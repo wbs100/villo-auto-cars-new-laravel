@@ -1,237 +1,391 @@
 @extends('layouts.app')
 
+@push('head')
+<link rel="stylesheet" href="{{ asset('NewAssts/css/master.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/theme.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/sections.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/responsive.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/custom.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/blog.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/sidebar.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/color.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/about.css') }}">
+<!-- CDN & plugin CSS (also available in global header) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/switcher.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/color1.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/color2.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/color3.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/color4.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/color5.css') }}">
+
+<!-- jQuery fallback: only load if not loaded globally -->
+<script>if (!window.jQuery) { document.write('<script src="{{ asset("NewAssts/plugins/jquery/jquery-1.11.1.min.js") }}"><\/script>'); }</script>
+@endpush
+
+@section('custom-header')
+    <div id="this-top" class="layout-theme animated-css" data-header="sticky" data-header-top="200">
+        <div id="wrapper">
+            <!-- HEADER -->
+            <div class="header">
+                <div class="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="header-contacts">
+                                    <span class="header-contacts__item"><i class="icon fa fa-phone"></i> 076 905 7272</span>
+                                    <a class="header-contacts__item" href="mailto:villoauto@gmail.com"><i class="icon fa fa-envelope"></i> villoauto@gmail.com</a>
+                                </div>
+                                <ul class="social-links list-inline">
+                                    <li><a href="#"><i class="bi bi-facebook"></i></a></li>
+                                    <li><a href="#"><i class="bi bi-instagram"></i></a></li>
+                                    <li><a href="#"><i class="bi bi-whatsapp"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header__inner">
+                    <div class="header-container-padding">
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12">
+                                <a href="{{ route('home') }}" class="logo d-none d-lg-block">
+                                    <img class="logo__img img-responsive" src="{{ asset('NewAssts/img/logo.png') }}" style="height: 100px; object-fit: contain;" alt="Logo" />
+                                </a>
+                                <div class="navbar yamm">
+                                    <div class="navbar-header hidden-md hidden-lg hidden-sm">
+                                        <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle">
+                                            <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                                        </button>
+                                        <a href="javascript:void(0);" class="navbar-brand"></a>
+                                    </div>
+                                    <div id="navbar-collapse-1" class="navbar-collapse collapse ">
+                                        <ul class="nav navbar-nav ">
+                                            <li><a href="{{ route('home') }}">HOME</a></li>
+                                            <li><a href="{{ route('vehicle-listings') }}">VEHICLE LISTINGS</a></li>
+                                            <li><a href="{{ route('services') }}">SERVICES</a></li>
+                                            <li><a href="{{ route('about') }}">ABOUT US</a></li>
+                                            <li><a href="{{ route('gallery') }}">GALLERY</a></li>
+                                            <li><a href="{{ route('contact') }}">CONTACT US</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block-title">
+                <div class="block-title__inner section-bg section-bg_second">
+                    <div class="bg-inner">
+                        <h1 class="ui-title-page">ABOUT US</h1>
+                        <div class="decor-1 center-block"></div>
+                        <ol class="breadcrumb">
+                            <li><a href="{{ route('home') }}">HOME</a></li>
+                            <li class="active">About Us</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /#wrapper -->
+    </div> <!-- /#this-top -->
+    @endsection
+
 @section('content')
 
-<!--=================================
- inner-intro -->
+<!-- Welcome / Intro Section -->
+<section class="welcome-4 page-section-ptb white-bg my-section-padding welcome-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-header">
+                    <span class="section-subtitle">Welcome to</span>
+                    <h2 class="section-title">VILLO AUTO CARS</h2>
+                    <div class="section-separator"></div>
+                    <p class="section-description">
+                        At Villo Auto Cars, we bring you the best selection of reconditioned and brand-new vehicles
+                        at competitive prices. Whether you're looking for your first car, an upgrade, or a reliable
+                        vehicle for your business, we've got you covered with flexible finance options and trusted
+                        service.
 
-<section class="inner-intro bg-1 bg-overlay-black-70">
-  <div class="container">
-    <div class="text-center row intro-title">
-      <div class="col-md-6 text-md-start d-inline-block">
-        <h1 class="text-white">About us </h1>
-      </div>
-      <div class="col-md-6 text-md-end float-end">
-        <ul class="page-breadcrumb">
-          <li><a href="/"><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
-          <li><span>about us</span> </li>
-        </ul>
-      </div>
+                        Our goal is to make car ownership smooth and hassle-free. From hand-picked vehicles to
+                        expert guidance, we ensure quality and trust at every step.
+                        We provide full documentation assistance, flexible leasing plans, and ongoing customer
+                        support long after your purchase.
+                        Located in the heart of Nugegoda, we've served thousands of happy customers
+                        islandwide—delivering
+                        excellence, every time.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row features-row">
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4 mb-lg-0">
+                <div class="feature-box feature-item" data-index="0">
+                    <div class="feature-icon-wrapper"><i class="fas fa-car feature-icon"></i></div>
+                    <h6 class="feature-title">ALL BRANDS</h6>
+                    <p class="feature-description">Choose from Toyota, Honda, Nissan, Suzuki, and more top-tier brands.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4 mb-lg-0">
+                <div class="feature-box feature-item" data-index="1">
+                    <div class="feature-icon-wrapper"><i class="fas fa-headset feature-icon"></i></div>
+                    <h6 class="feature-title">CUSTOMER SUPPORT</h6>
+                    <p class="feature-description">Friendly, expert support throughout your car-buying journey.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4 mb-sm-0">
+                <div class="feature-box feature-item" data-index="2">
+                    <div class="feature-icon-wrapper"><i class="fas fa-shield-alt feature-icon"></i></div>
+                    <h6 class="feature-title">TRUSTED DEALERSHIP</h6>
+                    <p class="feature-description">Reputation built on honesty, service quality, and satisfied
+                        customers.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="feature-box feature-item" data-index="3">
+                    <div class="feature-icon-wrapper"><i class="fas fa-wallet feature-icon"></i></div>
+                    <h6 class="feature-title">AFFORDABLE OPTIONS</h6>
+                    <p class="feature-description">Finance plans to suit every budget. Drive away with confidence.</p>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
-<!--=================================
- inner-intro -->
-
-<!--welcome section-->
-<section class="welcome-4 page-section-ptb white-bg my-section-padding">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-10">
-        <div class="section-title">
-          <span>Welcome to</span>
-          <h2>Villo Auto Cars</h2>
-          <div class="separator"></div>
-          <p>At Villo Auto Cars, we bring you the best selection of reconditioned and brand-new vehicles at competitive prices. Whether you're looking for your first car, an upgrade, or a reliable vehicle for your business, we’ve got you covered with flexible finance options and trusted service.</p>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="owl-carousel owl-theme" data-nav-arrow="true" data-items="1" data-md-items="1" data-sm-items="1" data-xs-items="1" data-space="0">
-          <div class="item">
-            <img class="img-fluid" src="assets/images/car/15.jpg" alt="Villo Auto Cars showroom">
-          </div>
-          <div class="item">
-            <img class="img-fluid" src="assets/images/car/16.jpg" alt="Vehicle Collection">
-          </div>
-          <div class="item">
-            <img class="img-fluid" src="assets/images/car/17.jpg" alt="Premium Cars">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <p>Our goal is to make car ownership smooth and hassle-free. From hand-picked vehicles to expert guidance, we ensure quality and trust at every step.</p>
-        <br />
-        <p>We provide full documentation assistance, flexible leasing plans, and ongoing customer support long after your purchase.</p>
-        <p>Located in the heart of Nugegoda, we’ve served thousands of happy customers islandwide—delivering excellence, every time.</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-3 col-sm-6">
-        <div class="feature-box-3">
-          <div class="icon">
-            <i class="glyph-icon flaticon-beetle"></i>
-          </div>
-          <div class="content">
-            <h6>All Brands</h6>
-            <p class="mb-0">Choose from Toyota, Honda, Nissan, Suzuki, and more top-tier brands.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="feature-box-3">
-          <div class="icon">
-            <i class="glyph-icon flaticon-interface-1"></i>
-          </div>
-          <div class="content">
-            <h6>Customer Support</h6>
-            <p class="mb-0">Friendly, expert support throughout your car-buying journey.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="feature-box-3">
-          <div class="icon">
-            <i class="glyph-icon flaticon-key"></i>
-          </div>
-          <div class="content">
-            <h6>Trusted Dealership</h6>
-            <p class="mb-0">Reputation built on honesty, service quality, and satisfied customers.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="feature-box-3">
-          <div class="icon">
-            <i class="glyph-icon flaticon-wallet"></i>
-          </div>
-          <div class="content">
-            <h6>Affordable Options</h6>
-            <p class="mb-0">Finance plans to suit every budget. Drive away with confidence.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!--history section-->
+<!-- Our History -->
 <section class="our-history white-bg page-section-ptb my-section-padding-bottom">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="section-title">
-          <span>Villo Auto Cars: From humble beginnings to a trusted name</span>
-          <h2>Our History</h2>
-          <div class="separator"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <span>Villo Auto Cars: From humble beginnings to a trusted name</span>
+                    <h2>Our History</h2>
+                    <div class="separator"></div>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="timeline list-style-none">
+                    <li>
+                        <div class="timeline-badge">
+                            <h4>01</h4>
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h5>Founded in 2010</h5>
+                            </div>
+                            <div class="timeline-body">
+                                <p>Villo Auto Cars opened its doors in Nugegoda with a mission to deliver quality
+                                    vehicles at fair prices.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge">
+                            <h4>02</h4>
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h5>Expanding Our Services</h5>
+                            </div>
+                            <div class="timeline-body">
+                                <p>We expanded into offering full vehicle documentation, after-sales services, and
+                                    leasing assistance.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-badge">
+                            <h4>03</h4>
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h5>New Showroom Opening</h5>
+                            </div>
+                            <div class="timeline-body">
+                                <p>Our spacious new showroom opened, allowing us to display a wide range of vehicles.
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge">
+                            <h4>04</h4>
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h5>Going Digital</h5>
+                            </div>
+                            <div class="timeline-body">
+                                <p>We launched our website and social platforms, enabling customers across Sri Lanka to
+                                    view our inventory and connect online.</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <ul class="timeline list-style-none">
-          <li>
-            <div class="timeline-badge"><h4>01</h4></div>
-            <div class="timeline-panel">
-              <div class="timeline-heading">
-                <h5>Founded in 2010</h5>
-              </div>
-              <div class="timeline-body">
-                <p>Villo Auto Cars opened its doors in Nugegoda with a mission to deliver quality vehicles at fair prices. Our early days were built on passion and dedication.</p>
-              </div>
-            </div>
-          </li>
-          <li class="timeline-inverted">
-            <div class="timeline-badge"><h4>02</h4></div>
-            <div class="timeline-panel">
-              <div class="timeline-heading">
-                <h5>Expanding Our Services</h5>
-              </div>
-              <div class="timeline-body">
-                <p>We expanded into offering full vehicle documentation, after-sales services, and leasing assistance, making the buying experience seamless.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="timeline-badge"><h4>03</h4></div>
-            <div class="timeline-panel">
-              <div class="timeline-heading">
-                <h5>New Showroom Opening</h5>
-              </div>
-              <div class="timeline-body">
-                <p>Our spacious new showroom opened, allowing us to display a wide range of vehicles and welcome more customers in comfort and style.</p>
-              </div>
-            </div>
-          </li>
-          <li class="timeline-inverted">
-            <div class="timeline-badge"><h4>04</h4></div>
-            <div class="timeline-panel">
-              <div class="timeline-heading">
-                <h5>Going Digital</h5>
-              </div>
-              <div class="timeline-body">
-                <p>We launched our website and social platforms, enabling customers across Sri Lanka to view our inventory and connect with us online with ease.</p>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
 </section>
 
-<!--=================================
-Counter -->
-
-<section class="counter counter-style-2 bg-red bg-1 bg-overlay-black-70 page-section-ptb">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-3 col-sm-6 item">
-        <div class="mb-4 counter-block text-start mb-lg-0">
-          <div class="separator"></div>
-          <div class="info">
-            <h6 class="text-white">Vehicles in Stock</h6>
-            <i class="glyph-icon flaticon-beetle"></i>
-            <b class="text-white timer" data-to="561" data-speed="10000"></b>
-          </div>
+<!-- Statistics -->
+<section class="statistics-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa fa-car"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-label">VEHICLES IN STOCK</div>
+                        <div class="stat-number" data-target="561">561</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa fa-comments"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-label">DEALER REVIEWS</div>
+                        <div class="stat-number" data-target="856">856</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa fa-smile"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-label">HAPPY CUSTOMER</div>
+                        <div class="stat-number" data-target="789">789</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa fa-trophy"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-label">AWARDS</div>
+                        <div class="stat-number" data-target="356">356</div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-lg-3 col-sm-6 item">
-        <div class="mb-4 counter-block text-start mb-lg-0">
-          <div class="separator"></div>
-          <div class="info">
-            <h6 class="text-white">Dealer Reviews</h6>
-            <i class="glyph-icon flaticon-interface"></i>
-            <b class="text-white timer" data-to="856" data-speed="10000"></b>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6 item">
-        <div class="mb-4 counter-block text-start mb-sm-0">
-          <div class="separator"></div>
-          <div class="info">
-            <h6 class="text-white">Happy Customer</h6>
-            <i class="glyph-icon flaticon-circle"></i>
-            <b class="text-white timer" data-to="789" data-speed="10000"></b>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6 item">
-        <div class="mb-0 counter-block text-start">
-          <div class="separator"></div>
-          <div class="info">
-            <h6 class="text-white">Awards</h6>
-            <i class="glyph-icon flaticon-cup"></i>
-            <b class="text-white timer" data-to="356" data-speed="10000"></b>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </section>
 
-<!--=================================
- Counter -->
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const statsSection = document.querySelector('.statistics-section');
+        const counters = document.querySelectorAll('.stat-number');
+        let started = false;
 
+        function animateCounters() {
+            counters.forEach(counter => {
+                const raw = counter.getAttribute('data-target') || counter.textContent;
+                const target = parseInt(String(raw).replace(/,/g, '').replace(/[^0-9]/g, ''), 10) || 0;
+                let frame = 0;
+                const duration = 2000;
+                const fps = 60;
+                const totalFrames = Math.round((duration / 1000) * fps);
+                const easeOutQuad = t => t * (2 - t);
 
-<!--=================================
- testimonial -->
+                const ticker = setInterval(() => {
+                    frame++;
+                    const progress = easeOutQuad(frame / totalFrames);
+                    const value = Math.round(target * progress);
+                    counter.textContent = value;
+                    if (frame >= totalFrames) { counter.textContent = target; clearInterval(ticker); }
+                }, Math.round(1000 / fps));
+            });
+        }
 
-@include('public-site.partials.testimonials')
+        if (!statsSection || counters.length === 0) return;
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => { if (entry.isIntersecting && !started) { started = true; animateCounters(); obs.disconnect(); } });
+            }, { threshold: 0.3 });
+            io.observe(statsSection);
+        } else { animateCounters(); }
+    });
+</script>
+@endpush
 
-<!--=================================
- testimonial -->
+<!-- Customer Reviews Section -->
+<section class="customer-reviews-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="section-title">
+                    <span>What Our Kandy Customers Say About Us</span>
+                    <h2>CUSTOMER REVIEWS</h2>
+                    <div class="separator"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4 review-col">
+                <div class="review-card">
+                    <div class="review-image">
+                        <img src="{{ asset('NewAssts/media/gridImg/1_1.webp') }}" alt="Car Review">
+                    </div>
+                    <img src="{{ asset('NewAssts/media/avatar_reviews/1.jpg') }}" alt="Nishani Rathnayake"
+                        class="reviewer-avatar">
+                    <div class="review-content">
+                        <h5 class="reviewer-name">Nishani Rathnayake</h5>
+                        <span class="reviewer-title">Doctor, Kandy General Hospital</span>
+                        <p class="review-text">"Excellent service and genuine spare parts availability. I've been a
+                            loyal customer for 5 years and wouldn't go anywhere else for my automotive needs."</p>
+                        <div class="quote-icon">"</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4 review-col">
+                <div class="review-card">
+                    <div class="review-image">
+                        <img src="{{ asset('NewAssts/media/gridImg/1_2.webp') }}" alt="Car Review">
+                    </div>
+                    <img src="{{ asset('NewAssts/media/avatar_reviews/2.jpg') }}" alt="Pradeep Jayasuriya"
+                        class="reviewer-avatar">
+                    <div class="review-content">
+                        <h5 class="reviewer-name">Pradeep Jayasuriya</h5>
+                        <span class="reviewer-title">Business Owner, Kandy</span>
+                        <p class="review-text">"Villo Auto Cars helped me find the perfect Toyota Corolla for my family.
+                            Their service was exceptional, and the financing was very competitive. Highly recommended!"
+                        </p>
+                        <div class="quote-icon">"</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4 review-col">
+                <div class="review-card">
+                    <div class="review-image">
+                        <img src="{{ asset('NewAssts/media/gridImg/2_1.webp') }}" alt="Car Review">
+                    </div>
+                    <img src="{{ asset('NewAssts/media/avatar_reviews/3.jpg') }}" alt="Samantha De Silva"
+                        class="reviewer-avatar">
+                    <div class="review-content">
+                        <h5 class="reviewer-name">Samantha De Silva</h5>
+                        <span class="reviewer-title">Teacher, Peradeniya</span>
+                        <p class="review-text">"I purchased my Honda Vezel from Villo Auto Cars last year. The entire
+                            process was smooth and transparent. Their after-sales service is outstanding!"</p>
+                        <div class="quote-icon">"</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @endsection

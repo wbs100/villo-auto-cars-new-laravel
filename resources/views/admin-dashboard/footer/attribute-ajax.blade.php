@@ -1,5 +1,6 @@
 <script>
-    document.getElementById('selectAttr').addEventListener('change', function() {
+    const _selectAttr = document.getElementById('selectAttr');
+    _selectAttr?.addEventListener('change', function() {
         const selected = this.value;
 
         document.getElementById('createAttributeForm').action = "/" + selected;
@@ -47,7 +48,7 @@
 
         openLoadingModal();
 
-        let routeName = "/" + document.getElementById('selectAttr').value + "-table";
+        let routeName = "/" + (document.getElementById('selectAttr')?.value || '') + "-table";
 
         $.ajax({
             url: $(this).attr('action'),

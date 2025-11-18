@@ -1,36 +1,132 @@
-<!-- js -->
-<!-- jquery  -->
-<script type="text/javascript" src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
-<!-- bootstrap -->
-<script type="text/javascript" src="{{ asset('assets/js/popper.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-<!-- mega-menu -->
-<script type="text/javascript" src="{{ asset('assets/js/mega-menu/mega_menu.js') }}"></script>
-<!-- appear -->
-<script type="text/javascript" src="{{ asset('assets/js/jquery.appear.js') }}"></script>
-<!-- jquery-ui -->
-<script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js')}}"></script>
-<!-- counter -->
-<script type="text/javascript" src="{{ asset('assets/js/counter/jquery.countTo.js') }}"></script>
-<!-- owl-carousel -->
-<script type="text/javascript" src="{{ asset('assets/js/owl-carousel/owl.carousel.min.js') }}"></script>
-<!-- select -->
-<script type="text/javascript" src="{{ asset('assets/js/select/jquery-select.js') }}"></script>
-<!-- magnific popup -->
-<script type="text/javascript" src="{{ asset('assets/js/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
-<!-- revolution -->
-<script type="text/javascript" src="{{ asset('assets/revolution/js/jquery.themepunch.tools.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/revolution/js/jquery.themepunch.revolution.min.js') }}"></script>
-<!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) 
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.migration.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.parallax.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script>
-	-->
-<!-- custom -->
-<script type="text/javascript" src="{{ asset('assets/js/custom.js') }}"></script>
+<!-- SCRIPTS -->
+<script src="{{ asset('NewAssts/js/jquery-migrate-1.2.1.js') }}"></script>
+<script src="{{ asset('NewAssts/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('NewAssts/js/modernizr.custom.js') }}"></script>
+<script src="{{ asset('NewAssts/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('NewAssts/js/waypoints.min.js') }}"></script>
+<script src="{{ asset('NewAssts/plugins/prettyphoto/js/jquery.prettyPhoto.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="{{ asset('NewAssts/plugins/jelect/jquery.jelect.js') }}"></script>
+
+<!-- HOME SLIDER -->
+<script src="{{ asset('NewAssts/plugins/sliderpro/js/jquery.sliderPro.min.js') }}"></script>
+<script src="{{ asset('NewAssts/plugins/nouislider/jquery.nouislider.all.min.js') }}"></script>
+<script src="{{ asset('NewAssts/plugins/flexslider/jquery.flexslider.js') }}"></script>
+
+<!-- THEME -->
+<script src="{{ asset('NewAssts/js/cssua.min.js') }}"></script>
+<script src="{{ asset('NewAssts/js/wow.min.js') }}"></script>
+<script src="{{ asset('NewAssts/js/custom.js') }}"></script>
+
+<!-- swiper CDN -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+	const swiper = new Swiper('.mySwiper', {
+		slidesPerView: 1,
+		spaceBetween: 30,
+		loop: true,
+		autoplay: { delay: 3500, disableOnInteraction: false },
+		navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+		breakpoints: {
+			640: { slidesPerView: 1, spaceBetween: 3 },
+			768: { slidesPerView: 2, spaceBetween: 3 },
+			1024: { slidesPerView: 3, spaceBetween: 3 }
+		}
+	});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+	const minGap = 10000;
+	const min = 6900, max = 801700;
+	const priceMin = document.getElementById('priceMin');
+	const priceMax = document.getElementById('priceMax');
+	const priceRangeDisplay = document.getElementById('priceRangeDisplay');
+	const sliderRange = document.getElementById('sliderRange');
+
+	// Ensure elements exist on the current page before attaching listeners
+	if (priceMin && priceMax && priceRangeDisplay && sliderRange) {
+		function formatPrice(val) { return 'Rs. ' + Number(val).toLocaleString(); }
+
+		function updateSliderRange() {
+			const minVal = parseInt(priceMin.value);
+			const maxVal = parseInt(priceMax.value);
+			const percentMin = ((minVal - min) / (max - min)) * 100;
+			const percentMax = ((maxVal - min) / (max - min)) * 100;
+			sliderRange.style.left = percentMin + '%';
+			sliderRange.style.width = (percentMax - percentMin) + '%';
+		}
+
+		function updatePriceRange(e) {
+			let minVal = parseInt(priceMin.value);
+			let maxVal = parseInt(priceMax.value);
+			if (maxVal - minVal < minGap) {
+				if (e && e.target === priceMin) {
+					priceMin.value = maxVal - minGap; minVal = maxVal - minGap; }
+				else { priceMax.value = minVal + minGap; maxVal = minVal + minGap; }
+			}
+			priceRangeDisplay.textContent = formatPrice(priceMin.value) + ' - ' + formatPrice(priceMax.value);
+			updateSliderRange();
+		}
+		priceMin.addEventListener('input', updatePriceRange);
+		priceMax.addEventListener('input', updatePriceRange);
+		updateSliderRange();
+	}
+</script>
+
+<script>
+	// Filter tabs
+	document.querySelectorAll(".filter-tab").forEach((tab) => {
+		tab.addEventListener("click", function () {
+			document.querySelectorAll(".filter-tab").forEach((t) => t.classList.remove("active"));
+			this.classList.add("active");
+		});
+	});
+</script>
+
+<script>
+	document.getElementById('vehicleImportForm')?.addEventListener('submit', function (e) {
+		e.preventDefault();
+		const formData = new FormData(this); const data = {};
+		for (let [key, value] of formData.entries()) { data[key] = value; }
+		if (!data.name || !data.phone || !data.email || !data.brand || !data.condition) { alert('Please fill in all required fields.'); return; }
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(data.email)) { alert('Please enter a valid email address.'); return; }
+		const subject = `Vehicle Import Inquiry - ${data.brand} ${data.model || ''}`.trim();
+		const body = `Dear Villo Auto Cars Team,\n\nI am interested in importing a vehicle with the following specifications:\n\nCustomer Details:\n- Name: ${data.name}\n- Phone: ${data.phone}\n- Email: ${data.email}\n\nVehicle Requirements:\n- Brand: ${data.brand}\n- Model: ${data.model || 'Not specified'}\n- Year: ${data.year || 'Not specified'}\n- Condition: ${data.condition}\n- Mileage Preference: ${data.mileage || 'Not specified'}\n\nAdditional Requirements:\n${data.message || 'No additional requirements mentioned.'}\n\nPlease contact me to discuss this import inquiry further.\n\nBest regards,\n${data.name}`;
+		const mailtoLink = `mailto:villoauto@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+		window.location.href = mailtoLink;
+	});
+</script>
+
+<script>
+	// Hover/visibility logic for image actions
+	document.querySelectorAll(".car-image-wrapper .image-actions").forEach((el) => { el.style.display = "none"; });
+	document.querySelectorAll(".car-image.secondary").forEach((img) => {
+		img.addEventListener("mouseenter", function () { const actions = this.parentElement.querySelector('.image-actions'); if (actions) actions.style.display = 'block'; });
+		img.addEventListener("mouseleave", function () { const actions = this.parentElement.querySelector('.image-actions'); if (actions) actions.style.display = 'none'; });
+	});
+	document.querySelectorAll('.car-image.primary').forEach((img) => { img.addEventListener('mouseenter', function () { const actions = this.parentElement.querySelector('.image-actions'); if (actions) actions.style.display = 'none'; }); });
+</script>
+
+<script>
+	// Initialize all logo swipers
+	const logoSwipers = document.querySelectorAll('.logo-swiper');
+	logoSwipers.forEach((swiperElement, index) => {
+		new Swiper(swiperElement, {
+			slidesPerView: 2, spaceBetween: 30, loop: true, autoplay: { delay: 0, disableOnInteraction: false },
+			speed: 3000 + (index * 1000), freeMode: true, freeModeMomentum: false, allowTouchMove: false, cssMode: false,
+			breakpoints: {
+				320: { slidesPerView: 2, spaceBetween: 20 },
+				480: { slidesPerView: 3, spaceBetween: 25 },
+				640: { slidesPerView: 4, spaceBetween: 30 },
+				768: { slidesPerView: 5, spaceBetween: 40 },
+				1024: { slidesPerView: 6, spaceBetween: 50 },
+				1200: { slidesPerView: 7, spaceBetween: 60 }
+			}
+		});
+	});
+</script>
+
+@stack('scripts')

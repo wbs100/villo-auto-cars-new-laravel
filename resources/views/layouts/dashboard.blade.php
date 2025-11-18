@@ -19,7 +19,8 @@
 
     </div>
 
-    <script src="{{ asset('assets/js/dashboard/common.js') }}"></script>
+    {{-- replaced invalid script path with `@stack` to allow view-specific scripts --}}
+    @stack('scripts')
 </body>
 
 </html>

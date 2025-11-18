@@ -1,262 +1,280 @@
 @extends('layouts.app')
 
-@section('content')
+@push('head')
+<link rel="stylesheet" href="{{ asset('NewAssts/css/master.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/theme.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/sections.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/responsive.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/custom.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/blog.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/sidebar.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/color.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/about.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/css/services.css') }}">
+<!-- CDN & plugin CSS (also available in global header) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/switcher.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/color1.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/color2.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/color3.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/color4.css') }}">
+<link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/color5.css') }}">
 
-<!--=================================
- inner-intro -->
+<!-- jQuery fallback: only load if not loaded globally -->
+<script>if (!window.jQuery) { document.write('<script src="{{ asset("NewAssts/plugins/jquery/jquery-1.11.1.min.js") }}"><\/script>'); }</script>
+@endpush
 
-<section class="inner-intro bg-1 bg-overlay-black-70">
-    <div class="container">
-        <div class="text-center row intro-title">
-            <div class="col-md-6 text-md-start d-inline-block">
-                <h1 class="text-white">Service </h1>
-            </div>
-            <div class="col-md-6 text-md-end float-end">
-                <ul class="page-breadcrumb">
-                    <li><a href="/"><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
-                    <li><span>Services</span> </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!--=================================
- inner-intro -->
-
-
-<!--=================================
- service -->
-
-<section class="inner-service white-bg page-section-ptb">
-  <div class="container">
-    <div class="row g-0">
-      <div class="col-md-4 col-sm-6">
-        <div class="text-center feature-box-2">
-          <div class="icon">
-            <i class="glyph-icon flaticon-car"></i>
-          </div>
-          <div class="content">
-            <h5>SUPER FAST</h5>
-            <p>We value your time. Our team ensures lightning-fast diagnostics, service, and delivery, getting you back on the road without delay.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6">
-        <div class="text-center feature-box-2">
-          <div class="icon">
-            <i class="glyph-icon flaticon-wallet"></i>
-          </div>
-          <div class="content">
-            <h5>AFFORDABLE</h5>
-            <p>Enjoy premium vehicle services and competitive prices. At Villo Auto Cars, we ensure top value for every rupee you spend.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6">
-        <div class="text-center feature-box-2 no-br">
-          <div class="icon">
-            <i class="glyph-icon flaticon-gas-station"></i>
-          </div>
-          <div class="content">
-            <h5>OIL CHANGES</h5>
-            <p>Regular oil changes are vital. We use top-grade oils to extend your engine life and improve performance — quick and professional.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6">
-        <div class="text-center feature-box-2 no-bb">
-          <div class="icon">
-            <i class="glyph-icon flaticon-air-conditioning"></i>
-          </div>
-          <div class="content">
-            <h5>AIR CONDITIONING</h5>
-            <p>Beat the heat with our expert A/C repairs and servicing. We’ll keep your vehicle’s climate cool, comfortable, and running efficiently.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6">
-        <div class="text-center feature-box-2 no-bb">
-          <div class="icon">
-            <i class="glyph-icon flaticon-gearstick"></i>
-          </div>
-          <div class="content">
-            <h5>TRANSMISSION</h5>
-            <p>From maintenance to complete overhauls, our technicians handle manual and automatic transmissions with precision and care.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6">
-        <div class="text-center feature-box-2 no-br no-bb">
-          <div class="icon">
-            <i class="glyph-icon flaticon-key"></i>
-          </div>
-          <div class="content">
-            <h5>DEALERSHIP</h5>
-            <p class="mb-0">Find your dream car at Villo Auto Cars. Our trusted dealership offers a wide selection of quality pre-owned and new vehicles.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!--=================================
- service -->
-
-
-<!--=================================
-Counter -->
-
-<section class="counter counter-style-2 bg-red bg-1 bg-overlay-black-70 page-section-ptb">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-sm-6 item">
-                <div class="mb-4 counter-block text-start mb-lg-0">
-                    <div class="separator"></div>
-                    <div class="info">
-                        <h6 class="text-white">Vehicles in Stock</h6>
-                        <i class="glyph-icon flaticon-beetle"></i>
-                        <b class="text-white timer" data-to="561" data-speed="10000"></b>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 item">
-                <div class="mb-4 counter-block text-start mb-lg-0">
-                    <div class="separator"></div>
-                    <div class="info">
-                        <h6 class="text-white">Dealer Reviews</h6>
-                        <i class="glyph-icon flaticon-interface"></i>
-                        <b class="text-white timer" data-to="856" data-speed="10000"></b>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 item">
-                <div class="mb-4 counter-block text-start mb-sm-0">
-                    <div class="separator"></div>
-                    <div class="info">
-                        <h6 class="text-white">Happy Customer</h6>
-                        <i class="glyph-icon flaticon-circle"></i>
-                        <b class="text-white timer" data-to="789" data-speed="10000"></b>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 item">
-                <div class="mb-0 counter-block text-start">
-                    <div class="separator"></div>
-                    <div class="info">
-                        <h6 class="text-white">Awards</h6>
-                        <i class="glyph-icon flaticon-cup"></i>
-                        <b class="text-white timer" data-to="356" data-speed="10000"></b>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!--=================================
- Counter -->
-
-
-<!--=================================
- service-center -->
-
-<section class="service-center white-bg page-section-ptb">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6">
-        <h5>We provide reliable auto care services to keep you confidently on the road.</h5>
-        <p>
-          At Villo Auto Cars, we combine experience, precision, and passion to deliver outstanding automotive solutions. Whether it's routine maintenance or complex repairs, our certified technicians are committed to providing exceptional service tailored to your vehicle's needs.
-        </p>
-        <ul class="list-style-1">
-          <li><i class="fa fa-check"></i> Comprehensive diagnostics and inspections for all vehicle models.</li>
-          <li><i class="fa fa-check"></i> Quality-assured repairs using genuine parts and modern tools.</li>
-          <li><i class="fa fa-check"></i> Transparent service process and competitive pricing.</li>
-          <li><i class="fa fa-check"></i> Friendly, knowledgeable staff dedicated to your satisfaction.</li>
-        </ul>
-      </div>
-      <div class="mt-4 col-lg-6 mt-lg-0">
-        <img class="img-fluid center-block" src="assets/images/car/22.jpg" alt="Villo Auto Cars - Service Center">
-      </div>
-    </div>
-  </div>
-</section>
-
-<!--=================================
- service-center -->
-
-<hr class="gray" />
-
-<!--=================================
- service schedule -->
-
-<section class="service-schedule white-bg page-section-ptb">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-title">
-                    <span>This is what we do and we do it perfectly</span>
-                    <h2>service schedule </h2>
-                    <div class="separator"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="gray-form">
-                    <div id="formmessage">Success/Error Message Goes Here</div>
-                    <form class="form-horizontal" id="contactform" role="form" method="post" action="https://themes.potenzaglobalsolutions.com/html/cardealer/php/contact-form.php">
-                        <div class="contact-form row">
-                            <div class="col-lg-4 col-sm-12">
-                                <div class="mb-3">
-                                    <input id="name" type="text" placeholder="Name*" class="form-control" name="name">
+@section('custom-header')
+    <div id="this-top" class="layout-theme animated-css" data-header="sticky" data-header-top="200">
+        <div id="wrapper">
+            <!-- HEADER -->
+            <div class="header">
+                <div class="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="header-contacts">
+                                    <span class="header-contacts__item"><i class="icon fa fa-phone"></i> 076 905 7272</span>
+                                    <a class="header-contacts__item" href="mailto:villoauto@gmail.com"><i class="icon fa fa-envelope"></i> villoauto@gmail.com</a>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-12">
-                                <div class="mb-3">
-                                    <input type="email" placeholder="Email*" class="form-control" name="email">
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-12">
-                                <div class="mb-3">
-                                    <input type="text" placeholder="Phone*" class="form-control" name="phone">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <textarea class="form-control input-message" placeholder="Comment*" rows="7" name="message"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <input type="hidden" name="action" value="sendEmail" />
-                                <button id="submit" name="submit" type="submit" value="Send" class="button red"> Send your message </button>
+                                <ul class="social-links list-inline">
+                                    <li><a href="#"><i class="bi bi-facebook"></i></a></li>
+                                    <li><a href="#"><i class="bi bi-instagram"></i></a></li>
+                                    <li><a href="#"><i class="bi bi-whatsapp"></i></a></li>
+                                </ul>
                             </div>
                         </div>
-                    </form>
-                    <div id="ajaxloader" style="display:none"><img class="center-block" src="assets/images/ajax-loader.gif" alt=""></div>
+                    </div>
+                </div>
+
+                <div class="header__inner">
+                    <div class="header-container-padding">
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12">
+                                <a href="{{ route('home') }}" class="logo d-none d-lg-block">
+                                    <img class="logo__img img-responsive" src="{{ asset('NewAssts/img/logo.png') }}" style="height: 100px; object-fit: contain;" alt="Logo" />
+                                </a>
+                                <div class="navbar yamm">
+                                    <div class="navbar-header hidden-md hidden-lg hidden-sm">
+                                        <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle">
+                                            <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                                        </button>
+                                        <a href="javascript:void(0);" class="navbar-brand"></a>
+                                    </div>
+                                    <div id="navbar-collapse-1" class="navbar-collapse collapse ">
+                                        <ul class="nav navbar-nav ">
+                                            <li><a href="{{ route('home') }}">HOME</a></li>
+                                            <li><a href="{{ route('vehicle-listings') }}">VEHICLE LISTINGS</a></li>
+                                            <li><a href="{{ route('services') }}">SERVICES</a></li>
+                                            <li><a href="{{ route('about') }}">ABOUT US</a></li>
+                                            <li><a href="{{ route('gallery') }}">GALLERY</a></li>
+                                            <li><a href="{{ route('contact') }}">CONTACT US</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="mt-4 opening-hours gray-bg mt-md-0">
-                    <h6>opening hours</h6>
-                    <ul class="list-style-none">
-                        <li><strong>Sunday</strong> <span class="text-red"> closed</span></li>
-                        <li><strong>Monday</strong> <span> 9:00 AM to 9:00 PM</span></li>
-                        <li><strong>Tuesday </strong> <span> 9:00 AM to 9:00 PM</span></li>
-                        <li><strong>Wednesday </strong> <span> 9:00 AM to 9:00 PM</span></li>
-                        <li><strong>Thursday </strong> <span> 9:00 AM to 9:00 PM</span></li>
-                        <li><strong>Friday </strong> <span> 9:00 AM to 9:00 PM</span></li>
-                        <li><strong>Saturday </strong> <span> 9:00 AM to 9:00 PM</span></li>
-                    </ul>
+
+            <div class="block-title">
+                <div class="block-title__inner section-bg section-bg_second">
+                    <div class="bg-inner">
+                        <h1 class="ui-title-page">OUR Services</h1>
+                        <div class="decor-1 center-block"></div>
+                        <ol class="breadcrumb">
+                            <li><a href="{{ route('home') }}">HOME</a></li>
+                            <li class="active">Services</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /#wrapper -->
+    </div> <!-- /#this-top -->
+    @endsection
+
+@section('content')
+
+    <main class="main-content page-services">
+
+        <!-- Services Section -->
+        <section class="services-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa fa-car"></i></div>
+                            <h3 class="service-title">SUPER FAST</h3>
+                            <p class="service-description">We value your time. Our team ensures lightning-fast
+                                diagnostics, service, and delivery, getting you back on the road without delay.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa fa-credit-card"></i></div>
+                            <h3 class="service-title">AFFORDABLE</h3>
+                            <p class="service-description">Enjoy premium vehicle services and competitive
+                                prices. At Villo Auto Cars, we ensure top value for every rupee you spend.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa fa-oil-can"></i></div>
+                            <h3 class="service-title">OIL CHANGES</h3>
+                            <p class="service-description">Regular oil changes are vital. We use top-grade oils
+                                to extend your engine life and improve performance — quick and professional.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa fa-snowflake"></i></div>
+                            <h3 class="service-title">AIR CONDITIONING</h3>
+                            <p class="service-description">Beat the heat with our expert A/C repairs and
+                                servicing. We'll keep your vehicle's climate cool, comfortable, and running
+                                efficiently.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa fa-cogs"></i></div>
+                            <h3 class="service-title">TRANSMISSION</h3>
+                            <p class="service-description">From maintenance to complete overhauls, our
+                                technicians handle manual and automatic transmissions with precision and care.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa fa-handshake"></i></div>
+                            <h3 class="service-title">DEALERSHIP</h3>
+                            <p class="service-description">Find your dream car at Villo Auto Cars. Our trusted
+                                dealership offers a wide selection of quality pre-owned and new vehicles.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="statistics-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fa fa-car"></i></div>
+                            <div class="stat-content">
+                                <div class="stat-label">VEHICLES IN STOCK</div>
+                                <div class="stat-number" data-target="561">561</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fa fa-comments"></i></div>
+                            <div class="stat-content">
+                                <div class="stat-label">DEALER REVIEWS</div>
+                                <div class="stat-number" data-target="856">856</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fa fa-smile"></i></div>
+                            <div class="stat-content">
+                                <div class="stat-label">HAPPY CUSTOMER</div>
+                                <div class="stat-number" data-target="789">789</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fa fa-trophy"></i></div>
+                            <div class="stat-content">
+                                <div class="stat-label">AWARDS</div>
+                                <div class="stat-number" data-target="356">356</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reliable Service Section -->
+        <section class="reliable-service-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h2 class="section-heading">WE PROVIDE RELIABLE AUTO CARE SERVICES TO KEEP YOU CONFIDENTLY ON THE ROAD.</h2>
+                        <p class="section-intro">At Villo Auto Cars, we combine experience, precision, and passion to deliver outstanding automotive solutions. Whether it's routine maintenance or complex repairs, our certified technicians are committed to providing exceptional service tailored to your vehicle's needs.</p>
+                        <ul class="service-features">
+                            <li><i class="fa fa-check"></i> Comprehensive diagnostics and inspections for all vehicle models.</li>
+                            <li><i class="fa fa-check"></i> Quality-assured repairs using genuine parts and modern tools.</li>
+                            <li><i class="fa fa-check"></i> Transparent service process and competitive pricing.</li>
+                            <li><i class="fa fa-check"></i> Friendly, knowledgeable staff dedicated to your satisfaction.</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="{{ asset('NewAssts/media/gridImg/2_1.webp') }}" alt="Auto Service" class="service-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Service Schedule Section -->
+    <section class="service-schedule-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <p class="schedule-subtitle">This is what we do and we do it perfectly</p>
+                <h2 class="schedule-title">SERVICE SCHEDULE</h2>
+                <div class="title-underline"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <form class="service-form">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" class="form-control" placeholder="Name*" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <input type="email" class="form-control" placeholder="Email*" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <input type="tel" class="form-control" placeholder="Phone*" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="5" placeholder="Comment*" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-submit">Send Your Message</button>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <div class="opening-hours-box">
+                        <h3 class="hours-title">OPENING HOURS</h3>
+                        <div class="hours-divider"></div>
+                        <ul class="hours-list">
+                            <li><span class="day">Sunday</span><span class="time closed">closed</span></li>
+                            <li><span class="day">Monday</span><span class="time">9:00 AM to 9:00 PM</span></li>
+                            <li><span class="day">Tuesday</span><span class="time">9:00 AM to 9:00 PM</span></li>
+                            <li><span class="day">Wednesday</span><span class="time">9:00 AM to 9:00 PM</span></li>
+                            <li><span class="day">Thursday</span><span class="time">9:00 AM to 9:00 PM</span></li>
+                            <li><span class="day">Friday</span><span class="time">9:00 AM to 9:00 PM</span></li>
+                            <li><span class="day">Saturday</span><span class="time">9:00 AM to 9:00 PM</span></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!--=================================
-service schedule -->
 
 @endsection
+
+@push('scripts')
+<script src="{{ asset('NewAssts/js/plugins-init/services-init.js') }}"></script>
+@endpush

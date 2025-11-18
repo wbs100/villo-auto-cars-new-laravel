@@ -3,7 +3,7 @@
 ***********************************-->
 <div class="nav-header">
     <a href="/" class="brand-logo">
-        <img src="{{ asset('assets/images/va-logo.jpg') }}" alt="logo" style="width: 40px; padding-top: 10px; border-radius: 9999px;">
+        <img src="{{ asset('NewAssts/img/logo.png') }}" alt="logo" style="width: 40px; padding-top: 10px; border-radius: 9999px;">
     </a>
     <div class="nav-control">
         <div class="hamburger">

@@ -41,29 +41,36 @@ use App\Http\Controllers\BodyController;
 Route::get('/', function () {
     $vehicles = Vehicle::get();
     return view('public-site.home', compact('vehicles'));
-});
+})->name('home');
 
 Route::get('/about', function () {
     $vehicles = Vehicle::get();
     return view('public-site.about', compact('vehicles'));
-});
+})->name('about');
 
 Route::get('/all-services', function () {
     $vehicles = Vehicle::get();
     return view('public-site.services', compact('vehicles'));
-});
+})->name('services');
 
 Route::resource('vehicles', VehicleController::class);
 
 Route::get('/gallery', function () {
     $vehicles = Vehicle::get();
     return view('public-site.gallery', compact('vehicles'));
-});
+})->name('gallery');
+
+// vehicle listings public route
+Route::get('/vehicle-listings', function () {
+    $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(9);
+    $viewMode = session('view_mode', 'grid');
+    return view('public-site.vehicle-listings', compact('vehicles', 'viewMode'));
+})->name('vehicle-listings');
 
 Route::get('/contact', function () {
     $vehicles = Vehicle::get();
     return view('public-site.contact', compact('vehicles'));
-});
+})->name('contact');
 
  Route::get('/vehicle/{id}', function ($id) {
     $vehicle = Vehicle::findOrFail($id);
@@ -76,51 +83,6 @@ Route::post('/set-view-mode', function (Request $request) {
     return response()->json(['status' => 'ok']);
 })->name('set.view.mode');
 
-
-// filters in /listings
-
-Route::get('/listings', function (Request $request) {
-    $viewMode = session('view_mode', 'grid');
-
-    $query = Vehicle::query();
-
-    if ($request->filled('year')) {
-        $query->where('year', $request->year);
-    }
-
-    if ($request->filled('make')) {
-        $query->where('make', $request->make);
-    }
-
-    if ($request->filled('model')) {
-        $query->where('model', $request->model);
-    }
-
-    if ($request->filled('mileage')) {
-        $query->where('mileage', '<=', $request->mileage);
-    }
-
-    if ($request->filled('transmission')) {
-        $query->where('transmission', $request->transmission);
-    }
-
-    if ($request->filled('condition')) {
-        $query->where('condition', $request->condition);
-    }
-
-    if ($request->filled('price_range')) {
-        $range = explode('+', str_replace([' ', 'Rs.', ','], '', $request->price_range));
-        if (count($range) >= 2) {
-            $min = (int) $range[0];
-            $max = (int) $range[1];
-            $query->whereBetween('price', [$min, $max]);
-        }
-    }
-
-    $vehicles = $query->paginate(request('per_page', 9));
-
-    return view('public-site.listings', compact('vehicles', 'viewMode'));
-});
 
 Route::get('/listings-filter', function (Request $request) {
     $viewMode = session('view_mode', 'grid');
@@ -271,9 +233,9 @@ Route::get('/test-email', function () {
     }
 });
 
-/* 
+/*
 =====================
-      middleware 
+      middleware
 =====================
 */
 Route::middleware([

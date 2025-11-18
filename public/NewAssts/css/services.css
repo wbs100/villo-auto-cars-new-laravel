@@ -1,0 +1,56 @@
+/* Services Page Styles - moved from inline CSS in services2.blade.php */
+
+.services-section { padding: 60px 0; }
+.service-card { text-align: center; padding: 40px 20px; background: #fff; border-radius: 5px; transition: all 0.3s ease; height: 100%; margin-bottom: 60px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+.service-card:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); }
+.service-icon { width: 80px; height: 80px; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center; border: 2px solid #d32f2f; border-radius: 50%; color: #d32f2f; transition: all 0.3s ease; }
+.service-icon i { font-size: 35px; }
+.service-card:hover .service-icon { background: #d32f2f; color: #fff; }
+.service-title { font-size: 16px; font-weight: 700; color: #333; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+.service-description { font-size: 13px; color: #666; line-height: 1.8; margin: 0; }
+
+.statistics-section { padding: 60px 0; background: url('../media/gridImg/6_2.webp') center center/cover no-repeat; position: relative; color: #fff; overflow: hidden; }
+.statistics-section::before { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 1; }
+.statistics-section .container { position: relative; z-index: 2; }
+.stat-item { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 20px; border-right: 1px solid rgba(255, 255, 255, 0.2); }
+@media (max-width: 767px) { .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.2); display:flex; flex-direction:row; align-items:center; justify-content:flex-start; gap:20px; padding: 30px 20px; } .stat-icon { font-size: 50px !important; flex-shrink:0; min-width:60px;} .stat-content { text-align:left; } .stat-label{ font-size:12px !important; margin-bottom:8px !important;} .stat-number{ font-size:42px !important; line-height:1;} }
+.stat-icon { font-size: 45px; color: #fff; }
+.stat-content { text-align: left; }
+.stat-label { font-size: 11px; color: #fff; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 5px; }
+.stat-number { font-size: 42px; color: #fff; font-weight: 700; line-height: 1; }
+
+.reliable-service-section { padding: 80px 0; background: #fff; }
+.section-heading { font-size: 28px; font-weight: 700; color: #333; line-height: 1.4; margin-bottom: 25px; text-transform: uppercase; }
+.section-intro { font-size: 14px; color: #666; line-height: 1.8; margin-bottom: 30px; }
+.service-features { list-style: none; padding: 0; margin: 0; }
+.service-features li { font-size: 14px; color: #666; line-height: 1.8; margin-bottom: 15px; display: flex; align-items: flex-start; gap: 12px; }
+.service-features li i { color: #d32f2f; font-size: 16px; margin-top: 3px; flex-shrink: 0; }
+.service-image { width: 100%; border-radius: 8px; }
+
+
+.schedule-subtitle { font-size: 14px; color: #999; margin-bottom: 10px; font-style: italic; }
+.schedule-title { font-size: 36px; font-weight: 700; color: #333; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+.title-underline { width: 80px; height: 3px; background: #d32f2f; margin: 0 auto 50px; }
+.service-form .form-control { height: 50px; border: 1px solid #e0e0e0; border-radius: 3px; padding: 15px; font-size: 14px; background: #f5f5f5; transition: all 0.3s ease; }
+.service-form textarea.form-control { height: auto; resize: none; }
+.service-form .form-control:focus { border-color: #d32f2f; background: #fff; box-shadow: none; outline: none; }
+.btn-submit { width: 100%; height: 50px; background: #d32f2f; border: none; color: #fff; font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 3px; transition: all 0.3s ease; cursor: pointer; }
+.btn-submit:hover { background: #b71c1c; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3); }
+
+.opening-hours-box { background: #fff; padding: 35px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); height: 100%; }
+.hours-title { font-size: 18px; font-weight: 700; color: #333; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 15px; }
+.hours-divider { width: 50px; height: 2px; background: #d32f2f; margin-bottom: 25px; }
+.hours-list { list-style: none; padding: 0; margin: 0; }
+.hours-list li { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+.hours-list li:last-child { border-bottom: none; }
+.hours-list .day { font-weight: 600; color: #333; }
+.hours-list .time { color: #666; }
+.hours-list .time.closed { color: #d32f2f; font-weight: 600; }
+
+@media (max-width: 991px) { .reliable-service-section .col-md-6:first-child { margin-bottom: 40px; } }
+@media (max-width: 767px) { .services-section { padding: 30px 0; } .service-card { margin-bottom: 20px; } .statistics-section { padding: 40px 0; } .reliable-service-section { padding: 50px 0; } .section-heading { font-size: 22px; } .service-schedule-section { padding: 50px 0; } .schedule-title { font-size: 28px; } }
+
+/* Page specific scope */
+.page-services .service-card { /* additional overrides possible in future */ }
+
+/* End services.css */

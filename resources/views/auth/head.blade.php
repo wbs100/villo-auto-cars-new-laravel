@@ -30,7 +30,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- FAVICONS ICON -->
-    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/va-logo.jpg') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('NewAssts/img/favicon.png') }}">
     <link href="{{ asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
     <link class="main-css" href="{{ asset('css/style.css') }}" rel="stylesheet">
 
