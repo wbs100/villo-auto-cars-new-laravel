@@ -167,7 +167,7 @@
                             <input type="range" min="6900" max="801700" step="1000" value="6900" id="priceMin">
                             <input type="range" min="6900" max="801700" step="1000" value="801700" id="priceMax">
                         </div>
-                        <a href="{{ url('/listings') }}" class="btn-search btn btn-primary">Search Inventory</a>
+                        <a href="{{ url('/vehicle-listings') }}" class="btn-search btn btn-primary">Search Inventory</a>
                     </div>
                 </div>
             </div>
