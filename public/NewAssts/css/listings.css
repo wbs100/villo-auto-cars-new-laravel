@@ -4,7 +4,7 @@
 .car-details__wrap-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
 .car-details__title { font-size:26px; font-weight:700; text-transform:uppercase; }
 .car-details__wrap-price { text-align:right; }
-.car-details__price-inner{ font-size:22px; font-weight:700; color:#dc2d13; }
+.car-details__price-inner{ font-size:35px; font-weight:700; color:#ffffff; }
 .slider-product .slides img{ width:100%; height:auto; display:block; }
 .carousel-product .slides img{ width:100%; height:auto; display:block; }
 .wrap-nav-tabs { margin-top:20px; margin-bottom:20px; }

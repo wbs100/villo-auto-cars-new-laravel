@@ -64,7 +64,7 @@ Route::get('/gallery', function () {
 Route::get('/listings', function () {
     $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(9);
     $viewMode = session('view_mode', 'grid');
-    return view('public-site.listings', compact('vehicles', 'viewMode'));
+    return view('public-site.car-details', compact('vehicles', 'viewMode'));
 })->name('listings');
 
 // vehicle listings public route
@@ -73,6 +73,12 @@ Route::get('/vehicle-listings', function () {
     $viewMode = session('view_mode', 'grid');
     return view('public-site.vehicle-listings', compact('vehicles', 'viewMode'));
 })->name('vehicle-listings');
+
+// car details route (static view)
+Route::get('/car-details', function () {
+    $vehicles = Vehicle::get();
+    return view('public-site.car-details', compact('vehicles'));
+})->name('car-details');
 
 Route::get('/contact', function () {
     $vehicles = Vehicle::get();
@@ -128,7 +134,7 @@ Route::get('/listings-filter', function (Request $request) {
 
     return request()->ajax()
     ? view('public-site.partials.vehicle-results', compact('vehicles', 'viewMode'))
-    : view('public-site.listings', compact('vehicles', 'viewMode'));
+    : view('public-site.car-details', compact('vehicles', 'viewMode'));
 });
 
 Route::get('/listings-top-filter', function () {
@@ -168,7 +174,7 @@ Route::get('/listings-top-filter', function () {
 
     return request()->ajax()
     ? view('public-site.partials.vehicle-results', compact('vehicles', 'viewMode'))
-    : view('public-site.listings', compact('vehicles', 'viewMode'));
+    : view('public-site.car-details', compact('vehicles', 'viewMode'));
 
 });
 
