@@ -220,7 +220,7 @@
         <div class="row">
             <!-- add vehicle cards using NewAssts gridImg assets -->
             <div class="col-lg-4 col-md-6">
-                <a href="car-details.html">
+                <a href="{{ route('listings') }}">
                     <div class="car-card">
                         <div class="car-image-wrapper">
                             <img src="{{ asset('NewAssts/media/gridImg/1_1.webp') }}" alt="Car Primary" class="car-image primary" />
@@ -234,7 +234,7 @@
             </div>
             <!-- Card 2 - Ford Ranger -->
             <div class="col-lg-4 col-md-6">
-                <a href="car-details.html">
+                <a href="{{ route('listings') }}">
                     <div class="car-card">
                         <div class="car-image-wrapper">
                             <img src="{{ asset('NewAssts/media/gridImg/2_1.webp') }}" alt="Car Primary" class="car-image primary" />
@@ -292,7 +292,7 @@
 
             <!-- Card 3 - Chevrolet Corvette -->
             <div class="col-lg-4 col-md-6">
-                <a href="car-details.html">
+                <a href="{{ route('listings') }}">
                     <div class="car-card">
                         <div class="car-image-wrapper">
                             <img src="{{ asset('NewAssts/media/gridImg/3_1.webp') }}" alt="Car Primary" class="car-image primary" />
@@ -355,7 +355,7 @@
 
             <!-- Card 4 - With DEAL Badge -->
             <div class="col-lg-4 col-md-6">
-                <a href="car-details.html">
+                <a href="{{ route('listings') }}">
                     <div class="car-card">
                         <div class="car-image-wrapper">
                             <img src="{{ asset('NewAssts/media/gridImg/4_1.webp') }}" alt="Car Primary" class="car-image primary" />
@@ -413,7 +413,7 @@
 
             <!-- Card 5 - With DEAL Badge -->
             <div class="col-lg-4 col-md-6">
-                <a href="car-details.html">
+                <a href="{{ route('listings') }}">
                     <div class="car-card">
                         <div class="car-image-wrapper">
                             <img src="{{ asset('NewAssts/media/gridImg/5_1.webp') }}" alt="Car Primary" class="car-image primary" />
@@ -471,7 +471,7 @@
 
             <!-- Card 6 - With DEAL Badge -->
             <div class="col-lg-4 col-md-6">
-                <a href="car-details.html">
+                <a href="{{ route('listings') }}">
                     <div class="car-card">
                         <div class="car-image-wrapper">
                             <img src="{{ asset('NewAssts/media/gridImg/6_1.webp') }}" alt="Car Primary" class="car-image primary" />

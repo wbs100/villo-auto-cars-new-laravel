@@ -60,6 +60,13 @@ Route::get('/gallery', function () {
     return view('public-site.gallery', compact('vehicles'));
 })->name('gallery');
 
+// listings page (static route pointing to the listings view)
+Route::get('/listings', function () {
+    $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(9);
+    $viewMode = session('view_mode', 'grid');
+    return view('public-site.listings', compact('vehicles', 'viewMode'));
+})->name('listings');
+
 // vehicle listings public route
 Route::get('/vehicle-listings', function () {
     $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(9);
