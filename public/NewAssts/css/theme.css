@@ -381,7 +381,7 @@ img.pull-left {
 	background-image: url('../media/bg/11.jpg');
 }
 .block-title__inner {
-	padding-top: 120px;
+	padding-top: 160px; /* move block-title lower to avoid header overlap */
 	padding-bottom: 60px;
 }
 .block-title:before,
@@ -391,7 +391,7 @@ img.pull-left {
 	width: 50.01%;
 	height: 8vw;
 	background-color: #f5f5f5;
-	z-index: 101;
+	z-index: 10;
 	content: '';
 }
 .block-title:before {
@@ -546,7 +546,7 @@ img.pull-left {
 	position: absolute;
 	top: 0;
 	width: 100%;
-	z-index: 110;
+	z-index: 999; /* raise header above block-title pseudo elements */
 }
 .top-header {
 	padding-top: 17px;
@@ -1798,13 +1798,13 @@ img.pull-left {
 
 .preloaderjs .spinner{
 	display:none !important;
-	
+
 }
 
 
 .preloaderjs#page-preloader{
 	background:  rgba( 46, 46, 46, 0.99)  !important;
-	
+
 }
 
 

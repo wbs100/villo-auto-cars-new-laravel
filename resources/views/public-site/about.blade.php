@@ -27,74 +27,9 @@
 @endpush
 
 @section('custom-header')
-    <div id="this-top" class="layout-theme animated-css" data-header="sticky" data-header-top="200">
-        <div id="wrapper">
-            <!-- HEADER -->
-            <div class="header">
-                <div class="top-header">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="header-contacts">
-                                    <span class="header-contacts__item"><i class="icon fa fa-phone"></i> 076 905 7272</span>
-                                    <a class="header-contacts__item" href="mailto:villoauto@gmail.com"><i class="icon fa fa-envelope"></i> villoauto@gmail.com</a>
-                                </div>
-                                <ul class="social-links list-inline">
-                                    <li><a href="#"><i class="bi bi-facebook"></i></a></li>
-                                    <li><a href="#"><i class="bi bi-instagram"></i></a></li>
-                                    <li><a href="#"><i class="bi bi-whatsapp"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="header__inner">
-                    <div class="header-container-padding">
-                        <div class="row">
-                            <div class="col-md-12 col-xs-12">
-                                <a href="{{ route('home') }}" class="logo d-none d-lg-block">
-                                    <img class="logo__img img-responsive" src="{{ asset('NewAssts/img/logo.png') }}" style="height: 100px; object-fit: contain;" alt="Logo" />
-                                </a>
-                                <div class="navbar yamm">
-                                    <div class="navbar-header hidden-md hidden-lg hidden-sm">
-                                        <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle">
-                                            <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                                        </button>
-                                        <a href="javascript:void(0);" class="navbar-brand"></a>
-                                    </div>
-                                    <div id="navbar-collapse-1" class="navbar-collapse collapse ">
-                                        <ul class="nav navbar-nav ">
-                                            <li><a href="{{ route('home') }}">HOME</a></li>
-                                            <li><a href="{{ route('vehicle-listings') }}">VEHICLE LISTINGS</a></li>
-                                            <li><a href="{{ route('services') }}">SERVICES</a></li>
-                                            <li><a href="{{ route('about') }}">ABOUT US</a></li>
-                                            <li><a href="{{ route('gallery') }}">GALLERY</a></li>
-                                            <li><a href="{{ route('contact') }}">CONTACT US</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="block-title">
-                <div class="block-title__inner section-bg section-bg_second">
-                    <div class="bg-inner">
-                        <h1 class="ui-title-page">ABOUT US</h1>
-                        <div class="decor-1 center-block"></div>
-                        <ol class="breadcrumb">
-                            <li><a href="{{ route('home') }}">HOME</a></li>
-                            <li class="active">About Us</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- /#wrapper -->
-    </div> <!-- /#this-top -->
-    @endsection
+    @include('public-site.header.header')
+    @include('public-site.header.page-header', ['title' => 'ABOUT US', 'breadcrumb' => 'About Us'])
+@endsection
 
 @section('content')
 
