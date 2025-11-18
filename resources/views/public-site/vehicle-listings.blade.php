@@ -260,7 +260,6 @@
 @endsection
 
 @push('page-ajax')
-<script src="{{ asset('NewAssts/plugins/nouislider/jquery.nouislider.all.min.js') }}"></script>
 <script>
     function toggleFilter(el) {
         const parent = el.parentElement;
@@ -305,8 +304,8 @@
         document.getElementById('sortVehicles').value = '';
         // Reset slider via noUiSlider if available
         const slider = document.getElementById('slider-price');
-        if (slider && $(slider).noUiSlider) {
-            $(slider).noUiSlider('set', [0, 500000]);
+        if (slider && slider.noUiSlider) {
+            slider.noUiSlider.set([0, 500000]);
         }
         // Optionally reapply filters
         applyFilters();
