@@ -41,80 +41,9 @@
                             <main class="main-content page-gallery">
 
                     <!-- Gallery Filters -->
-                    <div class="gallery-filters">
-                        <ul class="pagination">
-                            <li class="active"><a href="#" data-filter="all">ALL</a></li>
-                            <li><a href="#" data-filter="luxury">LUXURY</a></li>
-                            <li><a href="#" data-filter="suv">SUV</a></li>
-                            <li><a href="#" data-filter="sedan">SEDAN</a></li>
-                            <li><a href="#" data-filter="hybrid">HYBRID</a></li>
-                        </ul>
-                    </div>
+                    @include('public-site.partials.gallery-filters')
 
-                    <!-- Gallery Grid -->
-                    <div class="gallery-grid">
-                        <!-- Recreated gallery items using NewAssts assets -->
-                        <div class="gallery-item" data-category="luxury">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/1.jpg') }}" alt="Luxury Car 1" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>Mercedes-Benz S-Class</h4><p>2023 Model</p></div>
-                        </div>
-                        <div class="gallery-item" data-category="suv">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/2.jpg') }}" alt="SUV 1" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>Toyota Land Cruiser</h4><p>2022 Model</p></div>
-                        </div>
-                        <div class="gallery-item" data-category="sedan">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/3.jpg') }}" alt="Sedan 1" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>Honda Accord</h4><p>2023 Model</p></div>
-                        </div>
-                        <div class="gallery-item" data-category="hybrid">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/4.jpg') }}" alt="Hybrid 1" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>Toyota Prius</h4><p>Hybrid 2023</p></div>
-                        </div>
-                        <div class="gallery-item" data-category="luxury">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/5.jpg') }}" alt="Luxury Car 2" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>BMW 7 Series</h4><p>2023 Model</p></div>
-                        </div>
-                        <div class="gallery-item" data-category="suv">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/6.jpg') }}" alt="SUV 2" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>Range Rover Sport</h4><p>2022 Model</p></div>
-                        </div>
-                        <div class="gallery-item" data-category="sedan">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/7.jpg') }}" alt="Sedan 2" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>Audi A6</h4><p>2023 Model</p></div>
-                        </div>
-                        <div class="gallery-item" data-category="hybrid">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/8.jpg') }}" alt="Hybrid 2" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>Honda Vezel</h4><p>Hybrid 2023</p></div>
-                        </div>
-                        <div class="gallery-item" data-category="luxury">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/9.jpg') }}" alt="Luxury Car 3" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>Lexus LS</h4><p>2023 Model</p></div>
-                        </div>
-                        <div class="gallery-item" data-category="suv">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/1.jpg') }}" alt="SUV 3" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>Nissan Patrol</h4><p>2022 Model</p></div>
-                        </div>
-                        <div class="gallery-item" data-category="sedan">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/2.jpg') }}" alt="Sedan 3" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>Toyota Camry</h4><p>2023 Model</p></div>
-                        </div>
-                        <div class="gallery-item" data-category="hybrid">
-                            <img src="{{ asset('NewAssts/media/posts/370x250/3.jpg') }}" alt="Hybrid 3" />
-                            <div class="gallery-overlay"><i class="fa fa-search-plus"></i></div>
-                            <div class="gallery-caption"><h4>Lexus NX Hybrid</h4><p>Hybrid 2023</p></div>
-                        </div>
-                    </div>
+                    @include('public-site.partials.gallery-grid')
 
                     <div class="text-center" style="margin-top: 40px;">
                         <a class="btn btn-success btn-effect" href="javascript:void(0);"><span class="btn-inner">LOAD MORE</span></a>
@@ -126,15 +55,7 @@
     </div>
 
     <!-- Lightbox Modal -->
-    <div id="lightboxModal" class="lightbox-modal">
-        <span class="lightbox-close">&times;</span>
-        <span class="lightbox-prev">&#10094;</span>
-        <span class="lightbox-next">&#10095;</span>
-        <div class="lightbox-content">
-            <img id="lightboxImg" src="" alt="Lightbox Image" />
-        </div>
-        <div class="lightbox-caption" id="lightboxCaption"></div>
-    </div>
+    <x-components.lightbox-modal />
 
 @push('scripts')
     <script src="{{ asset('NewAssts/js/plugins-init/gallery-init.js') }}"></script>
