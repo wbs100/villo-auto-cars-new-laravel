@@ -1,5 +1,5 @@
 <!-- Services Section -->
-<section class="services-section">
+<section class="">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 col-sm-6 mb-4">
