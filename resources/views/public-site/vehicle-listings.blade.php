@@ -40,10 +40,10 @@
 
         <div class="row">
             <div class="col-md-9" id="vehicleListingsContainer">
+                <main class="main-content">
                 @include('public-site.partials.sorting-bar')
 
                 @include('public-site.partials.vehicle-cards', ['limit' => 4])
-
                 </main>
             </div>
 
@@ -82,6 +82,12 @@
     function applyFilters() {
         // Collect selected filters and submit GET to listings-filter
         const params = new URLSearchParams();
+        // Model search
+        const modelSearchVal = document.getElementById('modelSearch')?.value;
+        if (modelSearchVal) params.append('model', modelSearchVal);
+        // Sort value
+        const sortVal = document.getElementById('sortVehicles')?.value;
+        if (sortVal) params.append('sort', sortVal);
         // Years
         document.querySelectorAll('#sidebarFilters input[name="year[]"]:checked').forEach(e => params.append('year[]', e.value));
         // Condition (single radio will be appended as array)
@@ -116,5 +122,11 @@
         // Optionally reapply filters
         applyFilters();
     }
+    // Press Enter on search to apply filters
+    document.getElementById('modelSearch')?.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); applyFilters(); }
+    });
+    // Change sort to apply quickly
+    document.getElementById('sortVehicles')?.addEventListener('change', function () { applyFilters(); });
 </script>
 @endpush
