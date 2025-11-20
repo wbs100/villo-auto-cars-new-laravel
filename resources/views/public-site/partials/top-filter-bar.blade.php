@@ -40,6 +40,7 @@
 			</div>
 		</div>
 
+
 		<!-- Filter Button -->
 		<div class="filter-group" style="flex: 0; align-self: flex-end;">
 			<button class="filter-action-btn" onclick="toggleSidebarFilters()">

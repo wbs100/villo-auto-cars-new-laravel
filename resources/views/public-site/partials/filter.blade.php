@@ -83,13 +83,13 @@
             </div>
             <div class="col-lg-4 col-12">
                 <div class="price-section">
-                    <div class="price-header">Price Range</div>
-                    <div class="price-value" id="priceRangeDisplay">Rs. 6,90000 - Rs. 901,70000</div>
+                        <div class="price-header">Price Range</div>
+                        <div class="price-value" id="priceRangeDisplay">Rs. {{ number_format(floor($minPrice ?? 0)) }} - Rs. {{ number_format(ceil($maxPrice ?? 0)) }}</div>
                     <div class="slider-container">
                         <div id="sliderTrack"></div>
                         <div id="sliderRange"></div>
-                        <input type="range" min="6900" max="801700" step="1000" value="6900" id="priceMin">
-                        <input type="range" min="6900" max="801700" step="1000" value="801700" id="priceMax">
+                        <input type="range" min="{{ floor($minPrice ?? 0) }}" max="{{ ceil($maxPrice ?? 0) }}" step="1000" value="{{ floor($minPrice ?? 0) }}" id="priceMin">
+                        <input type="range" min="{{ floor($minPrice ?? 0) }}" max="{{ ceil($maxPrice ?? 0) }}" step="1000" value="{{ ceil($maxPrice ?? 0) }}" id="priceMax">
                     </div>
                     <a href="{{ url('/vehicle-listings') }}" class="btn-search btn btn-primary">Search Inventory</a>
                 </div>

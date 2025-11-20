@@ -2,7 +2,7 @@
 <section class="customer-reviews-section">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="">
                 <x-components.section-header
                     :subtitle="'What Our Kandy Customers Say About Us'"
                     title="CUSTOMER REVIEWS"

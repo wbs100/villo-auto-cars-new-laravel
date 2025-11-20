@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
 
 class Vehicle extends Model
 {
@@ -40,4 +42,32 @@ class Vehicle extends Model
         'mileage' => 'decimal:2',
         'price' => 'decimal:2',
     ];
+
+
+
+    protected static function booted()
+    {
+        static::saved(function ($vehicle) {
+            // Clear cached min/max and gallery/featured lists
+            Cache::forget('vehicles.min_price');
+            Cache::forget('vehicles.max_price');
+            Cache::forget('vehicles.gallery');
+            // Clear current year featured and vehicle's manufactured year featured
+            Cache::forget('vehicles.featured.' . Carbon::now()->year);
+            if ($vehicle->manufactured_year) {
+                Cache::forget('vehicles.featured.' . $vehicle->manufactured_year);
+            }
+        });
+
+        static::deleted(function ($vehicle) {
+            Cache::forget('vehicles.min_price');
+            Cache::forget('vehicles.max_price');
+            Cache::forget('vehicles.gallery');
+            Cache::forget('vehicles.featured.' . Carbon::now()->year);
+            if ($vehicle->manufactured_year) {
+                Cache::forget('vehicles.featured.' . $vehicle->manufactured_year);
+            }
+        });
+    }
+
 }

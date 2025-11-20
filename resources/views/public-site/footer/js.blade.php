@@ -35,11 +35,16 @@
 	});
 </script>
 
+<!-- Hidden element to pass server-side price min/max to JS without embedding Blade in JS -->
+<div id="priceRangeData" data-min="{{ floor($minPrice ?? 0) }}" data-max="{{ ceil($maxPrice ?? 0) }}" style="display:none"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
 	const minGap = 10000;
-	const min = 6900, max = 801700;
+	const priceRangeData = document.getElementById('priceRangeData');
+	const min = priceRangeData ? (parseInt(priceRangeData.dataset.min) || 0) : 0;
+	const max = priceRangeData ? (parseInt(priceRangeData.dataset.max) || 0) : 0;
 	const priceMin = document.getElementById('priceMin');
 	const priceMax = document.getElementById('priceMax');
 	const priceRangeDisplay = document.getElementById('priceRangeDisplay');
@@ -52,8 +57,9 @@
 		function updateSliderRange() {
 			const minVal = parseInt(priceMin.value);
 			const maxVal = parseInt(priceMax.value);
-			const percentMin = ((minVal - min) / (max - min)) * 100;
-			const percentMax = ((maxVal - min) / (max - min)) * 100;
+			const rangeWidth = (max - min) > 0 ? (max - min) : 1;
+			const percentMin = ((minVal - min) / rangeWidth) * 100;
+			const percentMax = ((maxVal - min) / rangeWidth) * 100;
 			sliderRange.style.left = percentMin + '%';
 			sliderRange.style.width = (percentMax - percentMin) + '%';
 		}
@@ -73,6 +79,37 @@
 		priceMax.addEventListener('input', updatePriceRange);
 		updateSliderRange();
 	}
+
+// Adjust the sidebar price slider (noUiSlider) to use dynamic values
+if (typeof noUiSlider !== 'undefined' && document.getElementById('slider-price')) {
+	(function () {
+		const sliderEl = document.getElementById('slider-price');
+		try {
+			if (sliderEl && sliderEl.noUiSlider) {
+				sliderEl.noUiSlider.updateOptions({
+					start: [min, max],
+					range: { 'min': min, 'max': max },
+					step: 1000
+				});
+			} else {
+				$("#slider-price").noUiSlider({
+					start: [min, max],
+					step: 1000,
+					connect: true,
+					range: { 'min': min, 'max': max },
+					format: wNumb({ decimals: 0, prefix: 'Rs.' })
+				});
+				$('#slider-price').Link('lower').to($('#slider-price_min'));
+				$('#slider-price').Link('upper').to($('#slider-price_max'));
+			}
+			// Ensure the text inputs reflect the values
+			$('#slider-price_min').val(min);
+			$('#slider-price_max').val(max);
+		} catch (err) {
+			console.warn('Could not initialize price slider with dynamic range', err);
+		}
+	})();
+}
 </script>
 
 <script>

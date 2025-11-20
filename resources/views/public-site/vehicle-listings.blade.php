@@ -44,6 +44,9 @@
                 @include('public-site.partials.sorting-bar')
 
                 @include('public-site.partials.vehicle-cards', ['limit' => 4])
+                @if(isset($vehicles))
+                    <div class="pagination-nav d-flex justify-content-center mt-4">{{ $vehicles->links('components.custom-pagination') }}</div>
+                @endif
                 </main>
             </div>
 
@@ -106,6 +109,9 @@
         const min = document.getElementById('slider-price_min')?.value; const max = document.getElementById('slider-price_max')?.value;
         if (min) params.append('price_min', min.replace(/[^0-9]/g,''));
         if (max) params.append('price_max', max.replace(/[^0-9]/g,''));
+        // Per page
+        const perPageVal = document.getElementById('perPageSelect')?.value;
+        if (perPageVal) params.append('per_page', perPageVal);
         const url = "{{ url('/listings-filter') }}" + '?' + params.toString();
         window.location.href = url;
     }
@@ -117,8 +123,11 @@
         // Reset slider via noUiSlider if available
         const slider = document.getElementById('slider-price');
         if (slider && slider.noUiSlider) {
-            slider.noUiSlider.set([0, 500000]);
+            slider.noUiSlider.set([min, max]);
         }
+        // Reset per-page select
+        const perPageSelect = document.getElementById('perPageSelect');
+        if (perPageSelect) perPageSelect.value = 4;
         // Optionally reapply filters
         applyFilters();
     }
@@ -128,5 +137,54 @@
     });
     // Change sort to apply quickly
     document.getElementById('sortVehicles')?.addEventListener('change', function () { applyFilters(); });
+    // Change per page to apply quickly
+    document.getElementById('perPageSelect')?.addEventListener('change', function () { applyFilters(); });
+    // Make whole card clickable: delegate clicks from container
+    document.getElementById('vehicleListingsContainer')?.addEventListener('click', function(e) {
+        const card = e.target.closest('.card-clickable');
+        if (!card) return;
+        // ignore if clicking a real link or button
+        if (e.target.closest('a') || e.target.closest('button') || e.target.closest('input')) return;
+        const url = card.dataset.href;
+        if (url) window.location.href = url;
+    });
+
+    // Adjust sidebar scrollable area to fit viewport (fallback for sticky behavior)
+    function adjustSidebarHeight() {
+        const sidebarFilters = document.getElementById('sidebarFilters');
+        if (!sidebarFilters) return;
+        const aside = sidebarFilters.querySelector('.sidebar-enhanced');
+        if (!aside) return;
+
+        // Only apply for desktop/tablet sizes (matching CSS media query)
+        if (window.innerWidth < 992) {
+            aside.style.top = '';
+            aside.style.maxHeight = '';
+            aside.style.overflowY = '';
+            return;
+        }
+
+        // Compute combined header offsets (main header + page header) to apply as sticky top
+        const headerEl = document.querySelector('.header');
+        const pageHeaderEl = document.querySelector('.block-title');
+        let headerHeight = (headerEl && headerEl.offsetHeight) ? headerEl.offsetHeight : 0;
+        let pageHeaderHeight = (pageHeaderEl && pageHeaderEl.offsetHeight) ? pageHeaderEl.offsetHeight : 0;
+        const extraSpacing = 180; // even larger breathing room: push sidebar further down per design
+        const topOffset = headerHeight + pageHeaderHeight + extraSpacing;
+        aside.style.top = topOffset + 'px';
+
+        // Recalculate available height using the new top offset
+        const buffer = 16; // breathing space from bottom of viewport
+        const available = window.innerHeight - topOffset - buffer;
+        if (available > 220) {
+            aside.style.maxHeight = available + 'px';
+            aside.style.overflowY = 'auto';
+        } else {
+            aside.style.maxHeight = '';
+            aside.style.overflowY = '';
+        }
+    }
+    window.addEventListener('load', adjustSidebarHeight);
+    window.addEventListener('resize', function () { setTimeout(adjustSidebarHeight, 120); });
 </script>
 @endpush

@@ -62,14 +62,14 @@ Route::get('/gallery', function () {
 
 // listings page (static route pointing to the listings view)
 Route::get('/listings', function () {
-    $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(9);
+    $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(4);
     $viewMode = session('view_mode', 'grid');
     return view('public-site.car-details', compact('vehicles', 'viewMode'));
 })->name('listings');
 
 // vehicle listings public route
 Route::get('/vehicle-listings', function () {
-    $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(9);
+    $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(4);
     $viewMode = session('view_mode', 'grid');
     return view('public-site.vehicle-listings', compact('vehicles', 'viewMode'));
 })->name('vehicle-listings');
@@ -88,8 +88,49 @@ Route::get('/contact', function () {
  Route::get('/vehicle/{id}', function ($id) {
     $vehicle = Vehicle::findOrFail($id);
     $vehicles = Vehicle::get();
-    return view('public-site.vehicle-details', compact('vehicle', 'vehicles'));
-});
+
+    // Build related vehicles list: try same make or body, exclude current, include similar price range
+    $query = Vehicle::where('id', '!=', $vehicle->id);
+    $query->where(function($q) use ($vehicle) {
+        if (!empty($vehicle->make)) {
+            $q->orWhere('make', $vehicle->make);
+        }
+        if (!empty($vehicle->body)) {
+            $q->orWhere('body', $vehicle->body);
+        }
+        if (!empty($vehicle->price)) {
+            $min = max(0, $vehicle->price * 0.8);
+            $max = $vehicle->price * 1.2;
+            $q->orWhereBetween('price', [$min, $max]);
+        }
+    });
+
+    $related = $query->orderBy('created_at', 'desc')->take(3)->get();
+
+    // Prepare component items array
+    $relatedItems = $related->map(function($v) {
+        $img = $v->main_image ?? $v->image_2 ?? $v->image_3 ?? $v->image_4 ?? $v->image_5;
+        $imagePath = $img ? 'uploads/vehicles/' . $img : 'NewAssts/media/widget-post/1.jpg';
+        $title = trim(($v->make ?? '') . ' ' . ($v->model ?? '')) ?: 'Vehicle';
+        $price = $v->price ? 'Rs. ' . number_format($v->price, 0) : 'N/A';
+        $description = isset($v->description) ? \Illuminate\Support\Str::limit(strip_tags($v->description), 45) : '';
+        return [
+            'image' => $imagePath,
+            'title' => $title,
+            'price' => $price,
+            'description' => $description,
+            'route' => route('vehicle.details', $v->id),
+        ];
+    })->toArray();
+
+    // If no related items, leave empty to show fallback
+    if (empty($relatedItems)) {
+        $relatedItems = [];
+    }
+
+    // Use the existing car-details view, passing single vehicle and relatedItems
+    return view('public-site.car-details', compact('vehicle', 'vehicles', 'relatedItems'));
+})->name('vehicle.details');
 
 Route::post('/set-view-mode', function (Request $request) {
     session(['view_mode' => $request->view_mode]);
@@ -130,7 +171,16 @@ Route::get('/listings-filter', function (Request $request) {
         $vehicles->whereIn('interior_color', $request->interior_color);
     }
 
-    $vehicles = $vehicles->paginate($request->input('per_page', 9))->appends($request->query());
+    // Price range
+    if ($request->filled('price_min') && $request->filled('price_max')) {
+        $min = floatval(preg_replace('/[^0-9.]/', '', $request->price_min));
+        $max = floatval(preg_replace('/[^0-9.]/', '', $request->price_max));
+        if ($min && $max && $min <= $max) {
+            $vehicles->whereBetween('price', [$min, $max]);
+        }
+    }
+
+    $vehicles = $vehicles->paginate($request->input('per_page', 4))->appends($request->query());
 
     return request()->ajax()
     ? view('public-site.partials.vehicle-results', compact('vehicles', 'viewMode'))
@@ -170,7 +220,7 @@ Route::get('/listings-top-filter', function () {
     }
 
     // Pagination
-    $vehicles = $query->paginate(request('per_page', 9))->appends(request()->query());
+    $vehicles = $query->paginate(request('per_page', 4))->appends(request()->query());
 
     return request()->ajax()
     ? view('public-site.partials.vehicle-results', compact('vehicles', 'viewMode'))

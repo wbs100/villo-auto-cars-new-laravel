@@ -300,14 +300,14 @@
 		<h4>Price Range</h4>
 		<div class="slider-price" id="slider-price"></div>
 		<span class="slider-price__wrap-input">
-			<input class="slider-price__input" id="slider-price_min" placeholder="Min" />
+			<input class="slider-price__input" id="slider-price_min" placeholder="Min" value="{{ floor($minPrice ?? 0) }}" />
 			<span>-</span>
-			<input class="slider-price__input" id="slider-price_max" placeholder="Max" />
+			<input class="slider-price__input" id="slider-price_max" placeholder="Max" value="{{ ceil($maxPrice ?? 0) }}" />
 		</span>
 	</div>
 
-	<!-- Action Buttons - simple full-width buttons -->
-	<div style="margin-top: 20px;">
+	<!-- Action Buttons - simple full-width buttons (pinned footer) -->
+	<div class="sidebar-footer" style="margin-top: 20px;">
 		<button class="btn-filter-primary" onclick="applyFilters()">APPLY FILTERS</button>
 		<button class="btn-filter-secondary" onclick="resetFilters()">RESET ALL</button>
 	</div>
