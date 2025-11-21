@@ -97,6 +97,25 @@ body {
     height: auto;
 }
 
+/* Ensure anchor-based card wrappers don't show underline for text */
+a.car-card-link,
+a.car-card-link:visited,
+a.car-card-link:hover,
+a.car-card-link:active {
+    text-decoration: none !important;
+    color: inherit;
+    display: block;
+}
+
+a.car-card-link * {
+    text-decoration: none !important;
+}
+
+a.car-card-link:focus{
+    outline: 2px dashed rgba(0,0,0,0.12);
+    outline-offset: 3px;
+}
+
 .car-image-container {
     position: relative;
     overflow: hidden;

@@ -16,5 +16,25 @@
 .car-card{ border:1px solid #eee; border-radius:6px; overflow:hidden; }
 .car-card .car-image-wrapper{ position:relative; }
 .car-card .price-tag{ position:absolute; bottom:12px; left:12px; background:#fff; padding:6px 10px; border-radius:4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+/* Remove underline and reset link styles for clickable car-card wrapper */
+a.car-card-link,
+a.car-card-link:visited,
+a.car-card-link:hover,
+a.car-card-link:active {
+	text-decoration: none !important;
+	color: inherit;
+	display: block;
+}
+
+/* Ensure nested text inside link doesn't get underlined by any other rules */
+a.car-card-link * {
+	text-decoration: none !important;
+}
+
+/* Keep focus visible for keyboard users while preventing default underline */
+a.car-card-link:focus{
+	outline: 2px dashed rgba(0,0,0,0.12);
+	outline-offset: 3px;
+}
 /* Responsive Listing specific */
 @media (max-width:768px){ .car-details__wrap-title { flex-direction:column; align-items:flex-start; } }

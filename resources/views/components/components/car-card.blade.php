@@ -29,7 +29,7 @@
     $date = $date ?? 'March 26, 2021';
 @endphp
 
-<a href="{{ $route }}">
+<a href="{{ $route }}" class="car-card-link d-block">
     <div class="car-card">
         <div class="car-image-wrapper">
             <img src="{{ $primaryImage }}" alt="Car Primary" class="car-image primary" />

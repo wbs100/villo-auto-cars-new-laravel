@@ -67,3 +67,24 @@
 /* Make card show clickable cursor for links */
 .card-clickable { cursor: pointer; }
 .card-clickable .card__inner a { text-decoration: none; }
+
+/* Remove underline and reset link styles for clickable car-card wrapper */
+a.car-card-link,
+a.car-card-link:visited,
+a.car-card-link:hover,
+a.car-card-link:active {
+	text-decoration: none !important;
+	color: inherit;
+	display: block;
+}
+
+/* Ensure nested text inside link doesn't get underlined by any other rules */
+a.car-card-link * {
+	text-decoration: none !important;
+}
+
+/* Keep focus visible for keyboard users while preventing default underline */
+a.car-card-link:focus{
+	outline: 2px dashed rgba(0,0,0,0.12);
+	outline-offset: 3px;
+}
