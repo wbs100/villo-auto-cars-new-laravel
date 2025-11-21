@@ -8,15 +8,9 @@
                         <label class="form-label w-100">Select Make</label>
                         <select class="form-select w-100">
                             <option selected>--Any Make--</option>
-                            <option>Audi</option>
-                            <option>BMW</option>
-                            <option>Ferrari</option>
-                            <option>Ford</option>
-                            <option>Honda</option>
-                            <option>Lamborghini</option>
-                            <option>Lexus</option>
-                            <option>Mercedes-Benz</option>
-                            <option>Nissan</option>
+                            @foreach($makes as $make)
+                                <option value="{{ $make['name'] }}">{{ $make['name'] }} </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -38,14 +32,9 @@
                         <label class="form-label w-100">Select Body Style</label>
                         <select class="form-select w-100">
                             <option selected>--Any Body Style--</option>
-                            <option>Convertible</option>
-                            <option>Coupe</option>
-                            <option>Hatchback</option>
-                            <option>Pickup Truck</option>
-                            <option>Sedan</option>
-                            <option>SUV</option>
-                            <option>Van</option>
-                            <option>Wagon</option>
+                            @foreach($bodies as $body)
+                                <option value="{{ $body['name'] }}">{{ $body['name'] }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -64,19 +53,18 @@
                         <label class="form-label w-100">Select Transmission</label>
                         <select class="form-select w-100">
                             <option selected>--Any Transmission--</option>
-                            <option>Automatic</option>
-                            <option>Manual</option>
-                            <option>CVT</option>
-                            <option>Semi-Automatic</option>
+                            @foreach($transmissions as $transmission)
+                                <option value="{{ $transmission['name'] }}">{{ $transmission['name'] }} </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label w-100">Select Condition</label>
                         <select class="form-select w-100">
                             <option selected>--Any Condition--</option>
-                            <option>New</option>
-                            <option>Used</option>
-                            <option>Certified Pre-Owned</option>
+                            @foreach($conditions as $condition)
+                                <option value="{{ $condition['name'] }}">{{ $condition['name'] }} </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

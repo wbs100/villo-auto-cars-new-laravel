@@ -253,9 +253,9 @@
                     </div>
 
                     <!-- Action Buttons - simple full-width buttons (pinned footer) -->
-                    <div class="sidebar-footer" style="margin-top: 20px;">
-                        <button class="btn-filter-primary" type="submit">APPLY FILTERS</button>
-                        <button class="btn-filter-secondary" type="reset">RESET ALL</button>
+                    <div class="sidebar-footer" style="margin-top: 20px; text-align: center;">
+                        <button class="btn-filter-primary" type="submit" style="display:inline-block;">APPLY FILTERS</button>
+                        <a class="btn-filter-secondary" href="{{ route('vehicle-listings') }}" style="display:inline-block; text-decoration: none;">RESET ALL</a>
                     </div>
                 </aside>
 
