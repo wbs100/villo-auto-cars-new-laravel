@@ -2,7 +2,11 @@
 
 <body>
 
-    @include('public-site.header.header')
+    @hasSection('custom-header')
+        @yield('custom-header')
+    @else
+        @include('public-site.header.header')
+    @endif
 
     @yield('content')
 

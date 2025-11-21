@@ -20,6 +20,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\TransmissionController;
 use App\Http\Controllers\ConditionController;
 use App\Http\Controllers\BodyController;
+use Illuminate\Support\Facades\Cache;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,127 +41,168 @@ use App\Http\Controllers\BodyController;
 
 Route::get('/', function () {
     $vehicles = Vehicle::get();
-    return view('public-site.home', compact('vehicles'));
-});
+
+    // Get min and max prices with caching (5 minutes)
+    $minPrice = Cache::remember('vehicles.min_price', 300, function () {
+        return Vehicle::min('price') ?? 0;
+    });
+
+    $maxPrice = Cache::remember('vehicles.max_price', 300, function () {
+        return Vehicle::max('price') ?? 0;
+    });
+
+    $years = Year::all()->map(function($year) {
+        $count = Vehicle::where('manufactured_year', $year->name)->count();
+        return [
+            'name' => $year->name,
+            'count' => $count
+        ];
+    });
+
+    $conditions = Condition::all()->map(function($condition) {
+        $count = Vehicle::where('condition', $condition->name)->count();
+        return [
+            'name' => $condition->name,
+            'count' => $count
+        ];
+    });
+
+    $bodies = Body::all()->map(function($body) {
+        $count = Vehicle::where('body', $body->name)->count();
+        return [
+            'name' => $body->name,
+            'count' => $count
+        ];
+    });
+
+    $makes = Make::all()->map(function($make) {
+        $count = Vehicle::where('make', $make->name)->count();
+        return [
+            'name' => $make->name,
+            'count' => $count
+        ];
+    });
+
+    $transmissions = Transmission::all()->map(function($transmission) {
+        $count = Vehicle::where('transmission', $transmission->name)->count();
+        return [
+            'name' => $transmission->name,
+            'count' => $count
+        ];
+    });
+
+    $colors = Color::all()->map(function($color) {
+        $count = Vehicle::where('exterior_color', $color->name)->count();
+        return [
+            'name' => $color->name,
+            'count' => $count
+        ];
+    });
+
+    $models = Vehicle::select('model')->distinct()->pluck('model')->map(function($model) {
+        $count = Vehicle::where('model', $model)->count();
+        return [
+            'name' => $model,
+            'count' => $count
+        ];
+    });
+
+    return view('public-site.home', compact('vehicles', 'years', 'conditions', 'bodies', 'makes', 'transmissions', 'colors', 'models', 'minPrice', 'maxPrice'));
+})->name('home');
 
 Route::get('/about', function () {
     $vehicles = Vehicle::get();
     return view('public-site.about', compact('vehicles'));
-});
+})->name('about');
 
 Route::get('/all-services', function () {
     $vehicles = Vehicle::get();
     return view('public-site.services', compact('vehicles'));
-});
+})->name('services');
 
 Route::resource('vehicles', VehicleController::class);
 
 Route::get('/gallery', function () {
     $vehicles = Vehicle::get();
     return view('public-site.gallery', compact('vehicles'));
-});
+})->name('gallery');
+
+// listings page (static route pointing to the listings view)
+Route::get('/listings', function () {
+    $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(4);
+    $viewMode = session('view_mode', 'grid');
+    return view('public-site.car-details', compact('vehicles', 'viewMode'));
+})->name('listings');
+
+// vehicle listings public route
+// Route::get('/vehicle-listings', function () {
+//     $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(4);
+//     $viewMode = session('view_mode', 'grid');
+//     return view('public-site.vehicle-listings', compact('vehicles', 'viewMode'));
+// })->name('vehicle-listings');
+
+// car details route (static view)
+Route::get('/car-details', function () {
+    $vehicles = Vehicle::get();
+    return view('public-site.car-details', compact('vehicles'));
+})->name('car-details');
 
 Route::get('/contact', function () {
     $vehicles = Vehicle::get();
     return view('public-site.contact', compact('vehicles'));
-});
+})->name('contact');
 
  Route::get('/vehicle/{id}', function ($id) {
     $vehicle = Vehicle::findOrFail($id);
     $vehicles = Vehicle::get();
-    return view('public-site.vehicle-details', compact('vehicle', 'vehicles'));
-});
 
-Route::post('/set-view-mode', function (Request $request) {
-    session(['view_mode' => $request->view_mode]);
-    return response()->json(['status' => 'ok']);
-})->name('set.view.mode');
-
-
-// filters in /listings
-
-Route::get('/listings', function (Request $request) {
-    $viewMode = session('view_mode', 'grid');
-
-    $query = Vehicle::query();
-
-    if ($request->filled('year')) {
-        $query->where('year', $request->year);
-    }
-
-    if ($request->filled('make')) {
-        $query->where('make', $request->make);
-    }
-
-    if ($request->filled('model')) {
-        $query->where('model', $request->model);
-    }
-
-    if ($request->filled('mileage')) {
-        $query->where('mileage', '<=', $request->mileage);
-    }
-
-    if ($request->filled('transmission')) {
-        $query->where('transmission', $request->transmission);
-    }
-
-    if ($request->filled('condition')) {
-        $query->where('condition', $request->condition);
-    }
-
-    if ($request->filled('price_range')) {
-        $range = explode('+', str_replace([' ', 'Rs.', ','], '', $request->price_range));
-        if (count($range) >= 2) {
-            $min = (int) $range[0];
-            $max = (int) $range[1];
-            $query->whereBetween('price', [$min, $max]);
+    // Build related vehicles list: try same make or body, exclude current, include similar price range
+    $query = Vehicle::where('id', '!=', $vehicle->id);
+    $query->where(function($q) use ($vehicle) {
+        if (!empty($vehicle->make)) {
+            $q->orWhere('make', $vehicle->make);
         }
+        if (!empty($vehicle->body)) {
+            $q->orWhere('body', $vehicle->body);
+        }
+        if (!empty($vehicle->price)) {
+            $min = max(0, $vehicle->price * 0.8);
+            $max = $vehicle->price * 1.2;
+            $q->orWhereBetween('price', [$min, $max]);
+        }
+    });
+
+    $related = $query->orderBy('created_at', 'desc')->take(3)->get();
+
+    // Prepare component items array
+    $relatedItems = $related->map(function($v) {
+        $img = $v->main_image ?? $v->image_2 ?? $v->image_3 ?? $v->image_4 ?? $v->image_5;
+        $imagePath = $img ? 'uploads/vehicles/' . $img : 'NewAssts/media/widget-post/1.jpg';
+        $title = trim(($v->make ?? '') . ' ' . ($v->model ?? '')) ?: 'Vehicle';
+        $price = $v->price ? 'Rs. ' . number_format($v->price, 0) : 'N/A';
+        $description = isset($v->description) ? \Illuminate\Support\Str::limit(strip_tags($v->description), 45) : '';
+        return [
+            'image' => $imagePath,
+            'title' => $title,
+            'price' => $price,
+            'description' => $description,
+            'route' => route('vehicle.details', $v->id),
+        ];
+    })->toArray();
+
+    // If no related items, leave empty to show fallback
+    if (empty($relatedItems)) {
+        $relatedItems = [];
     }
 
-    $vehicles = $query->paginate(request('per_page', 9));
+    // Use the existing car-details view, passing single vehicle and relatedItems
+    return view('public-site.car-details', compact('vehicle', 'vehicles', 'relatedItems'));
+})->name('vehicle.details');
 
-    return view('public-site.listings', compact('vehicles', 'viewMode'));
-});
+// Remove view-mode toggle route - feature removed in UI
 
-Route::get('/listings-filter', function (Request $request) {
-    $viewMode = session('view_mode', 'grid');
 
-    $vehicles = Vehicle::query();
-
-    if ($request->filled('year')) {
-        $vehicles->whereIn('year', $request->year);
-    }
-
-    if ($request->filled('condition')) {
-        $vehicles->whereIn('condition', $request->condition);
-    }
-
-    if ($request->filled('body')) {
-        $vehicles->whereIn('body', $request->body);
-    }
-
-    if ($request->filled('make')) {
-        $vehicles->whereIn('make', $request->make);
-    }
-
-    if ($request->filled('transmission')) {
-        $vehicles->whereIn('transmission', $request->transmission);
-    }
-
-    if ($request->filled('exterior_color')) {
-        $vehicles->whereIn('exterior_color', $request->exterior_color);
-    }
-
-    if ($request->filled('interior_color')) {
-        $vehicles->whereIn('interior_color', $request->interior_color);
-    }
-
-    $vehicles = $vehicles->paginate($request->input('per_page', 9))->appends($request->query());
-
-    return request()->ajax()
-    ? view('public-site.partials.vehicle-results', compact('vehicles', 'viewMode'))
-    : view('public-site.listings', compact('vehicles', 'viewMode'));
-});
+Route::get('/vehicle-listings', [VehicleController::class, 'publicListingsFilter'])->name('vehicle-listings');
 
 Route::get('/listings-top-filter', function () {
     $viewMode = session('view_mode', 'grid');
@@ -195,11 +237,11 @@ Route::get('/listings-top-filter', function () {
     }
 
     // Pagination
-    $vehicles = $query->paginate(request('per_page', 9))->appends(request()->query());
+    $vehicles = $query->paginate(request('per_page', 4))->appends(request()->query());
 
     return request()->ajax()
     ? view('public-site.partials.vehicle-results', compact('vehicles', 'viewMode'))
-    : view('public-site.listings', compact('vehicles', 'viewMode'));
+    : view('public-site.car-details', compact('vehicles', 'viewMode'));
 
 });
 
@@ -271,9 +313,9 @@ Route::get('/test-email', function () {
     }
 });
 
-/* 
+/*
 =====================
-      middleware 
+      middleware
 =====================
 */
 Route::middleware([

@@ -1,4 +1,9 @@
 <!--vehicle grid view-->
+@if(isset($vehicles) && $vehicles->total())
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="results-summary">Showing {{ $vehicles->firstItem() }} - {{ $vehicles->lastItem() }} of {{ $vehicles->total() }} results</div>
+    </div>
+@endif
 <div id="gridView" class="vehicle-view-mode">
     @include('public-site.partials.vehicle-grid')
 </div>

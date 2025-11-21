@@ -1,121 +1,118 @@
-<!-- footer -->
-<footer class="footer bg-2 bg-overlay-black-90">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="social">
-                    <ul>
-                        <li>
-                            <a class="facebook"
-                                href="https://www.facebook.com/p/Villo-Auto-Cars-100083298821557/">facebook
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="instagram" href="https://www.instagram.com/villo_auto_cars/">instagram
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="whatsapp" href="https://wa.me/+94773116657">whatsapp
-                                <i class="fa fa-whatsapp"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-5 col-md-6">
-                <div class="about-content">
-                    <img class="img-fluid" id="logo-footer" src="{{ asset('/assets/images/va-logo.jpg') }}" alt=""
-                        style="border-radius: 9999px; height: 100px; aspect-ratio: 1/1;">
-                    <p>
-                        It is our ultimate target to maintain our good name in the market and to serve our clients
-                        with utmost integrity, preserving their trust.
-                    </p>
-                </div>
-                <div class="address">
-                    <ul>
-                        <li> <i class="fa fa-map-marker"></i><span>No. 614, Colombo road, Nanuoya, Pilimathalawa,
-                                Kandy</span>
-                        </li>
-                        <li> <i class="fa fa-phone"></i><span>077 311 6657</span> </li>
-                        <li> <i class="fa fa-envelope-o"></i><span>villoauto@gmail.com</span> </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="usefull-link">
-                    <h6 class="text-white">Useful Links</h6>
-                    <ul>
-                        <li><a href="/"><i class="fa fa-angle-double-right"></i> Home</a></li>
-                        <li><a href="/all-services"><i class="fa fa-angle-double-right"></i> Services</a></li>
-                        <li><a href="/about"><i class="fa fa-angle-double-right"></i> About Us</a></li>
-                        <li><a href="/gallery"><i class="fa fa-angle-double-right"></i> Gallery</a>
-                        </li>
-                        <li><a href="/contact"><i class="fa fa-angle-double-right"></i> Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="news-letter">
-                    <h6 class="text-white">subscribe Our Newsletter </h6>
-                    <p>Keep up on our always evolving products features and technology. Enter your e-mail and
-                        subscribe to our
-                        newsletter.</p>
-                    <form class="news-letter">
-                        <input type="email" placeholder="Enter your Email" class="form-control placeholder">
-                        <a class="button red" href="#">Subscribe</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <hr />
-        <div class="copyright">
-            <div class="row">
-                <div class="col-lg-12 col-md-12">
-                    <div class="text-center text-lg-center">
-                        2025 © All Rights Reserved | Villo Auto Cars | Designed & Developed by <a
-                            href="https://siliconradonnetworks.com/">Silicon Radon Networks (Pvt) Ltd.</a>
-                    </div>
-                </div>
-                <div class="hidden col-lg-6 col-md-12">
-                    <ul class="text-center list-inline text-lg-end">
-                        <li><a href="#">privacy policy </a> | </li>
-                        <li><a href="#">terms and conditions </a> |</li>
-                        <li><a href="#">contact us </a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+<!--footer new-->
+<footer class="footer">
+	<div class="container">
+		<div class="footer-top">
+			<div class="row">
+				<div class="col-lg-3 col-md-6 mb-4">
+					<div class="footer-column">
+						<h4>INVENTORY</h4>
+						<ul>
+							<li><a href="#">NEW VEHICLES</a></li>
+							<li><a href="#">USED VEHICLES</a></li>
+							<li><a href="#">PRE-OWNED VEHICLE SPECIALS</a></li>
+							<li><a href="#">PRICED UNDER 15K</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 mb-4">
+					<div class="footer-column">
+						<h4>FINANCING</h4>
+						<ul>
+							<li><a href="#">GET FINANCING</a></li>
+							<li><a href="#">PAYMENT CALCULATOR</a></li>
+							<li><a href="#">VALUE YOUR TRADE</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 mb-4">
+					<div class="footer-column">
+						<h4>QUICK LINKS</h4>
+						<ul>
+							<li><a href="#">FAQS</a></li>
+							<li><a href="#">WHY BUY FROM ALM</a></li>
+							<li><a href="#">FIVE QUESTIONS TO ASK</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 mb-4">
+					<div class="footer-column">
+						<h4>CONTACT</h4>
+						<ul>
+							<li><a href="tel:94769057272">076 905 7272</a></li>
+							<li><a href="mailto:villoauto@gmail.com">villoauto@gmail.com</a></li>
+							<li><a href="#">No. 614, Colombo road, Nanuoya, Pilimathalawa</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 
-<!-- back to top -->
-<div class="car-top">
-    <span><img src="{{ asset('/assets/images/car.png') }}" alt=""></span>
-</div>
-<!--Messenger and WhatsApp Floating btns-->
-<a href="https://m.me/94773116657" class="float" style="z-index: 999999;">
-    <i class="bi bi-messenger"></i>
+		<div class="footer-bottom">
+			<div>
+				<img src="{{ asset('NewAssts/img/logo-footer.png') }}" alt="logo" class="footer-logo">
+			</div>
+			<div class="copyright">
+				2025 © All Rights Reserved | Villo Auto Cars (Pvt) Ltd | Designed & Developed by Silicon Radon Networks (Pvt) Ltd.
+			</div>
+		</div>
+	</div>
+</footer>
+	<div class="car-top">
+	<span><img src="{{ asset('NewAssts/img/car.png') }}" alt="car"></span>
+	</div>
+
+    </div>
+    <!-- end #wrapper -->
+  </div>
+  <!-- end layout-theme -->
+
+<!-- Messenger and WhatsApp Floating btns -->
+<a href="https://m.me/94769057272" class="float" style="z-index: 999999;">
+	<i class="fa-brands fa-facebook-messenger my-float"></i>
 </a>
 <script async src='https://d2mpatx37cqexb.cloudfront.net/delightchat-whatsapp-widget/embeds/embed.min.js'></script>
 <script>
-    var wa_btnSetting = {
-        "btnColor": "#16BE45",
-        "ctaText": "",
-        "cornerRadius": 40,
-        "marginBottom": 20,
-        "marginLeft": 20,
-        "marginRight": 20,
-        "btnPosition": "right",
-        "whatsAppNumber": "94773116657",
-        "welcomeMessage": "Hello! How can we help you today?",
-        "zIndex": 999999,
-        "btnColorScheme": "light"
-    };
-    window.onload = () => {
-        _waEmbed(wa_btnSetting);
-    };
+	var wa_btnSetting = { "btnColor": "#16BE45", "ctaText": "", "cornerRadius": 40, "marginBottom": 20, "marginLeft": 20, "marginRight": 20, "btnPosition": "right", "whatsAppNumber": "94769057272", "welcomeMessage": "Hello! How can we help you today?", "zIndex": 999999, "btnColorScheme": "light" };
+	window.onload = () => {
+		_waEmbed(wa_btnSetting);
+	};
 </script>
+
+<!-- Vehicle Details Modal -->
+<div class="modal fade" id="vehicleModal" tabindex="-1" role="dialog" aria-labelledby="vehicleModalLabel">
+	<div class="modal-dialog modal-lg modal-center" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="vehicleModalLabel">2019 Honda Vezel Z</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6">
+						<img src="{{ asset('NewAssts/img/from-fb/2-wide.jpg') }}" class="img-responsive img-rounded" alt="2019 Honda Vezel Z">
+					</div>
+					<div class="col-md-6">
+						<h4>Key Details</h4>
+						<ul class="list-unstyled">
+							<li><strong>Make:</strong> Honda</li>
+							<li><strong>Model:</strong> Vezel Z</li>
+							<li><strong>Year:</strong> 2019</li>
+							<li><strong>Transmission:</strong> Automatic</li>
+							<li><strong>Fuel Type:</strong> Hybrid (Petrol/Electric)</li>
+							<li><strong>Mileage:</strong> 45,000 km</li>
+							<li><strong>Color:</strong> Pearl White</li>
+							<li><strong>Price:</strong> Rs. 8,450,000</li>
+						</ul>
+						<p>Well-maintained Honda Vezel Z with excellent fuel efficiency and advanced safety features. Equipped with push start, reverse camera, alloy wheels, and full service history.</p>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<a href="#" class="btn btn-primary">Enquire Now</a>
+			</div>
+		</div>
+	</div>
+</div>

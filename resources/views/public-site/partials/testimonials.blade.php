@@ -16,11 +16,11 @@
                     <div class="item">
                         <div class="text-center testimonial-block">
                             <div class="testimonial-image">
-                                <img class="img-fluid" src="assets/images/testimonial/01.jpg" alt="">
+                                <img class="img-fluid" src="{{ asset('NewAssts/media/posts/370x250/1.jpg') }}" alt="">
                             </div>
                             <div class="testimonial-box">
                                 <div class="testimonial-avtar">
-                                    <img class="img-fluid" src="assets/images/team/01.jpg" alt="">
+                                    <img class="img-fluid" src="{{ asset('NewAssts/media/staff/1.jpg') }}" alt="">
                                     <h6>Pradeep Jayasuriya</h6>
                                     <span>Business Owner, Kandy</span>
                                 </div>
@@ -37,11 +37,11 @@
                     <div class="item">
                         <div class="text-center testimonial-block">
                             <div class="testimonial-image">
-                                <img class="img-fluid" src="assets/images/testimonial/02.jpg" alt="">
+                                <img class="img-fluid" src="{{ asset('NewAssts/media/posts/370x250/2.jpg') }}" alt="">
                             </div>
                             <div class="testimonial-box">
                                 <div class="testimonial-avtar">
-                                    <img class="img-fluid" src="assets/images/team/02.jpg" alt="">
+                                    <img class="img-fluid" src="{{ asset('NewAssts/media/staff/2.jpg') }}" alt="">
                                     <h6>Samantha De Silva</h6>
                                     <span>Teacher, Peradeniya</span>
                                 </div>
@@ -57,11 +57,11 @@
                     <div class="item">
                         <div class="text-center testimonial-block">
                             <div class="testimonial-image">
-                                <img class="img-fluid" src="assets/images/testimonial/03.jpg" alt="">
+                                <img class="img-fluid" src="{{ asset('NewAssts/media/posts/370x250/3.jpg') }}" alt="">
                             </div>
                             <div class="testimonial-box">
                                 <div class="testimonial-avtar">
-                                    <img class="img-fluid" src="assets/images/team/03.jpg" alt="">
+                                    <img class="img-fluid" src="{{ asset('NewAssts/media/staff/3.jpg') }}" alt="">
                                     <h6>Rukshan Fernando</h6>
                                     <span>IT Professional, Kandy</span>
                                 </div>
@@ -78,11 +78,11 @@
                     <div class="item">
                         <div class="text-center testimonial-block">
                             <div class="testimonial-image">
-                                <img class="img-fluid" src="assets/images/testimonial/04.jpg" alt="">
+                                <img class="img-fluid" src="{{ asset('NewAssts/media/posts/370x250/4.jpg') }}" alt="">
                             </div>
                             <div class="testimonial-box">
                                 <div class="testimonial-avtar">
-                                    <img class="img-fluid" src="assets/images/team/04.jpg" alt="">
+                                    <img class="img-fluid" src="{{ asset('NewAssts/media/staff/4.jpg') }}" alt="">
                                     <h6>Nishani Rathnayake</h6>
                                     <span>Doctor, Kandy General Hospital</span>
                                 </div>

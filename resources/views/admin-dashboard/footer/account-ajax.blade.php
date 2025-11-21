@@ -1,5 +1,5 @@
 <script>
-    document.getElementById('togglePassword').addEventListener('click', function() {
+    document.getElementById('togglePassword')?.addEventListener('click', function() {
         const passwordInput = document.getElementById('passwordInput');
         const icon = this.querySelector('i');
 
