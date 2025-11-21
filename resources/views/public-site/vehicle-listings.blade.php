@@ -29,6 +29,25 @@
 </script>
 @endpush
 
+@push('page-ajax')
+<script id="server-debug-json" type="application/json">{!! json_encode(['debug' => config('app.debug'), 'conditions' => $conditions ?? [], 'years' => $years ?? []]) !!}</script>
+<script>
+    (function() {
+        const el = document.getElementById('server-debug-json');
+        if (!el) return;
+        let debugData = {};
+        try { debugData = JSON.parse(el.textContent || '{}'); } catch (e) { return; }
+        if (!debugData.debug) return;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const conditionBoxes = document.querySelectorAll('[id^="condition-"]');
+            conditionBoxes.forEach(el => {
+            });
+        });
+    })();
+</script>
+@endpush
+
 @section('custom-header')
 @include('public-site.header.header')
 @include('public-site.header.page-header', ['title' => 'VEHICLE LISTINGS', 'breadcrumb' => 'Vehicle Listings'])
@@ -303,16 +322,6 @@
     }
     window.addEventListener('load', adjustSidebarHeight);
     window.addEventListener('resize', function () { setTimeout(adjustSidebarHeight, 120); });
-    @if(config('app.debug'))
-    // Debug: Print counts passed to the view for quick browser inspection
-    console.log('View conditions (from server):', @json($conditions));
-    console.log('View years (from server):', @json($years));
-    document.addEventListener('DOMContentLoaded', function () {
-        const conditionBoxes = document.querySelectorAll('[id^="condition-"]');
-        conditionBoxes.forEach(el => {
-            console.log(`Condition checkbox: ${el.id}, count=`, el.dataset.count, 'value=', el.value);
-        });
-    });
-    @endif
+    // debug section removed from here to avoid Blade expressions in JS
 </script>
 @endpush
