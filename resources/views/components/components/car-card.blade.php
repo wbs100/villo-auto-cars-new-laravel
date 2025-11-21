@@ -29,17 +29,18 @@
     $date = $date ?? 'March 26, 2021';
 @endphp
 
-<a href="{{ $route }}" class="car-card-link d-block">
     <div class="car-card">
         <div class="car-image-wrapper">
+            <a href="{{ $route }}" class="car-image-link d-block" aria-label="{{ $title }}">
             <img src="{{ $primaryImage }}" alt="Car Primary" class="car-image primary" />
             <img src="{{ $secondaryImage }}" alt="Car Secondary" class="car-image secondary" />
             <!-- camera action removed per request -->
             <div class="price-tag"><span class="price-main">{{ $priceMain }}</span><span class="price-msrp">{{ $priceMsrp }}</span></div>
+            </a>
         </div>
         <div class="car-card-body">
             <div class="d-flex justify-content-between align-items-start mb-2">
-                <h3 class="car-title mb-0">{{ $title }}</h3>
+                <h3 class="car-title mb-0"><a href="{{ $route }}" class="car-title-link" aria-label="{{ $title }}">{{ $title }}</a></h3>
             </div>
 
             @if($registerStatus)
@@ -76,4 +77,3 @@
             </div>
         </div>
     </div>
-</a>

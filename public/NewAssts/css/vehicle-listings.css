@@ -69,22 +69,32 @@
 .card-clickable .card__inner a { text-decoration: none; }
 
 /* Remove underline and reset link styles for clickable car-card wrapper */
-a.car-card-link,
-a.car-card-link:visited,
-a.car-card-link:hover,
-a.car-card-link:active {
+a.car-image-link,
+a.car-title-link,
+a.car-image-link:visited,
+a.car-title-link:visited,
+a.car-image-link:hover,
+a.car-title-link:hover,
+a.car-image-link:active,
+a.car-title-link:active {
 	text-decoration: none !important;
 	color: inherit;
 	display: block;
 }
 
 /* Ensure nested text inside link doesn't get underlined by any other rules */
-a.car-card-link * {
+a.car-image-link *,
+a.car-title-link * {
 	text-decoration: none !important;
 }
 
 /* Keep focus visible for keyboard users while preventing default underline */
-a.car-card-link:focus{
+a.car-image-link:focus,
+a.car-title-link:focus{
 	outline: 2px dashed rgba(0,0,0,0.12);
 	outline-offset: 3px;
 }
+
+/* Clickable behavior for image/title links */
+.car-image-link, .car-title-link { cursor: pointer; }
+.car-image-link img { display: block; }
