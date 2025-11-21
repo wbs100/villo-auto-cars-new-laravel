@@ -195,13 +195,13 @@
         // Recalculate available height using the new top offset
         const buffer = 16; // breathing space from bottom of viewport
         const available = window.innerHeight - topOffset - buffer;
-        if (available > 220) {
-            aside.style.maxHeight = available + 'px';
-            aside.style.overflowY = 'auto';
-        } else {
-            aside.style.maxHeight = '';
-            aside.style.overflowY = '';
-        }
+        // if (available > 220) {
+        //     aside.style.maxHeight = available + 'px';
+        //     aside.style.overflowY = 'auto';
+        // } else {
+        //     aside.style.maxHeight = '';
+        //     aside.style.overflowY = '';
+        // }
     }
     window.addEventListener('load', adjustSidebarHeight);
     window.addEventListener('resize', function () { setTimeout(adjustSidebarHeight, 120); });
