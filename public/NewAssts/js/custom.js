@@ -559,3 +559,71 @@ new WOW().init();
 $(document).ready(function () {
     POTENZA.scrolltotop();
 });
+
+/*
+ * Unified price range handling:
+ * - keeps the double native range inputs (#priceMin, #priceMax) in sync with the golden slider track
+ * - respects dynamically rendered server-side min/max values provided by #priceRangeData
+ * - updates any sidebar noUiSlider (#slider-price) with dynamic min/max if present
+ */
+$(function () {
+    const $priceRangeData = $('#priceRangeData');
+    const min = $priceRangeData.length ? parseInt($priceRangeData.data('min')) || 0 : 0;
+    const max = $priceRangeData.length ? parseInt($priceRangeData.data('max')) || 0 : 0;
+    const $priceMin = $('#priceMin');
+    const $priceMax = $('#priceMax');
+    const $priceRangeDisplay = $('#priceRangeDisplay');
+    const $sliderRange = $('#sliderRange');
+
+    function formatPrice(val) { return 'Rs. ' + Number(val).toLocaleString(); }
+
+    if ($priceMin.length && $priceMax.length && $priceRangeDisplay.length && $sliderRange.length) {
+        const step = parseInt($priceMin.attr('step')) || 1000;
+        let minGap = step;
+        if ((max - min) < minGap) {
+            minGap = Math.max(0, Math.floor((max - min) / 2));
+        }
+
+        function updateSliderRange() {
+            const minVal = Math.max(min, Math.min(max, parseInt($priceMin.val())));
+            const maxVal = Math.max(min, Math.min(max, parseInt($priceMax.val())));
+            const rangeWidth = (max - min) > 0 ? (max - min) : 1;
+            const percentMin = ((minVal - min) / rangeWidth) * 100;
+            const percentMax = ((maxVal - min) / rangeWidth) * 100;
+            $sliderRange.css({ left: percentMin + '%', width: (percentMax - percentMin) + '%' });
+        }
+
+        function updatePriceRange(e) {
+            let minVal = Math.max(min, Math.min(max, parseInt($priceMin.val())));
+            let maxVal = Math.max(min, Math.min(max, parseInt($priceMax.val())));
+            if (maxVal - minVal < minGap) {
+                if (e && e.target === $priceMin[0]) {
+                    const newMin = Math.max(min, Math.min(max, maxVal - minGap));
+                    $priceMin.val(newMin); minVal = newMin;
+                } else {
+                    const newMax = Math.max(min, Math.min(max, minVal + minGap));
+                    $priceMax.val(newMax); maxVal = newMax;
+                }
+            }
+            $priceRangeDisplay.text(formatPrice($priceMin.val()) + ' - ' + formatPrice($priceMax.val()));
+            updateSliderRange();
+        }
+
+        $priceMin.on('input', updatePriceRange);
+        $priceMax.on('input', updatePriceRange);
+        updateSliderRange();
+    }
+
+    // Update sidebar noUiSlider if present and a dynamic min/max exists
+    if (typeof noUiSlider !== 'undefined' && $('#slider-price').length && $priceRangeData.length) {
+        const sliderEl = $('#slider-price')[0];
+        const start = [min, max];
+        try {
+            if (sliderEl && sliderEl.noUiSlider) {
+                sliderEl.noUiSlider.updateOptions({ start, range: { 'min': min, 'max': max }, step: 1000 });
+            }
+        } catch (err) {
+            console.warn('Could not update sidebar price slider with dynamic range', err);
+        }
+    }
+});
