@@ -13,31 +13,12 @@
                     <div class="widget-post1__inner">
                         <h3 class="widget-post1__title"><a href="{{ $item['route'] ?? '#' }}">{{ $item['title'] }}</a></h3>
                         <div class="widget-post1__price">Price: {{ $item['price'] }}</div>
-                        <div class="widget-post1__description">{{ $item['description'] }}</div>
                     </div>
                 </section>
             @endforeach
         @else
-            <section class="widget-post1 clearfix">
-                <div class="widget-post1__img">
-                    <img class="img-responsive" src="{{ asset('NewAssts/media/widget-post/1.jpg') }}" height="75" width="75" alt="foto" />
-                </div>
-                <div class="widget-post1__inner">
-                    <h3 class="widget-post1__title">Toyota Avalon</h3>
-                    <div class="widget-post1__price">Price: Rs. 33,12000</div>
-                    <div class="widget-post1__description">Cullam semper aibe vestibulum</div>
-                </div>
-            </section>
-            <section class="widget-post1 clearfix">
-                <div class="widget-post1__img">
-                    <img class="img-responsive" src="{{ asset('NewAssts/media/widget-post/2.jpg') }}" height="75" width="75" alt="foto" />
-                </div>
-                <div class="widget-post1__inner">
-                    <h3 class="widget-post1__title">Nissan Maxima</h3>
-                    <div class="widget-post1__price">Price: Rs. 40,68500</div>
-                    <div class="widget-post1__description">Cullam semper aibe vestibulum</div>
-                </div>
-            </section>
+            <p>No related cars available.</p>
+
         @endif
     </div>
 </section>

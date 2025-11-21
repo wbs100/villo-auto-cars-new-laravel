@@ -141,3 +141,14 @@ a.car-title-link:focus {
 .car-details .contact-form-box.single-column .col-md-6 { width: 100% !important; float: none !important; padding-left: 0 !important; padding-right: 0 !important; }
 .car-details .contact-form-box.single-column .form-control { width: 100%; box-sizing: border-box; }
 .car-details .contact-form-box.single-column .form-control, .car-details .contact-form-box.single-column textarea { margin-bottom: 12px; }
+
+/* Ensure there is a 20px gap under the vehicle description paragraph on the car details page */
+.car-details .tab-pane#tab1 p {
+    margin-bottom: 20px;
+}
+.car-details .tab-pane#tab2 p {
+    margin-bottom: 20px;
+}
+.car-details .tab-pane#tab3 p {
+    margin-bottom: 20px;
+}

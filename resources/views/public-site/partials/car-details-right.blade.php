@@ -23,7 +23,5 @@
 
     <x-components.related-cars-widget :items="$relatedItems ?? []" />
 
-    <div class="widget widget_mod-b">
-        <x-components.share-widget />
-    </div>
+    {{-- Share widget removed to prevent rendering issue and display of component name --}}
 </aside>
