@@ -3,58 +3,62 @@
     <div class="inventory-filter">
         <div class="row g-4">
             <div class="col-lg-8 col-12">
+                {{-- Filter form: use GET to send querystring params to public listings controller --}}
+                <form method="GET" action="{{ url('/vehicle-listings') }}" id="filterForm">
                 <div class=" g-3">
                     <div class="col-md-4 col-12">
                         <label class="form-label w-100">Select Make</label>
-                        <select class="form-select w-100">
-                            <option selected>--Any Make--</option>
+                        <select class="form-select w-100" name="make[]">
+                            <option value="" disabled {{ !request('make') ? 'selected' : '' }}>--Any Make--</option>
                             @foreach($makes as $make)
-                                <option value="{{ $make['name'] }}">{{ $make['name'] }} </option>
+                                <option value="{{ $make['name'] }}" {{ in_array($make['name'], (array) request('make')) ? 'selected' : '' }}>{{ $make['name'] }} </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label w-100">Select Model</label>
-                        <select class="form-select w-100">
-                            <option selected>--Any Model--</option>
+                        {{-- Public Listings controller accepts `search` to filter by model (uses LIKE), so we'll name it `search` --}}
+                        <select class="form-select w-100" name="search">
+                            <option value="" disabled {{ !request('search') ? 'selected' : '' }}>--Any Model--</option>
                             @foreach($models as $model)
-                                <option value="{{ $model['name'] }}">{{ $model['name'] }} </option>
+                                <option value="{{ $model['name'] }}" {{ request('search') == $model['name'] ? 'selected' : '' }}>{{ $model['name'] }} </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label w-100">Select Body Style</label>
-                        <select class="form-select w-100">
-                            <option selected>--Any Body Style--</option>
+                        <select class="form-select w-100" name="body[]">
+                            <option value="" disabled {{ !request('body') ? 'selected' : '' }}>--Any Body Style--</option>
                             @foreach($bodies as $body)
-                                <option value="{{ $body['name'] }}">{{ $body['name'] }}</option>
+                                <option value="{{ $body['name'] }}" {{ in_array($body['name'], (array) request('body')) ? 'selected' : '' }}>{{ $body['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label w-100">Select Color</label>
-                        <select class="form-select w-100">
-                            <option selected>--Any Color--</option>
+                        {{-- We send exterior_color to match controller filter --}}
+                        <select class="form-select w-100" name="exterior_color[]">
+                            <option value="" disabled {{ !request('exterior_color') ? 'selected' : '' }}>--Any Color--</option>
                             @foreach($colors as $color)
-                                <option value="{{ $color['name'] }}">{{ $color['name'] }} </option>
+                                <option value="{{ $color['name'] }}" {{ in_array($color['name'], (array) request('exterior_color')) ? 'selected' : '' }}>{{ $color['name'] }} </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label w-100">Select Transmission</label>
-                        <select class="form-select w-100">
-                            <option selected>--Any Transmission--</option>
+                        <select class="form-select w-100" name="transmission[]">
+                            <option value="" disabled {{ !request('transmission') ? 'selected' : '' }}>--Any Transmission--</option>
                             @foreach($transmissions as $transmission)
-                                <option value="{{ $transmission['name'] }}">{{ $transmission['name'] }} </option>
+                                <option value="{{ $transmission['name'] }}" {{ in_array($transmission['name'], (array) request('transmission')) ? 'selected' : '' }}>{{ $transmission['name'] }} </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label w-100">Select Condition</label>
-                        <select class="form-select w-100">
-                            <option selected>--Any Condition--</option>
+                        <select class="form-select w-100" name="condition[]">
+                            <option value="" disabled {{ !request('condition') ? 'selected' : '' }}>--Any Condition--</option>
                             @foreach($conditions as $condition)
-                                <option value="{{ $condition['name'] }}">{{ $condition['name'] }} </option>
+                                <option value="{{ $condition['name'] }}" {{ in_array($condition['name'], (array) request('condition')) ? 'selected' : '' }}>{{ $condition['name'] }} </option>
                             @endforeach
                         </select>
                     </div>
@@ -63,16 +67,74 @@
             <div class="col-lg-4 col-12">
                 <div class="price-section">
                         <div class="price-header">Price Range</div>
-                        <div class="price-value" id="priceRangeDisplay">Rs. {{ number_format(floor($minPrice ?? 0)) }} - Rs. {{ number_format(ceil($maxPrice ?? 0)) }}</div>
+                        <div class="price-value" id="priceRangeDisplay">Rs. {{ number_format(floatval(request('price_min') ?? floor($minPrice ?? 0))) }} - Rs. {{ number_format(floatval(request('price_max') ?? ceil($maxPrice ?? 0))) }}</div>
                     <div class="slider-container">
                         <div id="sliderTrack"></div>
                         <div id="sliderRange"></div>
-                        <input type="range" min="{{ floor($minPrice ?? 0) }}" max="{{ ceil($maxPrice ?? 0) }}" step="1000" value="{{ floor($minPrice ?? 0) }}" id="priceMin">
-                        <input type="range" min="{{ floor($minPrice ?? 0) }}" max="{{ ceil($maxPrice ?? 0) }}" step="1000" value="{{ ceil($maxPrice ?? 0) }}" id="priceMax">
+                        <input type="range" min="{{ floor($minPrice ?? 0) }}" max="{{ ceil($maxPrice ?? 0) }}" step="1000" value="{{ request('price_min') ?? floor($minPrice ?? 0) }}" id="priceMin" name="price_min">
+                        <input type="range" min="{{ floor($minPrice ?? 0) }}" max="{{ ceil($maxPrice ?? 0) }}" step="1000" value="{{ request('price_max') ?? ceil($maxPrice ?? 0) }}" id="priceMax" name="price_max">
                     </div>
-                    <a href="{{ url('/vehicle-listings') }}" class="btn-search btn btn-primary">Search Inventory</a>
+                    {{-- Submit button for the filter form (GET) --}}
+                    <button type="submit" class="btn-search btn btn-primary">Search Inventory</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+                </form>
+ </div>
+
+{{-- JavaScript to support slider display and auto-submit on change --}}
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const priceMin = document.getElementById('priceMin');
+        const priceMax = document.getElementById('priceMax');
+        const priceDisplay = document.getElementById('priceRangeDisplay');
+        const form = document.getElementById('filterForm');
+
+        function formatCurrency(num) {
+            try {
+                return Number(num).toLocaleString();
+            } catch (e) {
+                return num;
+            }
+        }
+
+        function updatePriceDisplay() {
+            let min = Math.min(Number(priceMin.value), Number(priceMax.value));
+            let max = Math.max(Number(priceMin.value), Number(priceMax.value));
+            priceDisplay.textContent = 'Rs. ' + formatCurrency(min) + ' - Rs. ' + formatCurrency(max);
+        }
+
+        // Keep the sliders in a valid range and update display
+        function syncSliders(e) {
+            let minVal = Number(priceMin.value);
+            let maxVal = Number(priceMax.value);
+            if (minVal > maxVal) {
+                // swap values
+                const tmp = minVal;
+                minVal = maxVal;
+                maxVal = tmp;
+                priceMin.value = minVal;
+                priceMax.value = maxVal;
+            }
+            updatePriceDisplay();
+        }
+
+        priceMin.addEventListener('input', syncSliders);
+        priceMax.addEventListener('input', syncSliders);
+
+        // Keep selects as normal inputs — submission is only on the Search button click
+        // (If you want auto-submit, uncomment the following lines.)
+        // const selects = form.querySelectorAll('select');
+        // selects.forEach(s => s.addEventListener('change', () => form.submit()));
+
+        // optional: submit on slider change (uncomment if you want auto-filter)
+        // priceMin.addEventListener('change', () => form.submit());
+        // priceMax.addEventListener('change', () => form.submit());
+
+        // initial display update
+        updatePriceDisplay();
+    });
+    </script>
+@endpush
