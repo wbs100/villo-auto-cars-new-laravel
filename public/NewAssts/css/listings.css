@@ -1,21 +1,97 @@
 /* Listings page styles extracted from listings2 */
-.header-container-padding { padding-right: 90px; padding-left: 90px; }
-@media (max-width: 768px) { .header-container-padding { padding-right: 15px; padding-left: 15px; } }
-.car-details__wrap-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-.car-details__title { font-size:26px; font-weight:700; text-transform:uppercase; }
-.car-details__wrap-price { text-align:right; }
-.car-details__price-inner{ font-size:35px; font-weight:700; color:#ffffff; }
-.slider-product .slides img{ width:100%; height:auto; display:block; }
-.carousel-product .slides img{ width:100%; height:auto; display:block; }
-.wrap-nav-tabs { margin-top:20px; margin-bottom:20px; }
-.wrap-nav-tabs .nav-tabs li a{ color:#333; padding:10px 18px; }
-.btn-collapse{ cursor:pointer; }
+.header-container-padding {
+    padding-right: 90px;
+    padding-left: 90px;
+}
+
+@media (max-width: 768px) {
+    .header-container-padding {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+
+.car-details__wrap-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.car-details__title {
+    font-size: 26px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.car-details__wrap-price {
+    text-align: right;
+}
+
+.car-details__price-inner {
+    font-size: 35px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.slider-product .slides img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.carousel-product .slides img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.wrap-nav-tabs {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.wrap-nav-tabs .nav-tabs li a {
+    color: #333;
+    padding: 10px 18px;
+}
+
+.btn-collapse {
+    cursor: pointer;
+}
+
 /* Price section adjustments */
-.price-section{ background:#fff; padding:20px; border-radius:6px; box-shadow:0 1px 6px rgba(0,0,0,0.06); }
-.price-section .btn-search{ width:100%; }
-.car-card{ border:1px solid #eee; border-radius:6px; overflow:hidden; }
-.car-card .car-image-wrapper{ position:relative; }
-.car-card .price-tag{ position:absolute; bottom:12px; left:12px; background:#fff; padding:6px 10px; border-radius:4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+.price-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.price-section .btn-search {
+    width: 100%;
+}
+
+.car-card {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.car-card .car-image-wrapper {
+    position: relative;
+}
+
+.car-card .price-tag {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
 /* Remove underline and reset link styles for clickable car-card wrapper */
 a.car-image-link,
 a.car-title-link,
@@ -25,26 +101,43 @@ a.car-image-link:hover,
 a.car-title-link:hover,
 a.car-image-link:active,
 a.car-title-link:active {
-	text-decoration: none !important;
-	color: inherit;
-	display: block;
+    text-decoration: none !important;
+    color: inherit;
+    display: block;
 }
 
 /* Ensure nested text inside link doesn't get underlined by any other rules */
 a.car-image-link *,
 a.car-title-link * {
-	text-decoration: none !important;
+    text-decoration: none !important;
 }
 
 /* Keep focus visible for keyboard users while preventing default underline */
 a.car-image-link:focus,
-a.car-title-link:focus{
-	outline: 2px dashed rgba(0,0,0,0.12);
-	outline-offset: 3px;
+a.car-title-link:focus {
+    outline: 2px dashed rgba(0, 0, 0, 0.12);
+    outline-offset: 3px;
 }
 
 /* Clickable behavior for image/title links */
-.car-image-link, .car-title-link { cursor: pointer; }
-.car-image-link img { display: block; }
+.car-image-link,
+.car-title-link {
+    cursor: pointer;
+}
+
+.car-image-link img {
+    display: block;
+}
+
 /* Responsive Listing specific */
-@media (max-width:768px){ .car-details__wrap-title { flex-direction:column; align-items:flex-start; } }
+@media (max-width:768px) {
+    .car-details__wrap-title {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Car details single-column contact form */
+.car-details .contact-form-box.single-column .col-md-6 { width: 100% !important; float: none !important; padding-left: 0 !important; padding-right: 0 !important; }
+.car-details .contact-form-box.single-column .form-control { width: 100%; box-sizing: border-box; }
+.car-details .contact-form-box.single-column .form-control, .car-details .contact-form-box.single-column textarea { margin-bottom: 12px; }

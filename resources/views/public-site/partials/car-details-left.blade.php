@@ -78,55 +78,7 @@
             </div>
         </div>
 
-        <div class="panel-group accordion" id="accordion-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a class="btn-collapse" data-toggle="collapse" data-parent="#accordion-1" href="#collapse-1"><i
-                            class="icon"></i></a>
-                    <h3 class="panel-title">exterior & interior</h3>
-                </div>
-                <div id="collapse-1" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <p>
-                           No features provided.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <!-- end panel -->
 
-            <div class="panel">
-                <div class="panel-heading">
-                    <a class="btn-collapse collapsed" data-toggle="collapse" data-parent="#accordion-1"
-                        href="#collapse-2"><i class="icon"></i></a>
-                    <h3 class="panel-title">safety features</h3>
-                </div>
-                <div id="collapse-2" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <p>
-                           No features provided.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <!-- end panel -->
-
-            <div class="panel">
-                <div class="panel-heading">
-                    <a class="btn-collapse collapsed" data-toggle="collapse" data-parent="#accordion-1"
-                        href="#collapse-3"><i class="icon"></i></a>
-                    <h3 class="panel-title">Entertainment</h3>
-                </div>
-                <div id="collapse-3" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <p>
-                           No features provided.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <!-- end panel -->
-        </div>
         <!-- end accordion -->
     </article>
 
