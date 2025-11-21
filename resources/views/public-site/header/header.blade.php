@@ -1,9 +1,9 @@
-<!-- Loader -->
+<!-- Loader 
 <div id="page-preloader"><span class="spinner"></span></div>
-<!-- Loader end -->
+- Loader end -->
 
 <div id="this-top" class="layout-theme animated-css" data-header="sticky" data-header-top="200">
-	<!-- Start Switcher -->
+	<!-- Start Switcher 
 	<div class="switcher-wrapper">
 		<div class="demo_changer">
 			<div class="demo-icon customBgColor">
@@ -30,7 +30,7 @@
 		<script src="{{ asset('NewAssts/plugins/switcher/js/evol.colorpicker.min.js') }}"></script>
 		<script src="{{ asset('NewAssts/plugins/switcher/js/dmss.js') }}"></script>
 	</div>
-	<!-- End Switcher -->
+	 End Switcher -->
 
 	<div id="wrapper">
 		<!-- HEADER -->

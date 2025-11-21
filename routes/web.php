@@ -68,11 +68,11 @@ Route::get('/listings', function () {
 })->name('listings');
 
 // vehicle listings public route
-Route::get('/vehicle-listings', function () {
-    $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(4);
-    $viewMode = session('view_mode', 'grid');
-    return view('public-site.vehicle-listings', compact('vehicles', 'viewMode'));
-})->name('vehicle-listings');
+// Route::get('/vehicle-listings', function () {
+//     $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(4);
+//     $viewMode = session('view_mode', 'grid');
+//     return view('public-site.vehicle-listings', compact('vehicles', 'viewMode'));
+// })->name('vehicle-listings');
 
 // car details route (static view)
 Route::get('/car-details', function () {
@@ -135,54 +135,7 @@ Route::get('/contact', function () {
 // Remove view-mode toggle route - feature removed in UI
 
 
-Route::get('/listings-filter', function (Request $request) {
-    $viewMode = session('view_mode', 'grid');
-
-    $vehicles = Vehicle::query();
-
-    if ($request->filled('year')) {
-        $vehicles->whereIn('year', $request->year);
-    }
-
-    if ($request->filled('condition')) {
-        $vehicles->whereIn('condition', $request->condition);
-    }
-
-    if ($request->filled('body')) {
-        $vehicles->whereIn('body', $request->body);
-    }
-
-    if ($request->filled('make')) {
-        $vehicles->whereIn('make', $request->make);
-    }
-
-    if ($request->filled('transmission')) {
-        $vehicles->whereIn('transmission', $request->transmission);
-    }
-
-    if ($request->filled('exterior_color')) {
-        $vehicles->whereIn('exterior_color', $request->exterior_color);
-    }
-
-    if ($request->filled('interior_color')) {
-        $vehicles->whereIn('interior_color', $request->interior_color);
-    }
-
-    // Price range
-    if ($request->filled('price_min') && $request->filled('price_max')) {
-        $min = floatval(preg_replace('/[^0-9.]/', '', $request->price_min));
-        $max = floatval(preg_replace('/[^0-9.]/', '', $request->price_max));
-        if ($min && $max && $min <= $max) {
-            $vehicles->whereBetween('price', [$min, $max]);
-        }
-    }
-
-    $vehicles = $vehicles->paginate($request->input('per_page', 4))->appends($request->query());
-
-    return request()->ajax()
-    ? view('public-site.partials.vehicle-results', compact('vehicles', 'viewMode'))
-    : view('public-site.car-details', compact('vehicles', 'viewMode'));
-});
+Route::get('/vehicle-listings', [VehicleController::class, 'publicListingsFilter'])->name('vehicle-listings');
 
 Route::get('/listings-top-filter', function () {
     $viewMode = session('view_mode', 'grid');

@@ -24,357 +24,459 @@
 <link rel="stylesheet" href="{{ asset('NewAssts/plugins/switcher/css/color5.css') }}">
 
 <!-- jQuery fallback: only load if not loaded globally -->
-<script>if (!window.jQuery) { document.write('<script src="{{ asset("NewAssts/plugins/jquery/jquery-1.11.1.min.js") }}"><\/script>'); }</script>
+<script>
+    if (!window.jQuery) { document.write('<script src="{{ asset("NewAssts/plugins/jquery/jquery-1.11.1.min.js") }}"><\/script>'); }
+</script>
 @endpush
 
-    @section('custom-header')
-        @include('public-site.header.header')
-        @include('public-site.header.page-header', ['title' => 'VEHICLE LISTINGS', 'breadcrumb' => 'Vehicle Listings'])
-    @endsection
-
+@section('custom-header')
+@include('public-site.header.header')
+@include('public-site.header.page-header', ['title' => 'VEHICLE LISTINGS', 'breadcrumb' => 'Vehicle Listings'])
+@endsection
 
 @section('content')
-    <div class="container">
-        <!-- TOP FILTER BAR -->
-        @include('public-site.partials.top-filter-bar')
+<div class="container">
 
-        <div class="row">
-            <div class="col-md-9" id="vehicleListingsContainer">
-                <main class="main-content">
-                @include('public-site.partials.sorting-bar')
+    <!-- TOP FILTER BAR -->
+    <div class="top-filter-bar">
+        <form method="GET" action="{{ route('vehicle-listings') }}" class="filter-controls-wrapper">
+            <!-- Model Search -->
+            <div class="filter-group">
+                <label class="filter-group-label" for="modelSearch">Model Search</label>
+                <div class="model-search-wrapper">
+                    <input type="text" class="model-search-input" id="modelSearch" placeholder="Search by model name"
+                        aria-label="Search by model name" name="search">
+                    <i class="fa fa-search search-icon" aria-hidden="true"></i>
+                </div>
+            </div>
+
+            <!-- Sort Vehicles -->
+            <div class="filter-group">
+                <label class="filter-group-label">Sort Vehicles</label>
+                <div class="sort-dropdown-wrapper">
+                    <select class="sort-dropdown" name="sort">
+                        <option value="">Sort by</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="year-new">Year: Newest First</option>
+                        <option value="year-old">Year: Oldest First</option>
+                        <option value="mileage-low">Mileage: Low to High</option>
+                        <option value="mileage-high">Mileage: High to Low</option>
+                    </select>
+                    <i class="fa fa-chevron-down dropdown-arrow"></i>
+                </div>
+            </div>
+
+            <!-- View Toggle (removed) -->
+
+
+            <!-- Filter Button -->
+            <div class="filter-group" style="flex: 0; align-self: flex-end;">
+                <button class="filter-action-btn" type="submit">
+                    <i class="fa fa-filter"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-9" id="vehicleListingsContainer">
+            <main class="main-content">
+                <!--sorting-->
+                <div class="sorting">
+                    <div class="sorting__inner">
+                        <div class="sorting__item">
+                            <span class="sorting__title">Showing</span>
+                            <span id="resultsCount">{{ $vehicles->total() ?? '0' }} Results</span>
+                        </div>
+                        <div class="sorting__item">
+                            <span class="sorting__title">show on page</span>
+                            <div class="select jelect">
+                                <input id="page" name="page" value="0" data-text="imagemin" type="text"
+                                    class="jelect-input" />
+                                <div tabindex="0" role="button" class="jelect-current">8 Items</div>
+                                <ul class="jelect-options">
+                                    <li class="jelect-option jelect-option_state_active">8 Items</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 @include('public-site.partials.vehicle-cards', ['limit' => 4])
-                @if(isset($vehicles))
-                    <div class="pagination-nav d-flex justify-content-center mt-4">{{ $vehicles->links('components.custom-pagination') }}</div>
-                @endif
-                </main>
-            </div>
 
-            <!-- ENHANCED SIDEBAR WITH FILTERS -->
-            <div class="col-md-3" id="sidebarFilters">
-                @include('public-site.partials.sidebar-filters')
-            </div>
+                @if(isset($vehicles))
+                <div class="pagination-nav d-flex justify-content-center mt-4">{{
+                    $vehicles->links('components.custom-pagination') }}</div>
+                @endif
+            </main>
+        </div>
+
+        <!-- ENHANCED SIDEBAR WITH FILTERS -->
+        <div class="col-md-3" id="sidebarFilters">
+            <form method="GET" action="{{ route('vehicle-listings') }}" id="vehicleFilterForm">
+                <aside class="sidebar sidebar-enhanced">
+                    <h3 class="filter-section-title">Filter Vehicles</h3>
+
+                    <!-- Year Filter -->
+                    <div class="filter-dropdown">
+                        <div class="filter-header" onclick="toggleFilter(this)">
+                            <h4>Year</h4>
+                            <span class="filter-arrow">▼</span>
+                        </div>
+                        <div class="filter-content">
+                            <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="year-2024" name="year[]" value="2024">
+                                    <label for="year-2024">2024</label>
+                                    <span class="filter-count">(12)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="year-2023" name="year[]" value="2023">
+                                    <label for="year-2023">2023</label>
+                                    <span class="filter-count">(25)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="year-2022" name="year[]" value="2022">
+                                    <label for="year-2022">2022</label>
+                                    <span class="filter-count">(18)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="year-2021" name="year[]" value="2021">
+                                    <label for="year-2021">2021</label>
+                                    <span class="filter-count">(15)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="year-2020" name="year[]" value="2020">
+                                    <label for="year-2020">2020</label>
+                                    <span class="filter-count">(22)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="year-2019" name="year[]" value="2019">
+                                    <label for="year-2019">2019</label>
+                                    <span class="filter-count">(19)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="year-older" name="year[]" value="older">
+                                    <label for="year-older">2018 & Older</label>
+                                    <span class="filter-count">(45)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Condition Filter -->
+                    <div class="filter-dropdown">
+                        <div class="filter-header" onclick="toggleFilter(this)">
+                            <h4>Condition</h4>
+                            <span class="filter-arrow">▼</span>
+                        </div>
+                        <div class="filter-content">
+                            <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="radio" id="condition-new" name="condition" value="new">
+                                    <label for="condition-new">Brand New</label>
+                                    <span class="filter-count">(35)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="radio" id="condition-used" name="condition" value="used">
+                                    <label for="condition-used">Used</label>
+                                    <span class="filter-count">(89)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="radio" id="condition-certified" name="condition" value="certified">
+                                    <label for="condition-certified">Certified Pre-Owned</label>
+                                    <span class="filter-count">(24)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Body Type Filter -->
+                    <div class="filter-dropdown">
+                        <div class="filter-header" onclick="toggleFilter(this)">
+                            <h4>Body</h4>
+                            <span class="filter-arrow">▼</span>
+                        </div>
+                        <div class="filter-content">
+                            <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="body-sedan" name="body[]" value="sedan">
+                                    <label for="body-sedan">Sedan</label>
+                                    <span class="filter-count">(42)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="body-suv" name="body[]" value="suv">
+                                    <label for="body-suv">SUV</label>
+                                    <span class="filter-count">(38)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="body-coupe" name="body[]" value="coupe">
+                                    <label for="body-coupe">Coupe</label>
+                                    <span class="filter-count">(15)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="body-hatchback" name="body[]" value="hatchback">
+                                    <label for="body-hatchback">Hatchback</label>
+                                    <span class="filter-count">(28)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="body-convertible" name="body[]" value="convertible">
+                                    <label for="body-convertible">Convertible</label>
+                                    <span class="filter-count">(8)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="body-wagon" name="body[]" value="wagon">
+                                    <label for="body-wagon">Wagon</label>
+                                    <span class="filter-count">(12)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="body-van" name="body[]" value="van">
+                                    <label for="body-van">Van</label>
+                                    <span class="filter-count">(18)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Make Filter -->
+                    <div class="filter-dropdown">
+                        <div class="filter-header" onclick="toggleFilter(this)">
+                            <h4>Make</h4>
+                            <span class="filter-arrow">▼</span>
+                        </div>
+                        <div class="filter-content">
+                            <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="make-audi" name="make[]" value="audi">
+                                    <label for="make-audi">Audi</label>
+                                    <span class="filter-count">(5)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="make-bentley" name="make[]" value="bentley">
+                                    <label for="make-bentley">Bentley</label>
+                                    <span class="filter-count">(10)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="make-bmw" name="make[]" value="bmw">
+                                    <label for="make-bmw">BMW</label>
+                                    <span class="filter-count">(70)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="make-chevrolet" name="make[]" value="chevrolet">
+                                    <label for="make-chevrolet">Chevrolet</label>
+                                    <span class="filter-count">(6)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="make-mercedes" name="make[]" value="mercedes">
+                                    <label for="make-mercedes">Mercedes-Benz</label>
+                                    <span class="filter-count">(80)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="make-landrover" name="make[]" value="landrover">
+                                    <label for="make-landrover">Land Rover</label>
+                                    <span class="filter-count">(36)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="make-toyota" name="make[]" value="toyota">
+                                    <label for="make-toyota">Toyota</label>
+                                    <span class="filter-count">(95)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="make-honda" name="make[]" value="honda">
+                                    <label for="make-honda">Honda</label>
+                                    <span class="filter-count">(72)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="make-nissan" name="make[]" value="nissan">
+                                    <label for="make-nissan">Nissan</label>
+                                    <span class="filter-count">(48)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transmission Filter -->
+                    <div class="filter-dropdown">
+                        <div class="filter-header" onclick="toggleFilter(this)">
+                            <h4>Transmission</h4>
+                            <span class="filter-arrow">▼</span>
+                        </div>
+                        <div class="filter-content">
+                            <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="trans-auto" name="transmission[]" value="automatic">
+                                    <label for="trans-auto">Automatic</label>
+                                    <span class="filter-count">(112)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="trans-manual" name="transmission[]" value="manual">
+                                    <label for="trans-manual">Manual</label>
+                                    <span class="filter-count">(36)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="trans-cvt" name="transmission[]" value="cvt">
+                                    <label for="trans-cvt">CVT</label>
+                                    <span class="filter-count">(8)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exterior Color Filter -->
+                    <div class="filter-dropdown">
+                        <div class="filter-header" onclick="toggleFilter(this)">
+                            <h4>Exterior Color</h4>
+                            <span class="filter-arrow">▼</span>
+                        </div>
+                        <div class="filter-content">
+                            <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="color-white" name="exterior_color[]" value="white">
+                                    <label for="color-white">White</label>
+                                    <span class="filter-count">(45)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="color-black" name="exterior_color[]" value="black">
+                                    <label for="color-black">Black</label>
+                                    <span class="filter-count">(38)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="color-silver" name="exterior_color[]" value="silver">
+                                    <label for="color-silver">Silver</label>
+                                    <span class="filter-count">(32)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="color-gray" name="exterior_color[]" value="gray">
+                                    <label for="color-gray">Gray</label>
+                                    <span class="filter-count">(28)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="color-red" name="exterior_color[]" value="red">
+                                    <label for="color-red">Red</label>
+                                    <span class="filter-count">(15)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="color-blue" name="exterior_color[]" value="blue">
+                                    <label for="color-blue">Blue</label>
+                                    <span class="filter-count">(22)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="color-other" name="exterior_color[]" value="other">
+                                    <label for="color-other">Other Colors</label>
+                                    <span class="filter-count">(16)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interior Color Filter -->
+                    <div class="filter-dropdown active">
+                        <div class="filter-header" onclick="toggleFilter(this)">
+                            <h4>Interior Color</h4>
+                            <span class="filter-arrow">▼</span>
+                        </div>
+                        <div class="filter-content">
+                            <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="int-black" name="interior_color[]" value="black">
+                                    <label for="int-black">Black</label>
+                                    <span class="filter-count">(65)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="int-beige" name="interior_color[]" value="beige">
+                                    <label for="int-beige">Beige</label>
+                                    <span class="filter-count">(42)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="int-gray" name="interior_color[]" value="gray">
+                                    <label for="int-gray">Gray</label>
+                                    <span class="filter-count">(35)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="int-brown" name="interior_color[]" value="brown">
+                                    <label for="int-brown">Brown</label>
+                                    <span class="filter-count">(18)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="int-tan" name="interior_color[]" value="tan">
+                                    <label for="int-tan">Tan</label>
+                                    <span class="filter-count">(12)</span>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="int-other" name="interior_color[]" value="other">
+                                    <label for="int-other">Other Colors</label>
+                                    <span class="filter-count">(8)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Range Filter -->
+                    <div class="price-filter-wrapper">
+                        <h4>Price Range</h4>
+                        <div class="slider-price" id="slider-price"></div>
+                        <span class="slider-price__wrap-input">
+                            <input class="slider-price__input" id="slider-price_min" placeholder="Min"
+                                value="{{ floor($minPrice ?? 0) }}" />
+                            <span>-</span>
+                            <input class="slider-price__input" id="slider-price_max" placeholder="Max"
+                                value="{{ ceil($maxPrice ?? 0) }}" />
+                        </span>
+                    </div>
+
+                    <!-- Action Buttons - simple full-width buttons (pinned footer) -->
+                    <div class="sidebar-footer" style="margin-top: 20px;">
+                        <button class="btn-filter-primary" type="submit">APPLY FILTERS</button>
+                        <button class="btn-filter-secondary" type="reset">RESET ALL</button>
+                    </div>
+                </aside>
+
+
+                {{-- <button type="submit" class="btn btn-primary w-100 mt-3">Apply Filters</button> --}}
+            </form>
         </div>
     </div>
+</div>
 @endsection
 
 @push('page-ajax')
 <script>
+    // Optional: Keep only UI/UX scripts, not filtering logic
     function toggleFilter(el) {
         const parent = el.parentElement;
         parent.classList.toggle('active');
     }
-
     function toggleSidebarFilters() {
         const sidebar = document.getElementById('sidebarFilters');
         if (!sidebar) return;
         if (window.getComputedStyle(sidebar).display === 'none') sidebar.style.display = 'block';
         else sidebar.style.display = 'none';
     }
-
-    // NOTE: View toggle UI removed; setView no longer necessary.
-
-    function applyFilters() {
-        // Collect selected filters and submit GET to listings-filter
-        const params = new URLSearchParams();
-        // Model search
-        const modelSearchVal = document.getElementById('modelSearch')?.value;
-        if (modelSearchVal) params.append('model', modelSearchVal);
-        // Sort value
-        const sortVal = document.getElementById('sortVehicles')?.value;
-        if (sortVal) params.append('sort', sortVal);
-        // Years
-        document.querySelectorAll('#sidebarFilters input[name="year[]"]:checked').forEach(e => params.append('year[]', e.value));
-        // Condition (single radio will be appended as array)
-        const cond = document.querySelector('#sidebarFilters input[name="condition"]:checked'); if (cond) params.append('condition[]', cond.value);
-        // Body
-        document.querySelectorAll('#sidebarFilters input[name="body[]"]:checked').forEach(e => params.append('body[]', e.value));
-        // Make
-        document.querySelectorAll('#sidebarFilters input[name="make[]"]:checked').forEach(e => params.append('make[]', e.value));
-        // Transmission
-        document.querySelectorAll('#sidebarFilters input[name="transmission[]"]:checked').forEach(e => params.append('transmission[]', e.value));
-        // Exterior Color
-        document.querySelectorAll('#sidebarFilters input[name="exterior_color[]"]:checked').forEach(e => params.append('exterior_color[]', e.value));
-        // Interior Color
-        document.querySelectorAll('#sidebarFilters input[name="interior_color[]"]:checked').forEach(e => params.append('interior_color[]', e.value));
-        // Price
-        const min = document.getElementById('slider-price_min')?.value; const max = document.getElementById('slider-price_max')?.value;
-        if (min) params.append('price_min', min.replace(/[^0-9]/g,''));
-        if (max) params.append('price_max', max.replace(/[^0-9]/g,''));
-        // Per page
-        const perPageVal = document.getElementById('perPageSelect')?.value;
-        if (perPageVal) params.append('per_page', perPageVal);
-        const url = "{{ url('/listings-filter') }}" + '?' + params.toString();
-        window.location.href = url;
-    }
-
-    // Return URLSearchParams for the current client-side filter & sort state
-    function getClientParams() {
-        const params = new URLSearchParams();
-        const modelSearchVal = document.getElementById('modelSearch')?.value;
-        if (modelSearchVal) params.append('model', modelSearchVal);
-        const sortVal = document.getElementById('sortVehicles')?.value;
-        if (sortVal) params.append('sort', sortVal);
-        // price
-        const min = document.getElementById('slider-price_min')?.value; const max = document.getElementById('slider-price_max')?.value;
-        if (min) params.append('price_min', min.replace(/[^0-9]/g,''));
-        if (max) params.append('price_max', max.replace(/[^0-9]/g,''));
-        // per page
-        const perPageVal = document.getElementById('perPageSelect')?.value;
-        if (perPageVal) params.append('per_page', perPageVal);
-        // add selected checkbox filters too
-        document.querySelectorAll('#sidebarFilters input[type="checkbox"][name][value]:checked').forEach(e => params.append(e.name, e.value));
-        // add selected radio (name duplicates allowed) -> append as values
-        document.querySelectorAll('#sidebarFilters input[type="radio"][name][value]:checked').forEach(e => params.append(e.name, e.value));
-        return params;
-    }
-
-    function resetFilters() {
-        document.querySelectorAll('#sidebarFilters input[type="checkbox"], #sidebarFilters input[type="radio"]').forEach(i => i.checked = false);
-        document.getElementById('modelSearch').value = '';
-        document.getElementById('sortVehicles').value = '';
-        // Reset slider via noUiSlider if available
-        const slider = document.getElementById('slider-price');
-        if (slider && slider.noUiSlider) {
-            slider.noUiSlider.set([min, max]);
-        }
-        // Reset per-page select
-        const perPageSelect = document.getElementById('perPageSelect');
-        if (perPageSelect) perPageSelect.value = 4;
-        // Optionally reapply filters
-        // Update pagination links and client-side filtering, then navigate server-side reset
-        updatePaginationLinksWithParams();
-        filterCardsOnPage();
-        // clear URL model & sort - do a replace on history so page state is reset
-        history.replaceState(null, '', window.location.pathname);
-        // trigger server reset by applying filters with reset empty filters (if desired)
-        applyFilters();
-    }
-    // Press Enter on search to apply filters
-    document.getElementById('modelSearch')?.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') { e.preventDefault(); applyFilters(); }
-    });
-    // Change sort to apply client-side sorting & reapply client-side filters
-    document.getElementById('sortVehicles')?.addEventListener('change', function () { sortCardsOnPage(); filterCardsOnPage(); });
-    // Change per page to apply quickly
-    document.getElementById('perPageSelect')?.addEventListener('change', function () { applyFilters(); });
-    // Make whole card clickable: delegate clicks from container
-    document.getElementById('vehicleListingsContainer')?.addEventListener('click', function(e) {
-        const card = e.target.closest('.card-clickable');
-        if (!card) return;
-        // ignore if clicking a real link or button
-        if (e.target.closest('a') || e.target.closest('button') || e.target.closest('input')) return;
-        const url = card.dataset.href;
-        if (url) window.location.href = url;
-    });
-
-    // Adjust sidebar scrollable area to fit viewport (fallback for sticky behavior)
     function adjustSidebarHeight() {
         const sidebarFilters = document.getElementById('sidebarFilters');
         if (!sidebarFilters) return;
         const aside = sidebarFilters.querySelector('.sidebar-enhanced');
         if (!aside) return;
-
-        // Only apply for desktop/tablet sizes (matching CSS media query)
         if (window.innerWidth < 992) {
             aside.style.top = '';
             aside.style.maxHeight = '';
             aside.style.overflowY = '';
             return;
         }
-
-        // Compute combined header offsets (main header + page header) to apply as sticky top
         const headerEl = document.querySelector('.header');
         const pageHeaderEl = document.querySelector('.block-title');
         let headerHeight = (headerEl && headerEl.offsetHeight) ? headerEl.offsetHeight : 0;
         let pageHeaderHeight = (pageHeaderEl && pageHeaderEl.offsetHeight) ? pageHeaderEl.offsetHeight : 0;
-        const extraSpacing = 180; // even larger breathing room: push sidebar further down per design
+        const extraSpacing = 180;
         const topOffset = headerHeight + pageHeaderHeight + extraSpacing;
         aside.style.top = topOffset + 'px';
-
-        // Recalculate available height using the new top offset
-        const buffer = 16; // breathing space from bottom of viewport
+        const buffer = 16;
         const available = window.innerHeight - topOffset - buffer;
-        // if (available > 220) {
-        //     aside.style.maxHeight = available + 'px';
-        //     aside.style.overflowY = 'auto';
-        // } else {
-        //     aside.style.maxHeight = '';
-        //     aside.style.overflowY = '';
-        // }
     }
     window.addEventListener('load', adjustSidebarHeight);
     window.addEventListener('resize', function () { setTimeout(adjustSidebarHeight, 120); });
-
-    // Apply initial sorting & filters on load if there is a sort selection
-    window.addEventListener('load', function () {
-        sortCardsOnPage();
-        filterCardsOnPage();
-    });
-
-    // Update pagination anchor hrefs to include current client-side params so clicking the page keeps the filters.
-    function updatePaginationLinksWithParams() {
-        const params = getClientParams();
-        if (!params) return;
-        const paginationNav = document.querySelectorAll('.pagination-nav a');
-        if (!paginationNav || paginationNav.length === 0) return;
-        paginationNav.forEach(a => {
-            try {
-                const url = new URL(a.href, window.location.origin);
-                // keep the page param as set in href
-                const page = url.searchParams.get('page');
-                // append all client parameters (except any page param) while preserving page
-                const newParams = new URLSearchParams(params.toString());
-                if (page) newParams.set('page', page);
-                url.search = newParams.toString();
-                a.href = url.toString();
-            } catch (error) {
-                // if parsing fails, append simple
-                const sep = a.href.indexOf('?') === -1 ? '?' : '&';
-                a.href = a.href.replace(/[&?]model=[^&]*/g, '');
-                a.href = a.href.replace(/[&?]sort=[^&]*/g, '');
-                a.href = a.href.replace(/[&?]per_page=[^&]*/g, '');
-                a.href = a.href + sep + params.toString();
-            }
-        });
-    }
-
-    // Set inputs from current URL query so the UI reflects URL state on page reload
-    function setInputsFromQuery() {
-        const sp = new URLSearchParams(window.location.search);
-        const model = sp.get('model');
-        const sort = sp.get('sort');
-        if (model) document.getElementById('modelSearch').value = model;
-        if (sort) document.getElementById('sortVehicles').value = sort;
-        // Re-check per-page
-        const perPage = sp.get('per_page');
-        if (perPage) {
-            const el = document.getElementById('perPageSelect');
-            if (el) el.value = perPage;
-        }
-    }
-
-    // Hook: update pagination links when checkboxes/radios change in sidebar
-    document.querySelectorAll('#sidebarFilters input[type="checkbox"], #sidebarFilters input[type="radio"]').forEach(inp => {
-        inp.addEventListener('change', function () { updatePaginationLinksWithParams(); });
-    });
-
-    // run on load to set inputs and update pagination links accordingly
-    window.addEventListener('load', function () { setInputsFromQuery(); updatePaginationLinksWithParams(); });
 </script>
-    <script>
-    // Client-side filtering of vehicle cards by model name and description.
-    function filterCardsOnPage() {
-        const container = document.getElementById('vehicleListingsContainer');
-        if (!container) return;
-        const query = (document.getElementById('modelSearch')?.value || '').trim().toLowerCase();
-
-        // Remove any previous no-results message
-        const prev = document.getElementById('noResultsMessage');
-        if (prev) prev.remove();
-
-        const cards = container.querySelectorAll('article.card');
-        if (!cards || cards.length === 0) return;
-
-        // If query is empty, show all cards
-        if (!query) {
-            cards.forEach(c => { c.style.display = ''; });
-            return;
-        }
-
-        let visibleCount = 0;
-        const tokens = query.split(/\s+/).filter(t => t.length);
-
-        cards.forEach(card => {
-            // Collect searchable text: title, description, list text
-            const title = (card.querySelector('.card__title')?.textContent || '').toLowerCase();
-            const desc = (card.querySelector('.card__description')?.textContent || '').toLowerCase();
-            const list = (card.querySelector('.card__list')?.textContent || '').toLowerCase();
-            const combined = [title, desc, list].join(' ');
-
-            // All tokens must be present
-            const matches = tokens.every(tok => combined.indexOf(tok) !== -1);
-            if (matches) {
-                card.style.display = '';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
-            }
-        });
-
-        if (visibleCount === 0) {
-            const msg = document.createElement('div');
-            msg.id = 'noResultsMessage';
-            msg.className = 'no-results-message';
-            msg.style.padding = '22px';
-            msg.style.textAlign = 'center';
-            msg.style.color = '#666';
-            msg.textContent = 'No vehicles match your search.';
-            // insert before pagination if present, else append
-            const pag = container.querySelector('.pagination-nav');
-            if (pag) pag.parentElement.insertBefore(msg, pag);
-            else container.appendChild(msg);
-        }
-        // Update pagination links so they include the current params.
-        updatePaginationLinksWithParams();
-    }
-    </script>
-    <script>
-    // Client-side sorting of vehicle cards by price, year, or mileage.
-    function sortCardsOnPage() {
-        const container = document.getElementById('vehicleListingsContainer');
-        if (!container) return;
-        const mainContent = container.querySelector('main.main-content') || container;
-        const cardsNodeList = mainContent.querySelectorAll('article.card');
-        if (!cardsNodeList || cardsNodeList.length === 0) return;
-
-        const sortVal = (document.getElementById('sortVehicles')?.value || '').toLowerCase();
-        if (!sortVal) return; // no sorting requested
-
-        const cards = Array.from(cardsNodeList);
-
-        const getNumeric = (card, key) => {
-            const v = card.getAttribute(`data-${key}`) || card.dataset[key] || '';
-            const num = Number(String(v).replace(/[^0-9.-]+/g, ''));
-            return Number.isFinite(num) ? num : NaN;
-        };
-
-        // Choose comparator
-        let cmp;
-        switch (sortVal) {
-            case 'price-low':
-                cmp = (a,b) => (getNumeric(a,'price') || 0) - (getNumeric(b,'price') || 0);
-                break;
-            case 'price-high':
-                cmp = (a,b) => (getNumeric(b,'price') || 0) - (getNumeric(a,'price') || 0);
-                break;
-            case 'year-new':
-                cmp = (a,b) => (getNumeric(b,'year') || 0) - (getNumeric(a,'year') || 0);
-                break;
-            case 'year-old':
-                cmp = (a,b) => (getNumeric(a,'year') || 0) - (getNumeric(b,'year') || 0);
-                break;
-            case 'mileage-low':
-                cmp = (a,b) => (getNumeric(a,'mileage') || 0) - (getNumeric(b,'mileage') || 0);
-                break;
-            case 'mileage-high':
-                cmp = (a,b) => (getNumeric(b,'mileage') || 0) - (getNumeric(a,'mileage') || 0);
-                break;
-            default:
-                cmp = (a,b) => 0; // unknown: keep order
-        }
-
-        // Sort cards and reattach in order
-        cards.sort(cmp);
-
-        // Insert sorted cards back before pagination (if any)
-        const pagination = mainContent.querySelector('.pagination-nav');
-        const insertBeforeNode = pagination || null;
-        cards.forEach(card => {
-            if (insertBeforeNode) mainContent.insertBefore(card, insertBeforeNode);
-            else mainContent.appendChild(card);
-        });
-        updatePaginationLinksWithParams();
-    }
-    </script>
 @endpush

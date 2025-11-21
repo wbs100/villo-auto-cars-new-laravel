@@ -182,4 +182,73 @@ class VehicleController extends Controller
 
         return response()->json(['message' => 'Vehicle deleted successfully.']);
     }
+
+    // Public vehicle listings filter (GET)
+    public function publicListingsFilter(Request $request)
+    {
+        $viewMode = session('view_mode', 'grid');
+        $vehicles = Vehicle::query();
+
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $vehicles->where(function($q) use ($searchTerm) {
+                $q->where('model', 'LIKE', "%{$searchTerm}%");
+            });
+        }
+
+        if ($request->filled('year')) {
+            $vehicles->whereIn('manufactured_year', $request->year);
+        }
+        if ($request->filled('condition')) {
+            $vehicles->whereIn('condition', $request->condition);
+        }
+        if ($request->filled('body')) {
+            $vehicles->whereIn('body', $request->body);
+        }
+        if ($request->filled('make')) {
+            $vehicles->whereIn('make', $request->make);
+        }
+        if ($request->filled('transmission')) {
+            $vehicles->whereIn('transmission', $request->transmission);
+        }
+        if ($request->filled('exterior_color')) {
+            $vehicles->whereIn('exterior_color', $request->exterior_color);
+        }
+        if ($request->filled('interior_color')) {
+            $vehicles->whereIn('interior_color', $request->interior_color);
+        }
+        // Sorting
+        if ($request->filled('sort')) {
+            switch ($request->input('sort', 'default')) {
+                case 'price-low':
+                    $vehicles->orderBy('price', 'asc');
+                    break;
+                case 'price-high':
+                    $vehicles->orderBy('price', 'desc');
+                    break;
+                case 'year-new':
+                    $vehicles->orderBy('manufactured_year', 'desc');
+                    break;
+                case 'year-old':
+                    $vehicles->orderBy('manufactured_year', 'asc');
+                    break;
+                case 'mileage-low':
+                    $vehicles->orderBy('mileage', 'desc');
+                    break;
+                default:
+                    $vehicles->orderBy('mileage', 'asc');
+            }
+        }
+        // Price range
+        if ($request->filled('price_min') && $request->filled('price_max')) {
+            $min = floatval(preg_replace('/[^0-9.]/', '', $request->price_min));
+            $max = floatval(preg_replace('/[^0-9.]/', '', $request->price_max));
+            if ($min && $max && $min <= $max) {
+                $vehicles->whereBetween('price', [$min, $max]);
+            }
+        }
+        $vehicles = $vehicles->paginate($request->input('per_page', 8))->appends($request->query());
+        
+        return view('public-site.vehicle-listings', compact('vehicles', 'viewMode'));
+    }
 }
