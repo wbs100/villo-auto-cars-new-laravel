@@ -316,6 +316,14 @@ class VehicleController extends Controller
             ];
         });
 
+        $models = Vehicle::select('model')->distinct()->pluck('model')->map(function($model) {
+            $count = Vehicle::where('model', $model)->count();
+            return [
+                'name' => $model,
+                'count' => $count
+            ];
+        });
+
         return view('public-site.vehicle-listings', compact(
             'vehicles',
             'viewMode',
@@ -325,6 +333,7 @@ class VehicleController extends Controller
             'makes',
             'transmissions',
             'colors',
+            'models',
             'minPrice',
             'maxPrice'
         ));

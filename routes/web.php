@@ -20,6 +20,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\TransmissionController;
 use App\Http\Controllers\ConditionController;
 use App\Http\Controllers\BodyController;
+use Illuminate\Support\Facades\Cache;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,73 @@ use App\Http\Controllers\BodyController;
 
 Route::get('/', function () {
     $vehicles = Vehicle::get();
-    return view('public-site.home', compact('vehicles'));
+
+    // Get min and max prices with caching (5 minutes)
+    $minPrice = Cache::remember('vehicles.min_price', 300, function () {
+        return Vehicle::min('price') ?? 0;
+    });
+
+    $maxPrice = Cache::remember('vehicles.max_price', 300, function () {
+        return Vehicle::max('price') ?? 0;
+    });
+
+    $years = Year::all()->map(function($year) {
+        $count = Vehicle::where('manufactured_year', $year->name)->count();
+        return [
+            'name' => $year->name,
+            'count' => $count
+        ];
+    });
+
+    $conditions = Condition::all()->map(function($condition) {
+        $count = Vehicle::where('condition', $condition->name)->count();
+        return [
+            'name' => $condition->name,
+            'count' => $count
+        ];
+    });
+
+    $bodies = Body::all()->map(function($body) {
+        $count = Vehicle::where('body', $body->name)->count();
+        return [
+            'name' => $body->name,
+            'count' => $count
+        ];
+    });
+
+    $makes = Make::all()->map(function($make) {
+        $count = Vehicle::where('make', $make->name)->count();
+        return [
+            'name' => $make->name,
+            'count' => $count
+        ];
+    });
+
+    $transmissions = Transmission::all()->map(function($transmission) {
+        $count = Vehicle::where('transmission', $transmission->name)->count();
+        return [
+            'name' => $transmission->name,
+            'count' => $count
+        ];
+    });
+
+    $colors = Color::all()->map(function($color) {
+        $count = Vehicle::where('exterior_color', $color->name)->count();
+        return [
+            'name' => $color->name,
+            'count' => $count
+        ];
+    });
+
+    $models = Vehicle::select('model')->distinct()->pluck('model')->map(function($model) {
+        $count = Vehicle::where('model', $model)->count();
+        return [
+            'name' => $model,
+            'count' => $count
+        ];
+    });
+
+    return view('public-site.home', compact('vehicles', 'years', 'conditions', 'bodies', 'makes', 'transmissions', 'colors', 'models', 'minPrice', 'maxPrice'));
 })->name('home');
 
 Route::get('/about', function () {

@@ -17,15 +17,9 @@
                         <label class="form-label w-100">Select Model</label>
                         <select class="form-select w-100">
                             <option selected>--Any Model--</option>
-                            <option>Accord</option>
-                            <option>Camry</option>
-                            <option>Civic</option>
-                            <option>Corolla</option>
-                            <option>F-150</option>
-                            <option>Model 3</option>
-                            <option>Model S</option>
-                            <option>Mustang</option>
-                            <option>Silverado</option>
+                            @foreach($models as $model)
+                                <option value="{{ $model['name'] }}">{{ $model['name'] }} </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -38,15 +32,12 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label w-100">Select Mileage</label>
+                        <label class="form-label w-100">Select Color</label>
                         <select class="form-select w-100">
-                            <option selected>--Any Mileage--</option>
-                            <option>Under 10,000 miles</option>
-                            <option>10,000 - 30,000 miles</option>
-                            <option>30,000 - 50,000 miles</option>
-                            <option>50,000 - 75,000 miles</option>
-                            <option>75,000 - 100,000 miles</option>
-                            <option>Over 100,000 miles</option>
+                            <option selected>--Any Color--</option>
+                            @foreach($colors as $color)
+                                <option value="{{ $color['name'] }}">{{ $color['name'] }} </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
