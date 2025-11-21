@@ -34,9 +34,7 @@
         <div class="car-image-wrapper">
             <img src="{{ $primaryImage }}" alt="Car Primary" class="car-image primary" />
             <img src="{{ $secondaryImage }}" alt="Car Secondary" class="car-image secondary" />
-            <div class="image-actions">
-                <button class="action-btn"><i class="fas fa-camera"></i></button>
-            </div>
+            <!-- camera action removed per request -->
             <div class="price-tag"><span class="price-main">{{ $priceMain }}</span><span class="price-msrp">{{ $priceMsrp }}</span></div>
         </div>
         <div class="car-card-body">
