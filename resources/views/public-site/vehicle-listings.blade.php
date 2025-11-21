@@ -149,7 +149,7 @@
                             <div class="filter-options">
                                 @foreach($conditions as $condition)
                                 <div class="filter-option">
-                                    <input type="checkbox" id="condition-{{ $condition['name'] }}" name="condition[]" value="{{ $condition['name'] }}">
+                                    <input type="checkbox" id="condition-{{ $condition['name'] }}" name="condition[]" value="{{ $condition['name'] }}" data-count="{{ $condition['count'] }}">
                                     <label for="condition-{{ $condition['name'] }}">{{ $condition['name'] }}</label>
                                     <span class="filter-count">({{ $condition['count'] }})</span>
                                 </div>
@@ -303,5 +303,16 @@
     }
     window.addEventListener('load', adjustSidebarHeight);
     window.addEventListener('resize', function () { setTimeout(adjustSidebarHeight, 120); });
+    @if(config('app.debug'))
+    // Debug: Print counts passed to the view for quick browser inspection
+    console.log('View conditions (from server):', @json($conditions));
+    console.log('View years (from server):', @json($years));
+    document.addEventListener('DOMContentLoaded', function () {
+        const conditionBoxes = document.querySelectorAll('[id^="condition-"]');
+        conditionBoxes.forEach(el => {
+            console.log(`Condition checkbox: ${el.id}, count=`, el.dataset.count, 'value=', el.value);
+        });
+    });
+    @endif
 </script>
 @endpush

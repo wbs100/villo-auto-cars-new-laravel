@@ -13,6 +13,8 @@ use App\Models\Make;
 use App\Models\Transmission;
 use App\Models\Color;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class VehicleController extends Controller
 {
@@ -207,7 +209,9 @@ class VehicleController extends Controller
             $vehicles->whereIn('manufactured_year', $request->year);
         }
         if ($request->filled('condition')) {
-            $vehicles->whereIn('condition', $request->condition);
+            // Case-insensitive match: normalize request values to lowercase and compare LOWER(condition)
+            $conditionValues = array_map(function($v) { return strtolower(trim($v)); }, (array)$request->condition);
+            $vehicles->whereIn(DB::raw('LOWER(`condition`)'), $conditionValues);
         }
         if ($request->filled('body')) {
             $vehicles->whereIn('body', $request->body);
@@ -268,61 +272,111 @@ class VehicleController extends Controller
             return Vehicle::max('price') ?? 0;
         });
 
-        $years = Year::all()->map(function($year) {
-            $count = Vehicle::where('manufactured_year', $year->name)->count();
+        // To avoid N+1 queries we first compute counts for each relevant vehicle attribute
+        // in a single query using GROUP BY, then map the Year list and other filters to
+        // their corresponding counts.
+        // This returns collections keyed by the attribute value -> count.
+        $vehicleCountsByYear = Vehicle::groupBy('manufactured_year')
+            ->selectRaw('`manufactured_year`, COUNT(*) as count')
+            ->pluck('count', 'manufactured_year')
+            ->mapWithKeys(function ($count, $k) { return [trim((string)$k) => $count]; });
+
+
+        $years = Year::all()->map(function($year) use ($vehicleCountsByYear) {
+            $key = (string) $year->name;
+            $count = $vehicleCountsByYear->get($key, null);
+            if (is_null($count)) { $count = $vehicleCountsByYear->get((int)$key, 0); }
             return [
                 'name' => $year->name,
-                'count' => $count
+                'count' => (int) $count
             ];
         });
 
-        $conditions = Condition::all()->map(function($condition) {
-            $count = Vehicle::where('condition', $condition->name)->count();
+        $vehicleCountsByCondition = Vehicle::groupBy(DB::raw('LOWER(`condition`)'))
+            ->selectRaw('LOWER(`condition`) as condition_lower, COUNT(*) as count')
+            ->pluck('count', 'condition_lower')
+            ->mapWithKeys(function ($count, $k) { return [trim(strtolower((string)$k)) => $count]; });
+
+        $conditions = Condition::all()->map(function($condition) use ($vehicleCountsByCondition) {
+            $key = strtolower(trim((string) $condition->name));
+            $count = $vehicleCountsByCondition->get($key, 0);
             return [
                 'name' => $condition->name,
-                'count' => $count
+                'count' => (int) $count
             ];
         });
 
-        $bodies = Body::all()->map(function($body) {
-            $count = Vehicle::where('body', $body->name)->count();
+        $vehicleCountsByBody = Vehicle::groupBy(DB::raw('LOWER(body)'))
+            ->selectRaw('LOWER(body) as body_lower, COUNT(*) as count')
+            ->pluck('count', 'body_lower')
+            ->mapWithKeys(function ($count, $k) { return [trim(strtolower((string)$k)) => $count]; });
+
+        $bodies = Body::all()->map(function($body) use ($vehicleCountsByBody) {
+            $key = strtolower(trim((string) $body->name));
+            $count = $vehicleCountsByBody->get($key, 0);
             return [
                 'name' => $body->name,
-                'count' => $count
+                'count' => (int) $count
             ];
         });
 
-        $makes = Make::all()->map(function($make) {
-            $count = Vehicle::where('make', $make->name)->count();
+        $vehicleCountsByMake = Vehicle::groupBy(DB::raw('LOWER(`make`)'))
+            ->selectRaw('LOWER(`make`) as make_lower, COUNT(*) as count')
+            ->pluck('count', 'make_lower')
+            ->mapWithKeys(function ($count, $k) { return [trim(strtolower((string)$k)) => $count]; });
+
+        $makes = Make::all()->map(function($make) use ($vehicleCountsByMake) {
+            $key = strtolower(trim((string) $make->name));
+            $count = $vehicleCountsByMake->get($key, 0);
             return [
                 'name' => $make->name,
-                'count' => $count
+                'count' => (int) $count
             ];
         });
 
-        $transmissions = Transmission::all()->map(function($transmission) {
-            $count = Vehicle::where('transmission', $transmission->name)->count();
+        $vehicleCountsByTransmission = Vehicle::groupBy(DB::raw('LOWER(transmission)'))
+            ->selectRaw('LOWER(transmission) as transmission_lower, COUNT(*) as count')
+            ->pluck('count', 'transmission_lower')
+            ->mapWithKeys(function ($count, $k) { return [trim(strtolower((string)$k)) => $count]; });
+
+        $transmissions = Transmission::all()->map(function($transmission) use ($vehicleCountsByTransmission) {
+            $key = strtolower(trim((string) $transmission->name));
+            $count = $vehicleCountsByTransmission->get($key, 0);
             return [
                 'name' => $transmission->name,
-                'count' => $count
+                'count' => (int) $count
             ];
         });
 
-        $colors = Color::all()->map(function($color) {
-            $count = Vehicle::where('exterior_color', $color->name)->count();
+        $vehicleCountsByExteriorColor = Vehicle::groupBy(DB::raw('LOWER(exterior_color)'))
+            ->selectRaw('LOWER(exterior_color) as color_lower, COUNT(*) as count')
+            ->pluck('count', 'color_lower')
+            ->mapWithKeys(function ($count, $k) { return [trim(strtolower((string)$k)) => $count]; });
+
+        $colors = Color::all()->map(function($color) use ($vehicleCountsByExteriorColor) {
+            $key = strtolower(trim((string) $color->name));
+            $count = $vehicleCountsByExteriorColor->get($key, 0);
             return [
                 'name' => $color->name,
-                'count' => $count
+                'count' => (int) $count
             ];
         });
 
-        $models = Vehicle::select('model')->distinct()->pluck('model')->map(function($model) {
-            $count = Vehicle::where('model', $model)->count();
+        $vehicleCountsByModel = Vehicle::groupBy(DB::raw('LOWER(model)'))
+            ->selectRaw('LOWER(model) as model_lower, COUNT(*) as count')
+            ->pluck('count', 'model_lower')
+            ->mapWithKeys(function ($count, $k) { return [trim(strtolower((string)$k)) => $count]; });
+
+        $models = Vehicle::select('model')->distinct()->pluck('model')->map(function($model) use ($vehicleCountsByModel) {
+            $key = strtolower(trim((string) $model));
+            $count = $vehicleCountsByModel->get($key, 0);
             return [
                 'name' => $model,
-                'count' => $count
+                'count' => (int) $count
             ];
         });
+
+        // Removed debug logging; counts are prepared above.
 
         return view('public-site.vehicle-listings', compact(
             'vehicles',
