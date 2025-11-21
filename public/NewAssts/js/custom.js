@@ -408,14 +408,19 @@ $(document).ready(function () {
 
     if ($('#slider-price').length > 0) {
 
+        var $slider = $('#slider-price');
+        var minPrice = parseInt($slider.data('min')) || 0;
+        var maxPrice = parseInt($slider.data('max')) || 500000;
+        var startMin = parseInt($slider.data('start-min')) || minPrice;
+        var startMax = parseInt($slider.data('start-max')) || maxPrice;
 
         $("#slider-price").noUiSlider({
-            start: [150000, 350000],
+            start: [startMin, startMax],
             step: 500,
             connect: true,
             range: {
-                'min': 0,
-                'max': 500000
+                'min': minPrice,
+                'max': maxPrice
             },
 
             // Full number format support.

@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use App\Models\Year;
+use App\Models\Condition;
+use App\Models\Body;
+use App\Models\Make;
+use App\Models\Transmission;
+use App\Models\Color;
+use Illuminate\Support\Facades\Cache;
 
 class VehicleController extends Controller
 {
@@ -217,6 +224,7 @@ class VehicleController extends Controller
         if ($request->filled('interior_color')) {
             $vehicles->whereIn('interior_color', $request->interior_color);
         }
+
         // Sorting
         if ($request->filled('sort')) {
             switch ($request->input('sort', 'default')) {
@@ -239,6 +247,7 @@ class VehicleController extends Controller
                     $vehicles->orderBy('mileage', 'asc');
             }
         }
+
         // Price range
         if ($request->filled('price_min') && $request->filled('price_max')) {
             $min = floatval(preg_replace('/[^0-9.]/', '', $request->price_min));
@@ -247,8 +256,77 @@ class VehicleController extends Controller
                 $vehicles->whereBetween('price', [$min, $max]);
             }
         }
+
         $vehicles = $vehicles->paginate($request->input('per_page', 8))->appends($request->query());
-        
-        return view('public-site.vehicle-listings', compact('vehicles', 'viewMode'));
+
+        // Get min and max prices with caching (5 minutes)
+        $minPrice = Cache::remember('vehicles.min_price', 300, function () {
+            return Vehicle::min('price') ?? 0;
+        });
+
+        $maxPrice = Cache::remember('vehicles.max_price', 300, function () {
+            return Vehicle::max('price') ?? 0;
+        });
+
+        $years = Year::all()->map(function($year) {
+            $count = Vehicle::where('manufactured_year', $year->name)->count();
+            return [
+                'name' => $year->name,
+                'count' => $count
+            ];
+        });
+
+        $conditions = Condition::all()->map(function($condition) {
+            $count = Vehicle::where('condition', $condition->name)->count();
+            return [
+                'name' => $condition->name,
+                'count' => $count
+            ];
+        });
+
+        $bodies = Body::all()->map(function($body) {
+            $count = Vehicle::where('body', $body->name)->count();
+            return [
+                'name' => $body->name,
+                'count' => $count
+            ];
+        });
+
+        $makes = Make::all()->map(function($make) {
+            $count = Vehicle::where('make', $make->name)->count();
+            return [
+                'name' => $make->name,
+                'count' => $count
+            ];
+        });
+
+        $transmissions = Transmission::all()->map(function($transmission) {
+            $count = Vehicle::where('transmission', $transmission->name)->count();
+            return [
+                'name' => $transmission->name,
+                'count' => $count
+            ];
+        });
+
+        $colors = Color::all()->map(function($color) {
+            $count = Vehicle::where('exterior_color', $color->name)->count();
+            return [
+                'name' => $color->name,
+                'count' => $count
+            ];
+        });
+
+        return view('public-site.vehicle-listings', compact(
+            'vehicles',
+            'viewMode',
+            'years',
+            'conditions',
+            'bodies',
+            'makes',
+            'transmissions',
+            'colors',
+            'minPrice',
+            'maxPrice'
+        ));
     }
 }

@@ -67,35 +67,3 @@
 /* Make card show clickable cursor for links */
 .card-clickable { cursor: pointer; }
 .card-clickable .card__inner a { text-decoration: none; }
-
-/* Sidebar filter scroll behavior */
-@media (min-width: 991px) {
-	#sidebarFilters .sidebar-enhanced {
-		/* stick to viewport and allow internal scroll when there's overflow */
-		position: sticky;
-		top: 0; /* computed dynamically via JS to align below header/page header */
-		max-height: calc(255vh - 280px); /* leaves space for header/page header and footer */
-		overflow-y: auto;
-		-webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
-		padding-bottom: 10px;
-	}
-
-	#sidebarFilters .sidebar-enhanced .sidebar-footer {
-		position: sticky;
-		bottom: 0;
-		background: #fff;
-		padding-top: 12px;
-		padding-bottom: 12px;
-		z-index: 4;
-		box-shadow: 0 -6px 14px rgba(0,0,0,0.02);
-		margin-top: 16px;
-	}
-}
-
-/* On small screens don't pin/filter scroll as the sidebar is hidden or toggled */
-@media (max-width: 991px) {
-	#sidebarFilters .sidebar-enhanced { position: static; max-height: none; overflow: visible; }
-	#sidebarFilters .sidebar-enhanced .sidebar-footer { position: static; box-shadow: none; }
-}
-
-/* End Vehicle listings styles */
