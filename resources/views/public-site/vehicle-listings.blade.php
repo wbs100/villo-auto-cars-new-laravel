@@ -149,7 +149,7 @@
                             <div class="filter-options">
                                 @foreach($conditions as $condition)
                                 <div class="filter-option">
-                                    <input type="radio" id="condition-{{ $condition['name'] }}" name="condition" value="{{ $condition['name'] }}">
+                                    <input type="checkbox" id="condition-{{ $condition['name'] }}" name="condition[]" value="{{ $condition['name'] }}">
                                     <label for="condition-{{ $condition['name'] }}">{{ $condition['name'] }}</label>
                                     <span class="filter-count">({{ $condition['count'] }})</span>
                                 </div>
