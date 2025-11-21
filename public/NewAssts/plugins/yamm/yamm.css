@@ -7,11 +7,13 @@
 
 
 .header.sticky {
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	/* Reduce transparency by making the alpha closer to 1 (less transparent)
+	   Adjust the 4th value (alpha) between 0.0 (fully transparent) and 1.0 (fully opaque). */
+	background-color: rgba(255, 255, 255, 0.95);
     border-bottom-width: 0;
     border-bottom-style: solid;
     z-index: 1111;
@@ -22,11 +24,11 @@
 .header.sticky  .logo {
     display: inline-block;
     margin-top: 22px;
-	
+
 }
 
 .header.sticky   .yamm .nav > li > a {
-    padding: 35px 13px 23px;	
+    padding: 35px 13px 23px;
 }
 
 
@@ -79,10 +81,21 @@
 	display: block;
 	padding: 50px 13px 23px;
 	font: 700 12px Raleway;
+	/* Primary navigation color - set to white */
 	color: #FFF;
 	text-transform: uppercase;
 	transition: all .3s ease-out;
 }
+/* Keep link color white on hover to maintain contrast */
+.yamm .nav > li > a:hover {
+	color: #FFF;
+}
+
+/* When header becomes sticky and background is light, use darker nav text for contrast */
+.header.sticky .yamm .nav > li > a {
+	color: #333;
+}
+.header.sticky .yamm .nav > li > a:hover { color: #e40000; }
 .yamm .dropdown.yamm-fw .dropdown-menu {
 	left: 0;
 	right: 0;
@@ -90,8 +103,7 @@
 .yamm-fw {
 	position: inherit;
 }
-.yamm .navbar-toggle {
-}
+.yamm .navbar-toggle { display: inline-block; }
 .yamm .navbar-toggle .icon-bar {
 	background: #fff;
 }
@@ -129,7 +141,7 @@
 .yamm .dropdown-menu a{
 	    padding: 10px 20px;
     font: 700 12px Raleway;
-    color: #FFF;
+	color: #FFF;
 	border-bottom:1px dotted rgba(255, 255, 255, 0.4);
 }
 
@@ -170,6 +182,8 @@
 		display: block;
 		background-color: #222;
 	}
+	/* Ensure mobile nav links are white for readability */
+	.yamm .nav > li > a { color: #FFF; }
 	.yamm .nav > li {
 		display: block;
 	}

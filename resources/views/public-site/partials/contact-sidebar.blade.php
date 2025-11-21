@@ -19,5 +19,21 @@
             </dl>
         </div>
     </section>
+    <!-- Quick Contact Widget -->
+    <section class="widget">
+        <h3 class="widget-title">Quick Contact</h3>
+        <div class="decor-1"></div>
+        <div class="widget-content">
+            <div class="contact-form-box">
+                <form id="quickcontactform">
+                    <input type="text" class="form-control" placeholder="Name*" required>
+                    <input type="text" class="form-control" placeholder="Phone*" required>
+                    <textarea class="form-control" placeholder="Message*" rows="4" required></textarea>
+                    <button type="submit" class="btn-submit" style="width: 100%;">QUICK
+                        INQUIRY</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
 </aside>

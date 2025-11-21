@@ -249,13 +249,13 @@
 
 
 
-        /* Accordion Styles */
-        .accordion {
-            margin-top: 30px;
-            padding-top: 30px;
-            padding-right: 50px;
-            padding-left: 15px;
-        }
+/* Accordion Styles */
+.accordion {
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-right: 50px;
+    padding-left: 15px;
+}
 
 .accordion .panel {
     border: 1px solid #e0e0e0;
@@ -396,4 +396,15 @@
 /* 30px gap below the opening hours widget in WHEN TO VISIT tab */
 .tab-pane#tab3 .opening-hours-widget {
     margin-bottom: 30px;
+}
+
+
+/* Sidebar widget spacing — add 10px to the top of the first widget */
+.sidebar .widget:first-of-type {
+    margin-top: 10x;
+}
+
+/* Reduce bottom gap under the Quick Contact widget specifically in the sidebar */
+.sidebar .widget:nth-of-type(2) .contact-form-box {
+    margin-bottom: -20px;
 }

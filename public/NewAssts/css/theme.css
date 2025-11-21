@@ -69,6 +69,11 @@ img.pull-left {
 	text-transform: uppercase;
 }
 
+/* Add specific top padding when title is used within page headers */
+.block-title .ui-title-page {
+	padding-top: 40px;
+}
+
 .ui-title-block {
 	font-family: "Helvetica";
 	font-size: 40px;
