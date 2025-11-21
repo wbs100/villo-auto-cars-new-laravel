@@ -35,7 +35,8 @@ class VehicleSeeder extends Seeder
                 // Fields in table but not in CSV (add defaults)
                 'exterior_color'    => $record['EXTERIOR COLOR'] ?? 'White',
                 'interior_color'    => $record['INTERIOR COLOR'] ?? 'Black',
-                'price'             => $record['PRICE'] ?? 0,
+                // CSV header sometimes uses `Price`, `PRICE` or `price` — fallback to any of them.
+                'price'             => $record['PRICE'] ?? $record['Price'] ?? $record['price'] ?? 0,
                 'main_image'        => $record['MAIN IMAGE'] ?? '1753549123_04.jpg',
                 'image_2'           => $record['IMAGE 2'] ?? null,
                 'image_3'           => $record['IMAGE 3'] ?? null,

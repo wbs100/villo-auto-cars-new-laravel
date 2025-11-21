@@ -252,14 +252,64 @@ class VehicleController extends Controller
             }
         }
 
-        // Price range
-        if ($request->filled('price_min') && $request->filled('price_max')) {
-            $min = floatval(preg_replace('/[^0-9.]/', '', $request->price_min));
-            $max = floatval(preg_replace('/[^0-9.]/', '', $request->price_max));
-            if ($min && $max && $min <= $max) {
-                $vehicles->whereBetween('price', [$min, $max]);
+        // Price range: support min-only, max-only, and both; accept formatted values like "Rs. 3,000,000"
+        $minRaw = $request->input('price_min', null);
+        $maxRaw = $request->input('price_max', null);
+        $min = null;
+        $max = null;
+        if (!is_null($minRaw) && $minRaw !== '') {
+            // Remove everything except digits so strings like "Rs.2027000" become "2027000" (avoid leading dot)
+            $minClean = preg_replace('/\D+/', '', (string) $minRaw);
+            if (is_numeric($minClean)) {
+                $min = (float) $minClean;
             }
         }
+        if (!is_null($maxRaw) && $maxRaw !== '') {
+            // Remove everything except digits so strings like "Rs.3000000" become "3000000"
+            $maxClean = preg_replace('/\D+/', '', (string) $maxRaw);
+            if (is_numeric($maxClean)) {
+                $max = (float) $maxClean;
+            }
+        }
+
+        // Apply filtering based on which values are present
+        if (!is_null($min) && !is_null($max)) {
+            if ($min <= $max) {
+                $vehicles->whereBetween('price', [$min, $max]);
+            }
+        } elseif (!is_null($min)) {
+            $vehicles->where('price', '>=', $min);
+        } elseif (!is_null($max)) {
+            $vehicles->where('price', '<=', $max);
+        }
+
+        // Log debug info so we can verify incoming values and final numeric range
+        if (config('app.debug')) {
+            try {
+                Log::debug('Vehicles price filter debug', [
+                    'price_min_raw' => $minRaw,
+                    'price_max_raw' => $maxRaw,
+                    'price_min_numeric' => $min,
+                    'price_max_numeric' => $max,
+                    'ip' => $request->ip(),
+                ]);
+
+                Log::debug('Vehicles filter query debug', [
+                    'params' => $request->only(['price_min','price_max','search','year','condition','body','make','transmission','exterior_color','interior_color','per_page','sort']),
+                    'sql' => $vehicles->toSql(),
+                    'bindings' => $vehicles->getBindings(),
+                    'filtered_count' => $vehicles->count(),
+                    'total_count' => Vehicle::count(),
+                ]);
+            } catch (\Exception $e) {
+                // Avoid breaking the request if logging fails — continue gracefully.
+                Log::error('Failed to log price/filter query debug: ' . $e->getMessage());
+            }
+        }
+
+        // Add explicit counts to pass to the view for debug overlay
+        $filteredCount = $vehicles->count();
+        $totalCount = Vehicle::count();
 
         $vehicles = $vehicles->paginate($request->input('per_page', 8))->appends($request->query());
 
@@ -390,6 +440,9 @@ class VehicleController extends Controller
             'models',
             'minPrice',
             'maxPrice'
-        ));
+        ))->with([
+            'filteredCount' => $filteredCount,
+            'totalCount' => $totalCount
+        ]);
     }
 }

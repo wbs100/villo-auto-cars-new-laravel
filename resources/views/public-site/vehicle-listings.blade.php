@@ -30,7 +30,18 @@
 @endpush
 
 @push('page-ajax')
-<script id="server-debug-json" type="application/json">{!! json_encode(['debug' => config('app.debug'), 'conditions' => $conditions ?? [], 'years' => $years ?? []]) !!}</script>
+<script id="server-debug-json" type="application/json">{!! json_encode([
+    'debug' => config('app.debug'),
+    'conditions' => $conditions ?? [],
+    'years' => $years ?? [],
+    'min_price' => $minPrice ?? null,
+    'max_price' => $maxPrice ?? null,
+    'request_price_min' => request('price_min'),
+    'request_price_max' => request('price_max'),
+    'vehicles_total' => $vehicles->total() ?? null,
+    'filtered_count' => $filteredCount ?? null,
+    'total_count' => $totalCount ?? null
+]) !!}</script>
 <script>
     (function() {
         const el = document.getElementById('server-debug-json');
@@ -41,8 +52,35 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             const conditionBoxes = document.querySelectorAll('[id^="condition-"]');
-            conditionBoxes.forEach(el => {
-            });
+            conditionBoxes.forEach(el => {});
+
+            // Client-side debug: Log price inputs and server-provided debug JSON
+            try {
+                const el = document.getElementById('server-debug-json');
+                const debugInfo = el ? JSON.parse(el.textContent || '{}') : {};
+                if (debugInfo.debug) {
+                    // Show console debug instead of overlay
+                    console.debug('Server debug JSON:', debugInfo);
+                }
+            } catch (e) { }
+
+            const minInput = document.getElementById('slider-price_min');
+            const maxInput = document.getElementById('slider-price_max');
+            const form = document.getElementById('vehicleFilterForm');
+
+            function logPrices() {
+                const minVal = minInput ? minInput.value : null;
+                const maxVal = maxInput ? maxInput.value : null;
+
+            }
+
+            if (minInput) minInput.addEventListener('input', logPrices);
+            if (maxInput) maxInput.addEventListener('input', logPrices);
+            if (form) {
+                form.addEventListener('submit', function (e) {
+
+                });
+            }
         });
     })();
 </script>
@@ -86,9 +124,6 @@
                 </div>
             </div>
 
-            <!-- View Toggle (removed) -->
-
-
             <!-- Filter Button -->
             <div class="filter-group" style="flex: 0; align-self: flex-end;">
                 <button class="filter-action-btn" type="submit">
@@ -97,7 +132,6 @@
             </div>
         </form>
     </div>
-
 
     <div class="row">
         <div class="col-md-9" id="vehicleListingsContainer">
@@ -127,8 +161,7 @@
                 @include('public-site.partials.vehicle-cards', ['limit' => 4])
 
                 @if(isset($vehicles))
-                <div class="pagination-nav d-flex justify-content-center mt-4">{{
-                    $vehicles->links('components.custom-pagination') }}</div>
+                <div class="pagination-nav d-flex justify-content-center mt-4">{{ $vehicles->links('components.custom-pagination') }}</div>
                 @endif
             </main>
         </div>
