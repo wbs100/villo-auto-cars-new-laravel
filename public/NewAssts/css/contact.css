@@ -66,7 +66,7 @@
     font-size: 22px;
     font-weight: 700;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-transform: uppercase;
 }
 
@@ -74,7 +74,7 @@
 .contact-form-box {
     background: #f8f8f8;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 35px;
     border-radius: 5px;
 }
 
@@ -253,89 +253,91 @@
         .accordion {
             margin-top: 30px;
             padding-top: 30px;
-            padding-right: 30px;
+            padding-right: 50px;
+            padding-left: 15px;
         }
 
-        .accordion .panel {
-            border: 1px solid #e0e0e0;
-            border-radius: 0;
-            margin-bottom: 20px;
-            margin-top: 20px;
-            box-shadow: none;
-        }
+.accordion .panel {
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    box-shadow: none;
+}
 
-        .accordion .panel-heading {
-            background: #f8f8f8;
-            border-radius: 0;
-            padding: 0 0px;
-             margin-bottom: 2px;
+.accordion .panel-heading {
+    background: #f8f8f8;
+    border-radius: 0;
+    padding: 0 0px;
+    margin-bottom: 2px;
 
-        }
+}
 
-        .accordion .panel-title {
-            font-size: 16px;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #333;
-            padding: 24px 20px;
+.accordion .panel-title {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #333;
+    padding: 24px 20px;
 
-        }
+}
 
-        .accordion .btn-collapse {
-            position: relative;
-            /* participate in flex layout */
-            margin-right: 10px;
-            padding-bottom: 5px;
-            /* spacing between icon and title */
-            width: 34px;
-            height: 34px;
-            border: 2px solid #d32f2f;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
+.accordion .btn-collapse {
+    position: relative;
+    /* participate in flex layout */
+    margin-right: 10px;
+    padding-bottom: 5px;
+    /* spacing between icon and title */
+    width: 34px;
+    height: 34px;
+    border: 2px solid #d32f2f;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
 
-        .accordion .btn-collapse:hover {
-            background: #d32f2f;
-        }
+.accordion .btn-collapse:hover {
+    background: #d32f2f;
+}
 
-        .accordion .btn-collapse .icon {
-            padding-bottom: 2px;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.accordion .btn-collapse .icon {
+    padding-bottom: 2px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .accordion .btn-collapse .icon:before {
-            content: "-";
-            color: #d32f2f;
-            font-size: 22px;
-            font-weight: 700;
-            line-height: 1;
-            transition: all 0.3s ease;
-        }
+.accordion .btn-collapse .icon:before {
+    content: "-";
+    color: #d32f2f;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    transition: all 0.3s ease;
+}
 
-        .accordion .btn-collapse.collapsed .icon:before {
-            content: "+";
-            color: #d32f2f;
-        }
+.accordion .btn-collapse.collapsed .icon:before {
+    content: "+";
+    color: #d32f2f;
+}
 
-        .accordion .btn-collapse:hover .icon:before {
-            color: #fff;
-        }
+.accordion .btn-collapse:hover .icon:before {
+    color: #fff;
+}
 
-        .accordion .panel-body {
-            padding: 20px;
-            font-size: 14px;
-            line-height: 1.8;
-            color: #666;
-        }
+.accordion .panel-body {
+    padding: 20px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #666;
+}
+
 @media (max-width: 768px) {
     .letter {
         flex-direction: column;
@@ -386,3 +388,12 @@
 }
 
 /* End contact.css */
+/* 30px gap below the Email line in LOCATION INFO tab */
+.tab-pane#tab2 p:last-child {
+    margin-bottom: 30px;
+}
+
+/* 30px gap below the opening hours widget in WHEN TO VISIT tab */
+.tab-pane#tab3 .opening-hours-widget {
+    margin-bottom: 30px;
+}

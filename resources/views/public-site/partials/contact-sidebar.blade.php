@@ -20,17 +20,4 @@
         </div>
     </section>
 
-    <!-- Quick Contact Widget -->
-    <section class="widget">
-        <h3 class="widget-title">Quick Contact</h3>
-        <div class="decor-1"></div>
-        <div class="widget-content">
-            <x-components.quick-contact-form />
-        </div>
-    </section>
-
-    <!-- Share Widget -->
-    <section class="widget">
-        <x-components.share-widget />
-    </section>
 </aside>
