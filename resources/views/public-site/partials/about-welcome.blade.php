@@ -1,4 +1,4 @@
-<!-- About Welcome Partial -->
+vehicles table<!-- About Welcome Partial -->
 <section class="welcome-4 page-section-ptb white-bg my-section-padding welcome-section">
     <div class="container">
         <div class="row">

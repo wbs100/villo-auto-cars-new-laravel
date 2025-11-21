@@ -5,7 +5,13 @@
 
 @if(isset($vehiclesList) && (is_iterable($vehiclesList) && count($vehiclesList)))
 	@foreach($vehiclesList as $vehicle)
-		<article class="card clearfix card-clickable" data-href="{{ route('vehicle.details', $vehicle->id) }}">
+		@php
+			$cardTitle = trim(($vehicle->make ? $vehicle->make . ' ' : '') . ($vehicle->model ?? ''));
+			$cardPrice = $vehicle->price ?? 0;
+			$cardMileage = $vehicle->mileage ?? 0;
+			$cardYear = $vehicle->manufactured_year ?? ($vehicle->year ?? null);
+		@endphp
+		<article class="card clearfix card-clickable" data-href="{{ route('vehicle.details', $vehicle->id) }}" data-title="{{ $cardTitle }}" data-price="{{ $cardPrice }}" data-mileage="{{ $cardMileage }}" data-year="{{ $cardYear }}">
 			<div class="card__img">
 				@php $img = $vehicle->main_image ?? null; @endphp
 				<a href="{{ route('vehicle.details', $vehicle->id) }}">
@@ -31,9 +37,9 @@
 			</div>
 		</article>
 	@endforeach
-@else
+	@else
 	@for($i = 1; $i <= $limit; $i++)
-		<article class="card clearfix">
+		<article class="card clearfix" data-title="Vehicle {{ $i }}" data-price="{{ 3000000 + ($i * 100000) }}" data-mileage="35000" data-year="{{ 2020 - $i }}">
 			<div class="card__img">
 				<img class="img-responsive" src="{{ asset('NewAssts/media/cards/' . $i . '.jpg') }}" height="196" width="235" alt="foto" />
 				@if($i == 2)

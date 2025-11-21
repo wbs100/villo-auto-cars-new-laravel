@@ -2,7 +2,7 @@
     <article class="car-details">
         @php
             $title = isset($vehicle) ? trim(($vehicle->make ?? '') . ' ' . ($vehicle->model ?? '') . ' ' . ($vehicle->manufactured_year ?? '')) : 'Chevrolet Impala';
-            $price = isset($vehicle) && $vehicle->price ? 'Rs. ' . number_format($vehicle->price, 0) : 'Rs. 27,92000';
+            $price = (isset($vehicle) && isset($vehicle->price)) ? 'Rs. ' . number_format($vehicle->price, 0) : 'Rs. 27,92000';
             // images from the vehicle (main_image and others)
             $images = [];
             if (isset($vehicle)) {

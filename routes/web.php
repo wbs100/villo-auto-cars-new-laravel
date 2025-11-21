@@ -132,10 +132,7 @@ Route::get('/contact', function () {
     return view('public-site.car-details', compact('vehicle', 'vehicles', 'relatedItems'));
 })->name('vehicle.details');
 
-Route::post('/set-view-mode', function (Request $request) {
-    session(['view_mode' => $request->view_mode]);
-    return response()->json(['status' => 'ok']);
-})->name('set.view.mode');
+// Remove view-mode toggle route - feature removed in UI
 
 
 Route::get('/listings-filter', function (Request $request) {

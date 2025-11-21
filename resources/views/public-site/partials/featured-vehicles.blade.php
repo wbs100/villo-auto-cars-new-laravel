@@ -11,8 +11,8 @@
                         @include('components.components.car-card', [
                             'primaryImage' => $vehicle->main_image ? asset('uploads/vehicles/' . $vehicle->main_image) : asset('NewAssts/media/gridImg/1_1.webp'),
                             'secondaryImage' => $vehicle->image_2 ? asset('uploads/vehicles/' . $vehicle->image_2) : ($vehicle->main_image ? asset('uploads/vehicles/' . $vehicle->main_image) : asset('NewAssts/media/gridImg/1_2.webp')),
-                            'priceMain' => 'Rs. ' . number_format($vehicle->price, 0),
-                            'priceMsrp' => $vehicle->price ? 'MSRP: Rs. ' . number_format($vehicle->price, 0) : null,
+                            'priceMain' => isset($vehicle->price) ? 'Rs. ' . number_format($vehicle->price, 0) : 'N/A',
+                            'priceMsrp' => isset($vehicle->price) ? 'MSRP: Rs. ' . number_format($vehicle->price, 0) : null,
                             'title' => trim(($vehicle->make ? $vehicle->make . ' ' : '') . ($vehicle->model ?? '') . ' ' . ($vehicle->manufactured_year ?? '')),
                             'location' => $vehicle->location ?? 'Miami, USA',
                             'registerStatus' => $vehicle->register_status ?? null,

@@ -10,9 +10,74 @@ use Illuminate\Support\Facades\File;
 class VehicleController extends Controller
 {
     // GET /vehicles
-    public function index()
+    public function index(Request $request)
     {
-        $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(10);
+        $query = Vehicle::query();
+
+        // Filtering
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', (float) $request->input('price_min'));
+        }
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', (float) $request->input('price_max'));
+        }
+        if ($request->filled('make')) {
+            $query->where('make', $request->input('make'));
+        }
+        if ($request->filled('body')) {
+            $query->where('body', $request->input('body'));
+        }
+        if ($request->filled('transmission')) {
+            $query->where('transmission', $request->input('transmission'));
+        }
+        if ($request->filled('condition')) {
+            $query->where('condition', $request->input('condition'));
+        }
+        if ($request->filled('manufactured_year')) {
+            $query->where('manufactured_year', $request->input('manufactured_year'));
+        }
+        if ($request->filled('mileage_min')) {
+            $query->where('mileage', '>=', (int) $request->input('mileage_min'));
+        }
+        if ($request->filled('mileage_max')) {
+            $query->where('mileage', '<=', (int) $request->input('mileage_max'));
+        }
+
+        // Sorting: supported values (client can send via `sort_by`):
+        // price_asc, price_desc, year_newest, year_oldest, mileage_asc, mileage_desc
+        $sort = $request->input('sort_by') ?? $request->input('sort');
+        switch ($sort) {
+            case 'price_asc':
+            case 'Price: Low to High':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_desc':
+            case 'Price: High to Low':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'year_newest':
+            case 'Year: Newest First':
+                $query->orderBy('manufactured_year', 'desc');
+                break;
+            case 'year_oldest':
+            case 'Year: Oldest First':
+                $query->orderBy('manufactured_year', 'asc');
+                break;
+            case 'mileage_asc':
+            case 'Mileage: Low to High':
+                $query->orderBy('mileage', 'asc');
+                break;
+            case 'mileage_desc':
+            case 'Mileage: High to Low':
+                $query->orderBy('mileage', 'desc');
+                break;
+            default:
+                $query->orderBy('price', 'asc');
+        }
+
+        $perPage = (int) $request->input('per_page', 10);
+        $vehicles = $query->paginate($perPage)->appends($request->except('page'));
+
         return response()->json($vehicles);
     }
 

@@ -27,23 +27,12 @@
 			</div>
 		</div>
 
-		<!-- View Toggle -->
-		<div class="filter-group view-filter" style="flex: 0;">
-			<label class="filter-group-label">View</label>
-			<div class="view-toggle-group">
-				<button class="view-toggle-btn active" onclick="setView('grid')" data-view="grid" title="Grid view">
-					<i class="fa fa-th" aria-hidden="true"></i>
-				</button>
-				<button class="view-toggle-btn" onclick="setView('list')" data-view="list" title="List view">
-					<i class="fa fa-list" aria-hidden="true"></i>
-				</button>
-			</div>
-		</div>
+		<!-- View Toggle (removed) -->
 
 
 		<!-- Filter Button -->
 		<div class="filter-group" style="flex: 0; align-self: flex-end;">
-			<button class="filter-action-btn" onclick="toggleSidebarFilters()">
+			<button class="filter-action-btn" onclick="filterCardsOnPage();">
 				<i class="fa fa-filter"></i> Filter
 			</button>
 		</div>
