@@ -612,6 +612,15 @@ $(function () {
         $priceMin.on('input', updatePriceRange);
         $priceMax.on('input', updatePriceRange);
         updateSliderRange();
+
+            // Manage active z-index for the handle being dragged so it always stays on top
+            function setActiveHandle($el) {
+                $('#priceMin, #priceMax').removeClass('active-handle');
+                $el.addClass('active-handle');
+            }
+            $priceMin.on('pointerdown touchstart mousedown', function () { setActiveHandle($(this)); });
+            $priceMax.on('pointerdown touchstart mousedown', function () { setActiveHandle($(this)); });
+            $(document).on('pointerup touchend mouseup', function () { $('#priceMin, #priceMax').removeClass('active-handle'); });
     }
 
     // Update sidebar noUiSlider if present and a dynamic min/max exists
