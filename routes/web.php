@@ -25,6 +25,7 @@ use App\Http\Controllers\BodyController;
 use App\Http\Controllers\DreamvehicaleController;
 use App\Http\Controllers\ImportInquiryController;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,24 @@ Route::get('/notifications/unread-count', function () {
 })->middleware(['auth']);
 |
 */
+
+Route::get('/run-migrations', function () {
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        // Artisan::call('db:seed', ['--force' => true]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Migrations ran successfully.',
+            'output' => Artisan::output()
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+});
 
 /*
 ==========================
