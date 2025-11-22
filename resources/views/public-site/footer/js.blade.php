@@ -20,20 +20,8 @@
 
 <!-- swiper CDN -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-	const swiper = new Swiper('.mySwiper', {
-		slidesPerView: 1,
-		spaceBetween: 30,
-		loop: true,
-		autoplay: { delay: 3500, disableOnInteraction: false },
-		navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-		breakpoints: {
-			640: { slidesPerView: 1, spaceBetween: 3 },
-			768: { slidesPerView: 2, spaceBetween: 3 },
-			1024: { slidesPerView: 3, spaceBetween: 3 }
-		}
-	});
-</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Main Swiper is initialized in ui-interactions.js -->
 
 <!-- Hidden element to pass server-side price min/max to JS without embedding Blade in JS -->
 <div id="priceRangeData" data-min="{{ floor($minPrice ?? 0) }}" data-max="{{ ceil($maxPrice ?? 0) }}" style="display:none"></div>
@@ -42,58 +30,7 @@
 
 <!-- Price range logic moved to public/NewAssts/js/custom.js for central management -->
 
-<script>
-	// Filter tabs
-	document.querySelectorAll(".filter-tab").forEach((tab) => {
-		tab.addEventListener("click", function () {
-			document.querySelectorAll(".filter-tab").forEach((t) => t.classList.remove("active"));
-			this.classList.add("active");
-		});
-	});
-</script>
-
-<script>
-	document.getElementById('vehicleImportForm')?.addEventListener('submit', function (e) {
-		e.preventDefault();
-		const formData = new FormData(this); const data = {};
-		for (let [key, value] of formData.entries()) { data[key] = value; }
-		if (!data.name || !data.phone || !data.email || !data.brand || !data.condition) { alert('Please fill in all required fields.'); return; }
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!emailRegex.test(data.email)) { alert('Please enter a valid email address.'); return; }
-		const subject = `Vehicle Import Inquiry - ${data.brand} ${data.model || ''}`.trim();
-		const body = `Dear Villo Auto Cars Team,\n\nI am interested in importing a vehicle with the following specifications:\n\nCustomer Details:\n- Name: ${data.name}\n- Phone: ${data.phone}\n- Email: ${data.email}\n\nVehicle Requirements:\n- Brand: ${data.brand}\n- Model: ${data.model || 'Not specified'}\n- Year: ${data.year || 'Not specified'}\n- Condition: ${data.condition}\n- Mileage Preference: ${data.mileage || 'Not specified'}\n\nAdditional Requirements:\n${data.message || 'No additional requirements mentioned.'}\n\nPlease contact me to discuss this import inquiry further.\n\nBest regards,\n${data.name}`;
-		const mailtoLink = `mailto:villoauto@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-		window.location.href = mailtoLink;
-	});
-</script>
-
-<script>
-	// Hover/visibility logic for image actions
-	document.querySelectorAll(".car-image-wrapper .image-actions").forEach((el) => { el.style.display = "none"; });
-	document.querySelectorAll(".car-image.secondary").forEach((img) => {
-		img.addEventListener("mouseenter", function () { const actions = this.parentElement.querySelector('.image-actions'); if (actions) actions.style.display = 'block'; });
-		img.addEventListener("mouseleave", function () { const actions = this.parentElement.querySelector('.image-actions'); if (actions) actions.style.display = 'none'; });
-	});
-	document.querySelectorAll('.car-image.primary').forEach((img) => { img.addEventListener('mouseenter', function () { const actions = this.parentElement.querySelector('.image-actions'); if (actions) actions.style.display = 'none'; }); });
-</script>
-
-<script>
-	// Initialize all logo swipers
-	const logoSwipers = document.querySelectorAll('.logo-swiper');
-	logoSwipers.forEach((swiperElement, index) => {
-		new Swiper(swiperElement, {
-			slidesPerView: 2, spaceBetween: 30, loop: true, autoplay: { delay: 0, disableOnInteraction: false },
-			speed: 3000 + (index * 1000), freeMode: true, freeModeMomentum: false, allowTouchMove: false, cssMode: false,
-			breakpoints: {
-				320: { slidesPerView: 2, spaceBetween: 20 },
-				480: { slidesPerView: 3, spaceBetween: 25 },
-				640: { slidesPerView: 4, spaceBetween: 30 },
-				768: { slidesPerView: 5, spaceBetween: 40 },
-				1024: { slidesPerView: 6, spaceBetween: 50 },
-				1200: { slidesPerView: 7, spaceBetween: 60 }
-			}
-		});
-	});
-</script>
+<script src="{{ asset('NewAssts/js/ui-interactions.js') }}"></script>
+<script src="{{ asset('NewAssts/js/vehicle-import.js') }}"></script>
 
 @stack('scripts')

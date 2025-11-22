@@ -399,6 +399,58 @@ a.car-title-link:focus{
     margin-bottom: 12px;
 }
 
+/* Custom application toasts */
+.app-toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none; /* let clicks through except for toasts */
+}
+.app-toast {
+    pointer-events: auto;
+    display: flex;
+    align-items: start;
+    gap: 12px;
+    min-width: 320px;
+    max-width: 520px;
+    padding: 18px 18px 18px 22px;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    transform: translateY(-6px);
+    opacity: 0;
+    transition: transform 240ms ease, opacity 240ms ease;
+}
+.app-toast--visible { transform: translateY(0); opacity: 1; }
+.app-toast__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+.app-toast__body { flex: 1; }
+.app-toast__title { font-weight: 700; font-size: 18px; margin-bottom: 4px; }
+.app-toast__message { font-size: 14px; opacity: 0.95; }
+.app-toast__close { margin-left: 8px; cursor: pointer; background: rgba(255,255,255,0.08); border-radius: 6px; width: 34px; height: 34px; display:inline-flex; align-items:center; justify-content:center; border: none; }
+
+.app-toast--success { background: linear-gradient(180deg, #2ecc71, #22c55e); }
+.app-toast--success .app-toast__icon { background: rgba(255,255,255,0.12); }
+
+.app-toast--error { background: linear-gradient(180deg, #ef4444, #dc2626); }
+.app-toast--error .app-toast__icon { background: rgba(255,255,255,0.12); }
+
+@media (max-width: 576px) {
+    .app-toast { min-width: 260px; max-width: calc(100% - 40px); }
+}
+
+
 .footer-column ul li a {
     color: #999;
     text-decoration: none;
