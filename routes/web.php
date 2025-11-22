@@ -21,6 +21,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\TransmissionController;
 use App\Http\Controllers\ConditionController;
 use App\Http\Controllers\BodyController;
+use App\Http\Controllers\DreamvehicaleController;
 use Illuminate\Support\Facades\Cache;
 
 /*
@@ -152,6 +153,8 @@ Route::get('/contact', function () {
     $vehicles = Vehicle::get();
     return view('public-site.contact', compact('vehicles'));
 })->name('contact');
+
+Route::post('/import-inquiry', [DreamvehicaleController::class, 'store'])->name('import.inquiry');
 
  Route::get('/vehicle/{id}', function ($id) {
     $vehicle = Vehicle::findOrFail($id);

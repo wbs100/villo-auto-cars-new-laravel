@@ -23,10 +23,7 @@ class ContactFormMail extends Mailable
         $this->formData = $formData;
     }
 
-    public function build()
-    {
-        return $this->subject('New Booking Form Submission - Villo Auto Cars')->view('emails.booking-confirmation');
-    }
+    // We use the new Mailable content() method.
 
     /**
      * Get the message envelope.
@@ -34,7 +31,7 @@ class ContactFormMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Booking Form Mail',
+            subject: 'New Import Inquiry - Villo Auto Cars',
         );
     }
 
@@ -44,7 +41,7 @@ class ContactFormMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.import-inquiry',
         );
     }
 
