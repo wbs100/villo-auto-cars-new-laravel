@@ -1,5 +1,6 @@
 <script>
     // Create form removed — submission handler intentionally omitted.
+    reloadTable('inquiries-tbl','inquiryTableWrapper','/inquiry-table');
 
     $(document).on('submit', '.delete-inquiry-form', function(e) {
         e.preventDefault();

@@ -1,4 +1,7 @@
 <script>
+    let routeName = "/" + (document.getElementById('selectAttr')?.value || '') + "-table";
+    reloadTable('attributes-tbl', 'attributeTableWrapper', routeName);
+
     const _selectAttr = document.getElementById('selectAttr');
     _selectAttr?.addEventListener('change', function() {
         const selected = this.value;
@@ -35,6 +38,10 @@
                 `;
                     tableBody.appendChild(row);
                 });
+
+                let routeName = "/" + selected + "-table";
+
+                reloadTable('attributes-tbl', 'attributeTableWrapper', routeName);
             })
             .catch(error => {
                 console.error('Error fetching attributes:', error);

@@ -3,7 +3,8 @@
 ***********************************-->
 <div class="nav-header">
     <a href="/" class="brand-logo">
-        <img src="{{ asset('NewAssts/img/logo.png') }}" alt="logo" style="width: 40px; padding-top: 10px; border-radius: 9999px;">
+        <img src="{{ asset('NewAssts/img/logo.png') }}" alt="logo"
+            style="width: 40px; padding-top: 10px; border-radius: 9999px;">
     </a>
     <div class="nav-control">
         <div class="hamburger">
@@ -69,10 +70,14 @@
                         <!-- notification bell -->
                         <li class="nav-item dropdown notification_dropdown">
 
-                            <a class="nav-link position-relative" href="#" id="notificationToggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding:8px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="bi bi-bell" style="width:20px;height:20px;color:#2b2b2b;display:inline-block;vertical-align:middle;">
-    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-</svg>
+                            <a class="nav-link position-relative" href="#" id="notificationToggle" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false" style="padding:8px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                                    class="bi bi-bell"
+                                    style="width:20px;height:20px;color:#2b2b2b;display:inline-block;vertical-align:middle;">
+                                    <path
+                                        d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+                                </svg>
                                 <span id="notifCount" data-count="@php
                                     $notifCount = 0;
                                     try {
@@ -87,31 +92,35 @@
                                     echo $notifCount;
                                 @endphp">@php
                                     echo $notifCount > 0 ? $notifCount : '';
-                                @endphp</span>
+                                    @endphp</span>
                             </a>
-                            <div class="p-0 dropdown-menu dropdown-menu-end" aria-labelledby="notificationToggle" style="min-width:260px;">
+                            <div class="p-0 dropdown-menu dropdown-menu-end" aria-labelledby="notificationToggle"
+                                style="min-width:260px;">
                                 <div class="p-2 border-bottom">
                                     <strong>Notifications</strong>
                                 </div>
                                 <div style="max-height:260px; overflow:auto;">
                                     @php
-                                        $hasNotificationsTable = false;
-                                        try {
-                                            $hasNotificationsTable = \Illuminate\Support\Facades\Schema::hasTable('notifications');
-                                        } catch (\Throwable $e) {
-                                            $hasNotificationsTable = false;
-                                        }
+                                    $hasNotificationsTable = false;
+                                    try {
+                                    $hasNotificationsTable =
+                                    \Illuminate\Support\Facades\Schema::hasTable('notifications');
+                                    } catch (\Throwable $e) {
+                                    $hasNotificationsTable = false;
+                                    }
                                     @endphp
 
-                                    @if($hasNotificationsTable && auth()->check() && $user && $user->unreadNotifications->count())
-                                        @foreach($user->unreadNotifications->take(8) as $notification)
-                                            <a class="dropdown-item" href="{{ url('/notifications/open/'.$notification->id) }}">
-                                                {{ data_get($notification, 'data.message') ?? 'New notification' }}
-                                                <br><small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
-                                            </a>
-                                        @endforeach
+                                    @if($hasNotificationsTable && auth()->check() && $user &&
+                                    $user->unreadNotifications->count())
+                                    @foreach($user->unreadNotifications->take(8) as $notification)
+                                    <a class="dropdown-item" href="{{ url('/notifications/open/'.$notification->id) }}">
+                                        {{ data_get($notification, 'data.message') ?? 'New notification' }}
+                                        <br><small class="text-muted">{{ $notification->created_at->diffForHumans()
+                                            }}</small>
+                                    </a>
+                                    @endforeach
                                     @else
-                                        <div class="p-3 text-center text-muted">No new notifications</div>
+                                    <div class="p-3 text-center text-muted">No new notifications</div>
                                     @endif
                                 </div>
                                 <div class="p-2 border-top text-center">
@@ -122,8 +131,8 @@
                         <!--profile dropdown-->
                         <li class="nav-item ps-3">
                             <div class="dropdown header-profile2">
-                                <a class="nav-link" href="javascript:void(0);" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
                                     <div class="header-info2 d-flex align-items-center">
                                         <div class="header-media">
                                             <img src="images/user.jpg" alt="">
@@ -161,9 +170,12 @@
                                         <div class="px-0 py-2 card-footer">
                                             <a href="/login">
                                                 @auth
-                                                <form method="POST" action="{{ route('logout') }}" class="p-0 dropdown-item ai-icon">
+                                                <form method="POST" action="{{ route('logout') }}"
+                                                    class="p-0 dropdown-item ai-icon">
                                                     @csrf
-                                                    <button type="submit" class="w-100 btn btn-ghost d-flex align-items-center justify-content-start" style="gap: 10px; padding-left: 20px;">
+                                                    <button type="submit"
+                                                        class="w-100 btn btn-ghost d-flex align-items-center justify-content-start"
+                                                        style="gap: 10px; padding-left: 20px;">
                                                         <svg class="logout-svg" xmlns="http://www.w3.org/2000/svg"
                                                             width="18" height="18" viewBox="0 0 24 24" fill="none"
                                                             stroke="currentColor" stroke-width="2"
@@ -202,8 +214,10 @@
             <li>
                 <a href="/dashboard" class="" aria-expanded="false">
                     <div class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
-                            <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-car-front-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z" />
                         </svg>
                     </div>
                     <span class="nav-text">Cars</span>
@@ -212,33 +226,40 @@
             <li>
                 <a href="/attributes-manager" class="" aria-expanded="false">
                     <div class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-2-fill" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H11a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 5 7h2.5V6A1.5 1.5 0 0 1 6 4.5zm-3 8A1.5 1.5 0 0 1 4.5 10h1A1.5 1.5 0 0 1 7 11.5v1A1.5 1.5 0 0 1 5.5 14h-1A1.5 1.5 0 0 1 3 12.5zm6 0a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1A1.5 1.5 0 0 1 9 12.5z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-diagram-2-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H11a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 5 7h2.5V6A1.5 1.5 0 0 1 6 4.5zm-3 8A1.5 1.5 0 0 1 4.5 10h1A1.5 1.5 0 0 1 7 11.5v1A1.5 1.5 0 0 1 5.5 14h-1A1.5 1.5 0 0 1 3 12.5zm6 0a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1A1.5 1.5 0 0 1 9 12.5z" />
                         </svg>
                     </div>
                     <span class="nav-text">Attributes</span>
                 </a>
             </li>
             <li>
-                <a href="/account" class="" aria-expanded="false">
-                    <div class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                        </svg>
-                    </div>
-                    <span class="nav-text">Account</span>
-                </a>
-            </li>
-            <li>
                 <a href="/inquiries" class="" aria-expanded="false">
                     <div class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
-                            <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A1 1 0 0 0 4 12.586L2 14V3a1 1 0 0 1 1-1h11z"/>
-                            <path d="M3 3.5a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H3.5a.5.5 0 0 1-.5-.5zM3.5 6a.5.5 0 0 0 0 1H11a.5.5 0 0 0 0-1H3.5zM3.5 8.5a.5.5 0 0 0 0 1H9a.5.5 0 0 0 0-1H3.5z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-chat-left-text" viewBox="0 0 16 16">
+                            <path
+                                d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A1 1 0 0 0 4 12.586L2 14V3a1 1 0 0 1 1-1h11z" />
+                            <path
+                                d="M3 3.5a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H3.5a.5.5 0 0 1-.5-.5zM3.5 6a.5.5 0 0 0 0 1H11a.5.5 0 0 0 0-1H3.5zM3.5 8.5a.5.5 0 0 0 0 1H9a.5.5 0 0 0 0-1H3.5z" />
                         </svg>
                     </div>
                     <span class="nav-text">Inquiries</span>
+                </a>
+            </li>
+            <li>
+                <a href="/account" class="" aria-expanded="false">
+                    <div class="menu-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                            <path fill-rule="evenodd"
+                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                        </svg>
+                    </div>
+                    <span class="nav-text">Account</span>
                 </a>
             </li>
         </ul>
@@ -254,71 +275,73 @@
 
 <!-- Notification badge styling and behavior -->
 <style>
-/* Badge styling with shadow and pulse animation */
-#notifCount {
-    font-size: 11px;
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    transform: translate(25%, -25%);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ff4757, #ff6348);
-    color: white;
-    font-weight: 700;
-    box-shadow:
-        0 0 0 0 rgba(255, 71, 87, 0.7),
-        0 4px 8px rgba(255, 71, 87, 0.4);
-    animation: pulse-alarm 2s infinite;
-    border: 2px solid white;
-}
-
-/* Hide badge when count is 0 */
-#notifCount:empty,
-#notifCount[data-count="0"] {
-    display: none;
-}
-
-/* Pulse animation - only when visible */
-@keyframes pulse-alarm {
-    0% {
+    /* Badge styling with shadow and pulse animation */
+    #notifCount {
+        font-size: 11px;
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        transform: translate(25%, -25%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ff4757, #ff6348);
+        color: white;
+        font-weight: 700;
         box-shadow:
             0 0 0 0 rgba(255, 71, 87, 0.7),
             0 4px 8px rgba(255, 71, 87, 0.4);
-        transform: translate(25%, -25%) scale(1);
+        animation: pulse-alarm 2s infinite;
+        border: 2px solid white;
     }
-    50% {
-        box-shadow:
-            0 0 0 8px rgba(255, 71, 87, 0),
-            0 6px 12px rgba(255, 71, 87, 0.6);
-        transform: translate(25%, -25%) scale(1.1);
-    }
-    100% {
-        box-shadow:
-            0 0 0 0 rgba(255, 71, 87, 0),
-            0 4px 8px rgba(255, 71, 87, 0.4);
-        transform: translate(25%, -25%) scale(1);
-    }
-}
 
-/* Bell icon styling */
-.notification_dropdown .nav-link {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    /* Hide badge when count is 0 */
+    #notifCount:empty,
+    #notifCount[data-count="0"] {
+        display: none;
+    }
 
-/* Add hover effect for bell */
-.notification_dropdown .nav-link:hover svg {
-    transform: rotate(20deg);
-    transition: transform 0.3s ease;
-}
+    /* Pulse animation - only when visible */
+    @keyframes pulse-alarm {
+        0% {
+            box-shadow:
+                0 0 0 0 rgba(255, 71, 87, 0.7),
+                0 4px 8px rgba(255, 71, 87, 0.4);
+            transform: translate(25%, -25%) scale(1);
+        }
+
+        50% {
+            box-shadow:
+                0 0 0 8px rgba(255, 71, 87, 0),
+                0 6px 12px rgba(255, 71, 87, 0.6);
+            transform: translate(25%, -25%) scale(1.1);
+        }
+
+        100% {
+            box-shadow:
+                0 0 0 0 rgba(255, 71, 87, 0),
+                0 4px 8px rgba(255, 71, 87, 0.4);
+            transform: translate(25%, -25%) scale(1);
+        }
+    }
+
+    /* Bell icon styling */
+    .notification_dropdown .nav-link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Add hover effect for bell */
+    .notification_dropdown .nav-link:hover svg {
+        transform: rotate(20deg);
+        transition: transform 0.3s ease;
+    }
 </style>
 
 <script>

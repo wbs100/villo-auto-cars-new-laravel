@@ -273,7 +273,7 @@ Route::get('/listings-top-filter', function () {
 
 // vehicle table loading (admin dash)
 Route::get('/vehicle-table', function () {
-    return view('admin-dashboard.partials.vehicle-table', ['vehicles' => Vehicle::orderBy('created_at', 'desc')->paginate(30)]);
+    return view('admin-dashboard.partials.vehicle-table', ['vehicles' => Vehicle::all()]);
 })->name('vehicle.table');
 
 // year table loading (admin dash)

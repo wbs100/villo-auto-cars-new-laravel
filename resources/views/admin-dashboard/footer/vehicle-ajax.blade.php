@@ -1,4 +1,6 @@
 <script>
+    reloadTable('vehicles-tbl','vehicleTableWrapper','/vehicle-table');
+    
     $('#createCarForm').on('submit', function(e) {
         e.preventDefault();
 

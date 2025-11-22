@@ -30,7 +30,7 @@ class ImportInquiryController extends Controller
 
     public function table()
     {
-        $inquiries = ImportInquiry::orderBy('created_at', 'desc')->paginate(15);
+        $inquiries = ImportInquiry::orderBy('created_at', 'desc')->paginate(10);
         return view('admin-dashboard.partials.inquiry-table', compact('inquiries'));
     }
 
