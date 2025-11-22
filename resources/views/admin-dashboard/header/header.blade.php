@@ -66,6 +66,57 @@
                                 </svg>
                             </a>
                         </li>
+                        <!-- notification bell -->
+                        <li class="nav-item dropdown notification_dropdown">
+
+                            <a class="nav-link position-relative" href="#" id="notificationToggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding:8px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="bi bi-bell" style="width:20px;height:20px;color:#2b2b2b;display:inline-block;vertical-align:middle;">
+    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+</svg>
+                                <span id="notifCount" data-count="@php
+                                    $notifCount = 0;
+                                    try {
+                                        if (\Illuminate\Support\Facades\Schema::hasTable('notifications') && auth()->check()) {
+                                            $notifCount = auth()->user()->unreadNotifications->count();
+                                        }
+                                    } catch (\Throwable $e) {
+                                        $notifCount = 0;
+                                    }
+                                    echo $notifCount;
+                                @endphp">@php
+                                    echo $notifCount > 0 ? $notifCount : '';
+                                @endphp</span>
+                            </a>
+                            <div class="p-0 dropdown-menu dropdown-menu-end" aria-labelledby="notificationToggle" style="min-width:260px;">
+                                <div class="p-2 border-bottom">
+                                    <strong>Notifications</strong>
+                                </div>
+                                <div style="max-height:260px; overflow:auto;">
+                                    @php
+                                        $hasNotificationsTable = false;
+                                        try {
+                                            $hasNotificationsTable = \Illuminate\Support\Facades\Schema::hasTable('notifications');
+                                        } catch (\Throwable $e) {
+                                            $hasNotificationsTable = false;
+                                        }
+                                    @endphp
+
+                                    @if($hasNotificationsTable && auth()->check() && auth()->user()->unreadNotifications->count())
+                                        @foreach(auth()->user()->unreadNotifications->take(8) as $notification)
+                                            <a class="dropdown-item" href="{{ url('/notifications/open/'.$notification->id) }}">
+                                                {{ data_get($notification, 'data.message') ?? 'New notification' }}
+                                                <br><small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                            </a>
+                                        @endforeach
+                                    @else
+                                        <div class="p-3 text-center text-muted">No new notifications</div>
+                                    @endif
+                                </div>
+                                <div class="p-2 border-top text-center">
+                                    <a href="/notifications/mark-read" class="small">View all</a>
+                                </div>
+                            </div>
+                        </li>
                         <!--profile dropdown-->
                         <li class="nav-item ps-3">
                             <div class="dropdown header-profile2">
@@ -177,6 +228,17 @@
                     <span class="nav-text">Account</span>
                 </a>
             </li>
+            <li>
+                <a href="/inquiries" class="" aria-expanded="false">
+                    <div class="menu-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A1 1 0 0 0 4 12.586L2 14V3a1 1 0 0 1 1-1h11z"/>
+                            <path d="M3 3.5a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H3.5a.5.5 0 0 1-.5-.5zM3.5 6a.5.5 0 0 0 0 1H11a.5.5 0 0 0 0-1H3.5zM3.5 8.5a.5.5 0 0 0 0 1H9a.5.5 0 0 0 0-1H3.5z"/>
+                        </svg>
+                    </div>
+                    <span class="nav-text">Inquiries</span>
+                </a>
+            </li>
         </ul>
         <div class="copyright">
 
@@ -187,3 +249,97 @@
 <!--**********************************
     Sidebar end
 ***********************************-->
+
+<!-- Notification badge styling and behavior -->
+<style>
+/* Badge styling with shadow and pulse animation */
+#notifCount {
+    font-size: 11px;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    transform: translate(25%, -25%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff4757, #ff6348);
+    color: white;
+    font-weight: 700;
+    box-shadow:
+        0 0 0 0 rgba(255, 71, 87, 0.7),
+        0 4px 8px rgba(255, 71, 87, 0.4);
+    animation: pulse-alarm 2s infinite;
+    border: 2px solid white;
+}
+
+/* Hide badge when count is 0 */
+#notifCount:empty,
+#notifCount[data-count="0"] {
+    display: none;
+}
+
+/* Pulse animation - only when visible */
+@keyframes pulse-alarm {
+    0% {
+        box-shadow:
+            0 0 0 0 rgba(255, 71, 87, 0.7),
+            0 4px 8px rgba(255, 71, 87, 0.4);
+        transform: translate(25%, -25%) scale(1);
+    }
+    50% {
+        box-shadow:
+            0 0 0 8px rgba(255, 71, 87, 0),
+            0 6px 12px rgba(255, 71, 87, 0.6);
+        transform: translate(25%, -25%) scale(1.1);
+    }
+    100% {
+        box-shadow:
+            0 0 0 0 rgba(255, 71, 87, 0),
+            0 4px 8px rgba(255, 71, 87, 0.4);
+        transform: translate(25%, -25%) scale(1);
+    }
+}
+
+/* Bell icon styling */
+.notification_dropdown .nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add hover effect for bell */
+.notification_dropdown .nav-link:hover svg {
+    transform: rotate(20deg);
+    transition: transform 0.3s ease;
+}
+</style>
+
+<script>
+    (function(){
+        const badge = document.getElementById('notifCount');
+        if (!badge) return;
+
+        async function updateCount(){
+            try{
+                const res = await fetch('/notifications/unread-count', {cache: 'no-store'});
+                if (!res.ok) return;
+                const data = await res.json();
+                if (data && typeof data.count !== 'undefined'){
+                    badge.textContent = data.count > 0 ? data.count : '';
+                    badge.setAttribute('data-count', data.count);
+                    badge.style.display = data.count > 0 ? 'inline-flex' : 'none';
+                }
+            }catch(e){
+                // ignore
+            }
+        }
+
+        setTimeout(updateCount, 1200);
+        setInterval(updateCount, 30000);
+    })();
+</script>

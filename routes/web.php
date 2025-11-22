@@ -22,6 +22,7 @@ use App\Http\Controllers\TransmissionController;
 use App\Http\Controllers\ConditionController;
 use App\Http\Controllers\BodyController;
 use App\Http\Controllers\DreamvehicaleController;
+use App\Http\Controllers\ImportInquiryController;
 use Illuminate\Support\Facades\Cache;
 
 /*
@@ -32,6 +33,19 @@ use Illuminate\Support\Facades\Cache;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
+
+// AJAX endpoint for admin header to fetch unread notifications count
+Route::get('/notifications/unread-count', function () {
+    $count = 0;
+    try {
+        if (\Illuminate\Support\Facades\Schema::hasTable('notifications') && auth()->check()) {
+            $count = auth()->user()->unreadNotifications()->count();
+        }
+    } catch (\Throwable $e) {
+        $count = 0;
+    }
+    return response()->json(['count' => $count]);
+})->middleware(['auth']);
 |
 */
 
@@ -384,4 +398,64 @@ Route::middleware([
     Route::get('/years', [YearController::class, 'index']);
     Route::post('/years', [YearController::class, 'store']);
     Route::put('/years/{id}', [YearController::class, 'update']);
+
+    // Open a notification (mark as read) and redirect to its URL (e.g., inquiry details)
+    Route::get('/notifications/open/{id}', function ($id) {
+        try {
+            $user = auth()->user();
+            if (! $user) {
+                return redirect('/inquiries');
+            }
+
+            $notification = $user->notifications()->where('id', $id)->first();
+            if (! $notification) {
+                return redirect('/inquiries');
+            }
+
+            // mark as read
+            $notification->markAsRead();
+
+            $data = $notification->data ?? [];
+            $url = isset($data['url']) ? $data['url'] : url('/inquiries');
+            if (! empty($data['inquiry_id'])) {
+                $sep = (str_contains($url, '?')) ? '&' : '?';
+                $url = $url . $sep . 'inquiry_id=' . urlencode($data['inquiry_id']);
+            }
+
+            return redirect($url);
+        } catch (\Throwable $e) {
+            return redirect('/inquiries');
+        }
+    })->name('notifications.open');
+
+    // Mark all unread notifications as read and redirect to inquiries
+    Route::get('/notifications/mark-read', function () {
+        try {
+            $user = auth()->user();
+            if (! $user) {
+                return redirect('/inquiries');
+            }
+
+            // Update unread notifications to read
+            if (method_exists($user, 'unreadNotifications')) {
+                $user->unreadNotifications()->update(['read_at' => now()]);
+            } else {
+                // fallback: iterate
+                foreach ($user->unreadNotifications as $n) {
+                    $n->markAsRead();
+                }
+            }
+
+            return redirect('/inquiries');
+        } catch (\Throwable $e) {
+            return redirect('/inquiries');
+        }
+    })->name('notifications.mark_read');
+
+    // Admin Import Inquiries (admin UI)
+    // Show the admin form/list page
+    Route::get('/inquiries', [ImportInquiryController::class, 'index'])->name('inquiries.index');
+    Route::get('/inquiry-table', [ImportInquiryController::class, 'table'])->name('inquiries.table');
+    Route::post('/inquiries', [ImportInquiryController::class, 'store'])->name('inquiries.store');
+    Route::delete('/inquiries/{id}', [ImportInquiryController::class, 'destroy'])->name('inquiries.destroy');
 });
