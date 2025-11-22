@@ -15,6 +15,7 @@ use App\Http\Controllers\VehicleController;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use App\Http\Controllers\MakeController;
 use App\Http\Controllers\YearController;
 use App\Http\Controllers\ColorController;
@@ -402,6 +403,7 @@ Route::middleware([
     // Open a notification (mark as read) and redirect to its URL (e.g., inquiry details)
     Route::get('/notifications/open/{id}', function ($id) {
         try {
+            /** @var User|null $user */
             $user = auth()->user();
             if (! $user) {
                 return redirect('/inquiries');
@@ -431,6 +433,7 @@ Route::middleware([
     // Mark all unread notifications as read and redirect to inquiries
     Route::get('/notifications/mark-read', function () {
         try {
+            /** @var User|null $user */
             $user = auth()->user();
             if (! $user) {
                 return redirect('/inquiries');

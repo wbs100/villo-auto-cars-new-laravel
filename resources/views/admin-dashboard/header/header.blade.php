@@ -76,8 +76,10 @@
                                 <span id="notifCount" data-count="@php
                                     $notifCount = 0;
                                     try {
-                                        if (\Illuminate\Support\Facades\Schema::hasTable('notifications') && auth()->check()) {
-                                            $notifCount = auth()->user()->unreadNotifications->count();
+                                        /** @var \App\Models\User|null $user */
+                                        $user = auth()->user();
+                                        if (\Illuminate\Support\Facades\Schema::hasTable('notifications') && auth()->check() && $user) {
+                                            $notifCount = $user->unreadNotifications->count();
                                         }
                                     } catch (\Throwable $e) {
                                         $notifCount = 0;
@@ -101,8 +103,8 @@
                                         }
                                     @endphp
 
-                                    @if($hasNotificationsTable && auth()->check() && auth()->user()->unreadNotifications->count())
-                                        @foreach(auth()->user()->unreadNotifications->take(8) as $notification)
+                                    @if($hasNotificationsTable && auth()->check() && $user && $user->unreadNotifications->count())
+                                        @foreach($user->unreadNotifications->take(8) as $notification)
                                             <a class="dropdown-item" href="{{ url('/notifications/open/'.$notification->id) }}">
                                                 {{ data_get($notification, 'data.message') ?? 'New notification' }}
                                                 <br><small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
