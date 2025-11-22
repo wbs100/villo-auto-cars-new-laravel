@@ -11,7 +11,7 @@
 			$cardMileage = $vehicle->mileage ?? 0;
 			$cardYear = $vehicle->manufactured_year ?? ($vehicle->year ?? null);
 		@endphp
-		<article class="card clearfix card-clickable" data-href="{{ route('vehicle.details', $vehicle->id) }}" data-title="{{ $cardTitle }}" data-price="{{ $cardPrice }}" data-mileage="{{ $cardMileage }}" data-year="{{ $cardYear }}">
+		<article class="card clearfix card-clickable" role="link" tabindex="0" data-href="{{ route('vehicle.details', $vehicle->id) }}" data-title="{{ $cardTitle }}" data-price="{{ $cardPrice }}" data-mileage="{{ $cardMileage }}" data-year="{{ $cardYear }}">
 			<div class="card__img">
 				@php $img = $vehicle->main_image ?? null; @endphp
 				<a href="{{ route('vehicle.details', $vehicle->id) }}">
@@ -38,6 +38,51 @@
 		</article>
 	@endforeach
 @endif
+@push('page-ajax')
+<script>
+	// Ensure we only attach the handlers once per page.
+	if (!window.__vehicleCardClickHandlerAttached) {
+		window.__vehicleCardClickHandlerAttached = true;
+
+		document.addEventListener('click', (e) => {
+			const el = e.target.closest && e.target.closest('.card-clickable');
+			if (!el) return;
+
+			// If actually clicked inside a real anchor, leave default behavior
+			if (e.target.closest('a')) return;
+
+			const href = el.getAttribute('data-href');
+			if (!href) return;
+
+			// If ctrl/cmd/shift are pressed or middle button clicked, open in new tab
+			if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) {
+				window.open(href, '_blank');
+				return;
+			}
+
+			// Otherwise, navigate to the details page
+			window.location.href = href;
+		}, false);
+
+		// Keyboard accessibility: navigate on Enter or Space
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				const el = document.activeElement;
+				if (!el || !el.classList.contains('card-clickable')) return;
+				const href = el.getAttribute('data-href');
+				if (!href) return;
+				if (e.key === 'Enter') {
+					window.location.href = href;
+				} else {
+					// spacebar default is to scroll; prevent and navigate
+					e.preventDefault();
+					window.location.href = href;
+				}
+			}
+		}, false);
+	}
+</script>
+@endpush
 
 {{-- Pagination should be rendered at the page level using $vehicles->links('components.custom-pagination') when $vehicles is provided. --}}
 

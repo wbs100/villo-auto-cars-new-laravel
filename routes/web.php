@@ -10,6 +10,7 @@ use App\Models\Transmission;
 use App\Mail\BookingConfirmation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\VehicleController;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -60,7 +61,7 @@ Route::get('/', function () {
     });
 
     $conditions = Condition::all()->map(function($condition) {
-        $count = Vehicle::where('condition', $condition->name)->count();
+        $count = Vehicle::whereRaw('LOWER(`condition`) = ?', [strtolower($condition->name)])->count();
         return [
             'name' => $condition->name,
             'count' => $count

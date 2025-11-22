@@ -22,7 +22,7 @@
                             <label class="form-label">Year</label>
                             <select name="year" class="form-control">
                                 @foreach ($years as $attribute)
-                                <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                                <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -31,7 +31,7 @@
                             <label class="form-label">Make</label>
                             <select name="make" class="form-control">
                                 @foreach ($makes as $attribute)
-                                <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                                <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -40,7 +40,7 @@
                             <label class="form-label">Body</label>
                             <select name="body" class="form-control">
                                 @foreach ($bodies as $attribute)
-                                <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                                <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -49,7 +49,7 @@
                             <label class="form-label">Transmission</label>
                             <select name="transmission" class="form-control">
                                 @foreach ($transmissions as $attribute)
-                                <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                                <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -58,7 +58,7 @@
                             <label class="form-label">Condition</label>
                             <select name="condition" class="form-control">
                                 @foreach ($conditions as $attribute)
-                                <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                                <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -72,7 +72,7 @@
                             <label class="form-label">Exterior Color</label>
                             <select name="exterior_color" class="form-control">
                                 @foreach ($colors as $attribute)
-                                <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                                <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -81,7 +81,7 @@
                             <label class="form-label">Interior Color</label>
                             <select name="interior_color" class="form-control">
                                 @foreach ($colors as $attribute)
-                                <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                                <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -178,7 +178,7 @@
                         <label class="form-label">Year</label>
                         <select name="year" id="edit_year" class="form-control">
                             @foreach ($years as $attribute)
-                            <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                            <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -187,7 +187,7 @@
                         <label class="form-label">Make</label>
                         <select name="make" id="edit_make" class="form-control">
                             @foreach ($makes as $attribute)
-                            <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                            <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -196,7 +196,7 @@
                         <label class="form-label">Body</label>
                         <select name="body" id="edit_body" class="form-control">
                             @foreach ($bodies as $attribute)
-                            <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                            <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -205,7 +205,7 @@
                         <label class="form-label">Exterior Color</label>
                         <select name="exterior_color" id="edit_exterior_color" class="form-control">
                             @foreach ($colors as $attribute)
-                            <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                            <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -214,7 +214,7 @@
                         <label class="form-label">Interior Color</label>
                         <select name="interior_color" id="edit_interior_color" class="form-control">
                             @foreach ($colors as $attribute)
-                            <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                            <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -228,7 +228,7 @@
                         <label class="form-label">Transmission</label>
                         <select name="transmission" id="edit_transmission" class="form-control">
                             @foreach ($transmissions as $attribute)
-                            <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                            <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -237,7 +237,7 @@
                         <label class="form-label">Condition</label>
                         <select name="condition" id="edit_condition" class="form-control">
                             @foreach ($conditions as $attribute)
-                            <option value="{{ $attribute->name }}">{{ $attribute->name }}</option>
+                            <option value="{{ $attribute['name'] }}">{{ $attribute['name'] }}</option>
                             @endforeach
                         </select>
                     </div>

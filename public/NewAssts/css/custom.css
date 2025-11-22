@@ -70,7 +70,7 @@ body {
     border: none;
     font-size: 16px;
     font-weight: 600;
-    cursor: pointer;
+    cursor: grab;
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
@@ -239,7 +239,7 @@ a.car-title-link:focus{
     background: none;
     border: none;
     color: #999;
-    cursor: pointer;
+    cursor: grab;
     font-size: 16px;
 }
 
@@ -605,6 +605,7 @@ a.car-title-link:focus{
     z-index: 0;
 }
 
+/* the visible selected range track (gold) should not eat pointer events — thumbs should handle them */
 #sliderRange {
     position: absolute;
     top: 17px;
@@ -613,8 +614,10 @@ a.car-title-link:focus{
     background: #ffd700;
     z-index: 1;
     transition: left 0.1s, width 0.1s;
+    pointer-events: none; /* allow clicks to reach the native range inputs underneath */
 }
 
+/* ensure the native input ranges and their thumbs sit above everything else so they stay interactive */
 #priceMin,
 #priceMax {
     -webkit-appearance: none;
@@ -627,11 +630,13 @@ a.car-title-link:focus{
     outline: none;
     margin: 0;
     pointer-events: all;
-    z-index: 2;
+    z-index: 1002; /* bring range track inputs above overlapping elements */
+    touch-action: none; /* improve touch dragging on mobile */
 }
 
+/* keep one handle above the other so the focused thumb handles pointer events correctly */
 #priceMax {
-    z-index: 3;
+    z-index: 1003;
 }
 
 #priceMin::-webkit-slider-thumb,
@@ -1009,6 +1014,20 @@ a.car-title-link:focus{
 .vehicle-import-form select.form-control {
     height: 48px;
     cursor: pointer;
+    z-index: 1005; /* keep the visible knob above other elements */
+}
+
+/* While a thumb is active or focused keep it on the very top so user can continue dragging smoothly */
+#priceMin:active, #priceMin:focus {
+    z-index: 1006;
+}
+#priceMax:active, #priceMax:focus {
+    z-index: 1007;
+}
+
+/* class applied to the active handle (mousedown/touchstart) to keep it above others while dragging */
+.active-handle {
+    z-index: 1010 !important;
 }
 
 .vehicle-import-form textarea.form-control {
