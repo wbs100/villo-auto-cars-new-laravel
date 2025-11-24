@@ -58,7 +58,7 @@
 			<div class="row">
 				<div class="col-md-12 col-xs-12">
 					<a href="{{ route('home') }}" class="logo d-none d-lg-block">
-						<img class="logo__img img-responsive" src="{{ asset('NewAssts/img/logo.png') }}" style="height: 100px; object-fit: contain;" alt="Logo" />
+						<img class="logo__img img-responsive" src="{{ asset('NewAssts/img/logo-white.png') }}" style="height: 100px; object-fit: contain;" alt="Logo" />
 					</a>
 					<div class="navbar yamm">
 						<div class="navbar-header hidden-md hidden-lg hidden-sm">
