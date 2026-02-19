@@ -36,11 +36,11 @@
             <td class="text-end align-middle">
                 <div class="gap-2 d-flex justify-content-end">
                     <!-- View Button -->
-                    <button type="button" class="btn btn-sm btn-outline-primary view-inquiry-btn"
+                    {{-- <button type="button" class="btn btn-sm btn-outline-primary view-inquiry-btn"
                         data-inquiry-id="{{ $inquiry->id }}" data-bs-toggle="modal" data-bs-target="#viewInquiryModal"
                         data-inquiry='@json($inquiry)'>
                         <i class="bi bi-eye"></i> View
-                    </button>
+                    </button> --}}
 
                     <!-- Delete Button -->
                     <form method="POST" action="/inquiries/{{ $inquiry->id }}" class="d-inline delete-inquiry-form"
@@ -55,11 +55,11 @@
             </td>
         </tr>
         @empty
-        <tfoot>
+        {{-- <tfoot>
             <td colspan="12" class="text-center py-4">
                 <p class="mb-0 text-muted">No inquiries found.</p>
             </td>
-        </tfoot>
+        </tfoot> --}}
         @endforelse
     </tbody>
 </table>
